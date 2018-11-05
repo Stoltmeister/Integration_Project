@@ -6,11 +6,6 @@ namespace Integration_Project.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "AspNetUsers",
-                nullable: false,
-                defaultValue: "");
 
             migrationBuilder.CreateTable(
                 name: "StandardUsers",
