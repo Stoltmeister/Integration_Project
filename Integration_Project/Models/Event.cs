@@ -7,6 +7,7 @@ namespace Integration_Project.Models
 {
     public class Event
     {
+        [Key]
         public string Id { get; set; }
         public int VenueId { get; set; }
         public DateTime StartDate { get; set; }
