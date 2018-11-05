@@ -53,6 +53,28 @@ namespace Integration_Project.Controllers
             return View(standardUser);
         }
 
+        //public async Task<IActionResult> InterestSelection(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var standardUser = await _context.StandardUsers
+        //        .Include(s => s.ApplicationUser)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (standardUser == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    UserInterestsViewModel userInterests = new UserInterestsViewModel();
+        //    userInterests.StandardUser = standardUser;
+        //    userInterests.Interests = await _context.Interests.ToListAsync();
+        //    // userInterests.AddedInterests = await _context. ***Check For Combined Interests
+        //    // need to plan how interests are captured to be added to current users' interests
+        //    return View(standardUser);
+        //}
+
+
         // GET: StandardUsers/Create
         public IActionResult Create()
         {
