@@ -61,7 +61,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,Description,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl")] Venue venue)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
         {
             if (id != venue.Id)
             {

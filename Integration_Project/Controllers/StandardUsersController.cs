@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Integration_Project.Data;
 using Integration_Project.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity;
 
 namespace Integration_Project.Controllers
 {
@@ -22,8 +24,9 @@ namespace Integration_Project.Controllers
         // GET: StandardUsers
         public async Task<IActionResult> Index()
         {
-            var user = await _context.StandardUsers.Where(u => u.ApplicationUser == User.Identity).SingleAsync();
-            return View(user);
+            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUser.Identity.GetUserId()).SingleAsync();
+            return View(standardUser);
         }
 
         // GET: StandardUsers/Details/5

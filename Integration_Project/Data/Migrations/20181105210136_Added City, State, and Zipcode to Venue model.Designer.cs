@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181105210136_Added City, State, and Zipcode to Venue model")]
+    partial class AddedCityStateandZipcodetoVenuemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,24 +53,6 @@ namespace Integration_Project.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("EventId");
-
-                    b.Property<string>("InterestId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("InterestId");
-
-                    b.ToTable("EventInterests");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.Interest", b =>
@@ -323,17 +307,6 @@ namespace Integration_Project.Data.Migrations
                     b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Event", "Events")
-                        .WithMany()
-                        .HasForeignKey("EventId");
-
-                    b.HasOne("Integration_Project.Models.Interest", "Interests")
-                        .WithMany()
-                        .HasForeignKey("InterestId");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
