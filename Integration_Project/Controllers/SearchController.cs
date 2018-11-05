@@ -24,18 +24,41 @@ namespace Integration_Project.Controllers
         public async Task<IActionResult> Index()
         {
             var Model = new SearchViewModel();
-            
-            return View(await _context.Interests.ToListAsync());
+            return View(await _context.Events.ToListAsync());
         }
 
         [HttpPost]
         public IActionResult Index(List<Interest> interests, string text)
         {
+            var eventInterest = _context.EventInterests.ToList();
+            var currentEvents = _context.Events.ToList();
+            List<string> interestIds = new List<string>();
+            List<List<string>> eventIds = new List<List<string>>();
+            List<Event> Events = new List<Event>();
+            
             if (!string.IsNullOrEmpty(text))
             {
                 interests = _context.Interests.FullTextSearchQuery(text).ToList();
+                foreach(var interest in interests)
+                {
+                    interestIds.Add(interest.Id);
+                }
+                foreach(var id in interestIds.Distinct())
+                {
+                    var getEventIds = eventInterest.Where(x => x.InterestId == id).Select(x => x.EventId).ToList();
+                    eventIds.Add(getEventIds);
+                }
+                foreach(var lItem in eventIds)
+                {
+                    foreach(var eve in lItem)
+                    {
+                        var addEvent = currentEvents.Where(x => x.Id == eve).FirstOrDefault();
+                        Events.Add(addEvent);
+                    }
+                }
+
             }
-            return View(interests);
+            return View(Events);
         }
 
         // GET: Search/Details/5

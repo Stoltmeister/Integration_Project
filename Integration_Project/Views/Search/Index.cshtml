@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Integration_Project.Models.Interest>
+﻿@model IEnumerable<Integration_Project.Models.Event>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,17 +22,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Desciption)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.StartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Verified)
+                @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <a href="~/Views/Search/Index.cshtml">~/Views/Search/Index.cshtml</a>
             <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                @Html.DisplayNameFor(model => model.IsPrivate)
             </th>
             <th></th>
         </tr>
@@ -42,16 +42,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Desciption)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.StartDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Verified)
+                    @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
+                    @Html.DisplayFor(modelItem => item.IsPrivate)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
