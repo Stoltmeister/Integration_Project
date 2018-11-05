@@ -8,15 +8,9 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Venue</h4>
+    <h4>@Model.Name</h4>
     <hr />
-    <dl class="col-md-6">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <div class="col-md-6">
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
@@ -65,12 +59,14 @@
         <dd>
             <a href="http://www.@Model.WebsiteUrl">@Model.WebsiteUrl</a>
         </dd>
-    </dl>
+        </br></br>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 
 <style>
