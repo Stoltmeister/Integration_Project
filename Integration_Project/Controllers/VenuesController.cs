@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Integration_Project.Data;
 using Integration_Project.Models;
+using Integration_Project.Assets;
 
 namespace Integration_Project.Controllers
 {
@@ -21,8 +22,7 @@ namespace Integration_Project.Controllers
 
 
 
-
-
+        
 
 
         // GET: Venues
@@ -34,6 +34,7 @@ namespace Integration_Project.Controllers
         // GET: Venues/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            ViewBag.googleMapsKey = ApiKeys.googleMapsKey;
             if (id == null)
             {
                 return NotFound();
@@ -65,6 +66,7 @@ namespace Integration_Project.Controllers
             if (ModelState.IsValid)
             {
                 venue.CreationDate = DateTime.Now;
+                venue.UpdateLatitudeAndLongitude();
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -104,6 +106,7 @@ namespace Integration_Project.Controllers
             {
                 try
                 {
+                    venue.UpdateLatitudeAndLongitude();
                     _context.Update(venue);
                     await _context.SaveChangesAsync();
                 }
