@@ -12,7 +12,14 @@ namespace Integration_Project.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "StandardUsers");
+            }
+            else
+            {
+                return View();
+            }            
         }
 
         public IActionResult About()
