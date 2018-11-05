@@ -10,28 +10,23 @@ using Integration_Project.Models;
 
 namespace Integration_Project.Controllers
 {
-    public class VenuesController : Controller
+    public class StandardUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public VenuesController(ApplicationDbContext context)
+        public StandardUsersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-
-
-
-
-
-        // GET: Venues
+        // GET: StandardUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Venues.ToListAsync());
+            var user = await _context.StandardUsers.Where(u => u.ApplicationUser == User.Identity).SingleAsync();
+            return View(user);
         }
 
-        // GET: Venues/Details/5
+        // GET: StandardUsers/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -39,40 +34,42 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            var venue = await _context.Venues
+            var standardUser = await _context.StandardUsers
+                .Include(s => s.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (venue == null)
+            if (standardUser == null)
             {
                 return NotFound();
             }
 
-            return View(venue);
+            return View(standardUser);
         }
 
-        // GET: Venues/Create
+        // GET: StandardUsers/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
-        // POST: Venues/Create
+        // POST: StandardUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,Description,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,ApplicationUserId,Bio,FirstName,LastName,Email,City,State,ZipCode")] StandardUser standardUser)
         {
             if (ModelState.IsValid)
             {
-                venue.CreationDate = DateTime.Now;
-                _context.Add(venue);
+                _context.Add(standardUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", standardUser.ApplicationUserId);
+            return View(standardUser);
         }
 
-        // GET: Venues/Edit/5
+        // GET: StandardUsers/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -80,22 +77,23 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue == null)
+            var standardUser = await _context.StandardUsers.FindAsync(id);
+            if (standardUser == null)
             {
                 return NotFound();
             }
-            return View(venue);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", standardUser.ApplicationUserId);
+            return View(standardUser);
         }
 
-        // POST: Venues/Edit/5
+        // POST: StandardUsers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,ApplicationUserId,Bio,FirstName,LastName,Email,City,State,ZipCode")] StandardUser standardUser)
         {
-            if (id != venue.Id)
+            if (id != standardUser.Id)
             {
                 return NotFound();
             }
@@ -104,12 +102,12 @@ namespace Integration_Project.Controllers
             {
                 try
                 {
-                    _context.Update(venue);
+                    _context.Update(standardUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VenueExists(venue.Id))
+                    if (!StandardUserExists(standardUser.Id))
                     {
                         return NotFound();
                     }
@@ -120,10 +118,11 @@ namespace Integration_Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", standardUser.ApplicationUserId);
+            return View(standardUser);
         }
 
-        // GET: Venues/Delete/5
+        // GET: StandardUsers/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -131,30 +130,31 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            var venue = await _context.Venues
+            var standardUser = await _context.StandardUsers
+                .Include(s => s.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (venue == null)
+            if (standardUser == null)
             {
                 return NotFound();
             }
 
-            return View(venue);
+            return View(standardUser);
         }
 
-        // POST: Venues/Delete/5
+        // POST: StandardUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var venue = await _context.Venues.FindAsync(id);
-            _context.Venues.Remove(venue);
+            var standardUser = await _context.StandardUsers.FindAsync(id);
+            _context.StandardUsers.Remove(standardUser);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VenueExists(string id)
+        private bool StandardUserExists(string id)
         {
-            return _context.Venues.Any(e => e.Id == id);
+            return _context.StandardUsers.Any(e => e.Id == id);
         }
     }
 }
