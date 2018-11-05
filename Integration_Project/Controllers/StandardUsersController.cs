@@ -24,8 +24,13 @@ namespace Integration_Project.Controllers
         // GET: StandardUsers
         public async Task<IActionResult> Index()
         {
-            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            System.Security.Claims.ClaimsPrincipal currentUser = User; //dont need this
+            //User.Identity.GetUserId();
             var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUser.Identity.GetUserId()).SingleAsync();
+            if (standardUser.FirstName == null || standardUser.LastName == null)
+            {
+                return RedirectToAction("Edit", "StandardUsers", new { id = standardUser.Id });
+            }
             return View(standardUser);
         }
 
