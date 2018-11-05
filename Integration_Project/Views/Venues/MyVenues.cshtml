@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Integration_Project.Models.Venue>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "MyVenues";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>MyVenues</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -20,13 +20,10 @@
                 @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.Latitude)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zipcode)
+                @Html.DisplayNameFor(model => model.Longitude)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -53,13 +50,10 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City)
+                @Html.DisplayFor(modelItem => item.Latitude)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Zipcode)
+                @Html.DisplayFor(modelItem => item.Longitude)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -71,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.IsPrivate)
             </td>
             <td>
-                <a href="http://www.@item.WebsiteUrl">@item.WebsiteUrl</a>
+                @Html.DisplayFor(modelItem => item.WebsiteUrl)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
