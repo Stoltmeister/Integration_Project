@@ -5,18 +5,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Venues</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@{ 
-    foreach (Venue venue in Model)
-    {
-        @Html.Partial("VenueSummary", venue)
-    }
-}
 <div class="row">
+    @{
+        foreach (Venue venue in Model)
+        {
+            @Html.Partial("VenueSummary", venue)
+        }
+    }
+</div>
+
+<div class="row">
+    </br></br>
+    <h3>This table should be removed in the final product.</h3>
     <table class="table">
         <thead>
             <tr>
