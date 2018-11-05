@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Integration_Project.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,5 +13,11 @@ namespace Integration_Project.Data
             : base(options)
         {
         }
+
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Interest> Interests { get; set; }
+        public DbSet<Venue> Venues { get; set; }
+
+
     }
 }
