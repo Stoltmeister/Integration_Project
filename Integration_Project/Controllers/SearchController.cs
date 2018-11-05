@@ -7,74 +7,80 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Integration_Project.Data;
 using Integration_Project.Models;
-using Integration_Project.Assets;
+using Korzh.EasyQuery.Linq;
 
 namespace Integration_Project.Controllers
 {
-    public class VenuesController : Controller
+    public class SearchController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public VenuesController(ApplicationDbContext context)
+        public SearchController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-
-        
-
-
-        // GET: Venues
+        // GET: Search
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Venues.ToListAsync());
+            var Model = new SearchViewModel();
+            
+            return View(await _context.Interests.ToListAsync());
         }
 
-        // GET: Venues/Details/5
+        [HttpPost]
+        public IActionResult Index(List<Interest> interests, string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                interests = _context.Interests.FullTextSearchQuery(text).ToList();
+            }
+            return View(interests);
+        }
+
+        // GET: Search/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            ViewBag.googleMapsKey = ApiKeys.googleMapsKey;
             if (id == null)
             {
                 return NotFound();
             }
 
-            var venue = await _context.Venues
+            var interest = await _context.Interests
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (venue == null)
+            if (interest == null)
             {
                 return NotFound();
             }
 
-            return View(venue);
+            return View(interest);
         }
 
-        // GET: Venues/Create
+        
+
+        // GET: Search/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Venues/Create
+        // POST: Search/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,Description,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Verified,CreationDate")] Interest interest)
         {
             if (ModelState.IsValid)
             {
-                venue.CreationDate = DateTime.Now;
-                venue.UpdateLatitudeAndLongitude();
-                _context.Add(venue);
+                _context.Add(interest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            return View(interest);
         }
 
-        // GET: Venues/Edit/5
+        // GET: Search/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -82,22 +88,22 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue == null)
+            var interest = await _context.Interests.FindAsync(id);
+            if (interest == null)
             {
                 return NotFound();
             }
-            return View(venue);
+            return View(interest);
         }
 
-        // POST: Venues/Edit/5
+        // POST: Search/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Verified,CreationDate")] Interest interest)
         {
-            if (id != venue.Id)
+            if (id != interest.Id)
             {
                 return NotFound();
             }
@@ -106,13 +112,12 @@ namespace Integration_Project.Controllers
             {
                 try
                 {
-                    venue.UpdateLatitudeAndLongitude();
-                    _context.Update(venue);
+                    _context.Update(interest);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VenueExists(venue.Id))
+                    if (!InterestExists(interest.Id))
                     {
                         return NotFound();
                     }
@@ -123,10 +128,10 @@ namespace Integration_Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            return View(interest);
         }
 
-        // GET: Venues/Delete/5
+        // GET: Search/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -134,30 +139,30 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            var venue = await _context.Venues
+            var interest = await _context.Interests
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (venue == null)
+            if (interest == null)
             {
                 return NotFound();
             }
 
-            return View(venue);
+            return View(interest);
         }
 
-        // POST: Venues/Delete/5
+        // POST: Search/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var venue = await _context.Venues.FindAsync(id);
-            _context.Venues.Remove(venue);
+            var interest = await _context.Interests.FindAsync(id);
+            _context.Interests.Remove(interest);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VenueExists(string id)
+        private bool InterestExists(string id)
         {
-            return _context.Venues.Any(e => e.Id == id);
+            return _context.Interests.Any(e => e.Id == id);
         }
     }
 }

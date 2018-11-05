@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181105175129_update work")]
+    partial class updatework
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,24 +55,6 @@ namespace Integration_Project.Data.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("EventId");
-
-                    b.Property<string>("InterestId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("InterestId");
-
-                    b.ToTable("EventInterests");
-                });
-
             modelBuilder.Entity("Integration_Project.Models.Interest", b =>
                 {
                     b.Property<string>("Id")
@@ -87,34 +71,6 @@ namespace Integration_Project.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Interests");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<string>("Bio");
-
-                    b.Property<string>("City");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("State");
-
-                    b.Property<int>("ZipCode");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("StandardUsers");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.Venue", b =>
@@ -197,9 +153,6 @@ namespace Integration_Project.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -239,8 +192,6 @@ namespace Integration_Project.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -307,34 +258,6 @@ namespace Integration_Project.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-
-                    b.ToTable("ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Event", "Events")
-                        .WithMany()
-                        .HasForeignKey("EventId");
-
-                    b.HasOne("Integration_Project.Models.Interest", "Interests")
-                        .WithMany()
-                        .HasForeignKey("InterestId");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
-                {
-                    b.HasOne("Integration_Project.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

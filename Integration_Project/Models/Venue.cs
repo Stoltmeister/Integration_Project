@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Integration_Project.Assets;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,17 @@ namespace Integration_Project.Models
         public float Longitude { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
+        [Display(Name = "Private?")]
         public bool IsPrivate { get; set; }
         public string WebsiteUrl { get; set; }
+
+        public void UpdateLatitudeAndLongitude()
+        {
+            float[] latLng = Geocode.GetLatitudeAndLongitude(Address, ApiKeys.geocodeKey);
+            Latitude = latLng[0];
+            Longitude = latLng[1];
+
+            return;
+        }
     }
 }
