@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Integration_Project.Models
 {
-    public class Events
+    public class Event
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int VenueId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -17,5 +17,8 @@ namespace Integration_Project.Models
         public bool IsWeatherDependent { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public int MinParticipants { get; set; }
+        public int MaxParticipants { get; set; }
+        public bool CanInviteParticipants { get; set; }
     }
 }
