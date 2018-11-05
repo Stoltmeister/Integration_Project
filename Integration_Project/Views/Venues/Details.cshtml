@@ -10,7 +10,7 @@
 <div>
     <h4>Venue</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="col-md-6">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -59,3 +59,53 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+<style>
+    map{
+        height:400px;
+        width:100%;
+    }
+</style>
+<div class="col-md-6">
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            var location = {
+                lat: @Model.Latitude,
+                lng: @Model.Longitude
+            }
+
+            var options = {
+                zoom: 13,
+                center: location
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+            addMarker(location.lat, location.lng, @Model.Name, @Model.Address, map);
+        }
+
+        function addMarker(latitude, longitude, title, description, map) {
+            var latLng = new google.maps.LatLng(latitude, longitude);
+            var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                title: title,
+                map: map,
+                draggable: false
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+</div>
+
+

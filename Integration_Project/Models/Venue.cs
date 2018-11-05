@@ -17,6 +17,7 @@ namespace Integration_Project.Models
         public float Longitude { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
+        [Display(Name = "Private?")]
         public bool IsPrivate { get; set; }
         public string WebsiteUrl { get; set; }
     }

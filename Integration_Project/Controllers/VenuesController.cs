@@ -19,6 +19,12 @@ namespace Integration_Project.Controllers
             _context = context;
         }
 
+
+
+
+
+
+
         // GET: Venues
         public async Task<IActionResult> Index()
         {
@@ -54,10 +60,11 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Latitude,Longitude,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,Description,IsPrivate,WebsiteUrl")] Venue venue)
         {
             if (ModelState.IsValid)
             {
+                venue.CreationDate = DateTime.Now;
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +93,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Latitude,Longitude,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
         {
             if (id != venue.Id)
             {
