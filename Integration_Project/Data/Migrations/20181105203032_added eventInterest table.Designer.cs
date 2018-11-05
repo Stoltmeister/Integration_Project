@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181105203032_added eventInterest table")]
+    partial class addedeventInteresttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,8 +126,6 @@ namespace Integration_Project.Data.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("City");
-
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("Description");
@@ -138,11 +138,7 @@ namespace Integration_Project.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("State");
-
                     b.Property<string>("WebsiteUrl");
-
-                    b.Property<int>("Zipcode");
 
                     b.HasKey("Id");
 
