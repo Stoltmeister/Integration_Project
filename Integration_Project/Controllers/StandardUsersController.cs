@@ -24,9 +24,7 @@ namespace Integration_Project.Controllers
         // GET: StandardUsers
         public async Task<IActionResult> Index()
         {
-            System.Security.Claims.ClaimsPrincipal currentUser = User; //dont need this
-            //User.Identity.GetUserId();
-            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUser.Identity.GetUserId()).SingleAsync();
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
             if (standardUser.FirstName == null || standardUser.LastName == null)
             {
                 return RedirectToAction("Edit", "StandardUsers", new { id = standardUser.Id });
@@ -53,26 +51,43 @@ namespace Integration_Project.Controllers
             return View(standardUser);
         }
 
-        //public async Task<IActionResult> InterestSelection(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var standardUser = await _context.StandardUsers
-        //        .Include(s => s.ApplicationUser)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (standardUser == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    UserInterestsViewModel userInterests = new UserInterestsViewModel();
-        //    userInterests.StandardUser = standardUser;
-        //    userInterests.Interests = await _context.Interests.ToListAsync();
-        //    // userInterests.AddedInterests = await _context. ***Check For Combined Interests
-        //    // need to plan how interests are captured to be added to current users' interests
-        //    return View(standardUser);
-        //}
+        public async Task<IActionResult> InterestSelection(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var standardUser = await _context.StandardUsers
+                .Include(s => s.ApplicationUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (standardUser == null)
+            {
+                return NotFound();
+            }
+            UserInterestsViewModel userInterests = new UserInterestsViewModel();
+            userInterests.StandardUser = standardUser;
+            userInterests.Interests = await _context.Interests.ToListAsync();
+            // Correct Code: userInterests.AddedInterests = await _context.UserInterests.Where(Userid?).ToListAsnc();
+            userInterests.AddedInterests = userInterests.Interests; // CHANGE TO ABOVE LINE DATABASE IS UPDATED
+            
+            return View(userInterests);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddInterest(int id)
+        {
+            // Add interest to userinterest junction table
+            return View("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveInterest(int id)
+        {
+            // Remove interest from userinterest junction table
+            return View("Index");
+        }
 
 
         // GET: StandardUsers/Create
