@@ -2,7 +2,20 @@
 
 <div class="col-sm-4 col-lg-4 col-md-4">
     <div class="thumbnail">
-        <img src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg" alt="" />
+        @{ 
+            var imgSrc = "Hello";
+            if(Model.ProfilePicture != null)
+            {
+                var base64 = Convert.ToBase64String(Model.ProfilePicture);
+                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+            else
+            {
+                imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg";
+            }
+
+        }
+        <img src=@imgSrc alt=<img src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg"/>
         <div class="caption">
             <h4><a asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></h4>
             <p>@Model.Description</p>
