@@ -49,6 +49,10 @@
     </tbody>
 </table>
 <br />
+<p>If you don't see the interest you want to add you can add it below.</p>
+@Html.ActionLink("Create New Interest", "CreateInterest")
+<br />
+<br />
 @if (Model.AddedInterests.Count > 0)
 {
     <h4>Added Interests</h4>
@@ -72,7 +76,7 @@
         </thead>
         <tbody>
 
-            @for (int i = 0; i < Model.Interests.Count; i++)
+            @for (int i = 0; i < Model.AddedInterests.Count; i++)
             {
                 <tr>
                     <td>
@@ -88,7 +92,7 @@
                         @Html.DisplayFor(model => model.AddedInterests[i].CreationDate)
                     </td>
                     <td>
-                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { id = Model.Interests[i].Id })
+                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { id = Model.AddedInterests[i].Id })
                     </td>
                 </tr>
             }           
