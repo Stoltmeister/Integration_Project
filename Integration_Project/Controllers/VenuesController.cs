@@ -26,12 +26,59 @@ namespace Integration_Project.Controllers
 
 
 
+        public async Task<IActionResult> InterestSelection(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var currentVenue = await _context.Venues.FirstOrDefaultAsync(v => v.Id == id);
+            if (currentVenue == null)
+            {
+                return NotFound();
+            }
+            VenueInterestsViewModel venueInterests = new VenueInterestsViewModel();
+            List<Interest> likedInterests = new List<Interest>();
+            venueInterests.CurrentVenue = currentVenue;
+            var interestEntries = await _context.VenueInterests.Where(i => i.VenueID == currentVenue.Id).ToListAsync(); //try catch?
+            var interests = await _context.Interests.ToListAsync();
+            foreach (VenueInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interest);
+                interests.Remove(i.Interest);
+            }
+            venueInterests.AddedInterests = likedInterests;
+            venueInterests.Interests = interests;
+
+            return View(venueInterests);
+        }
 
         //AddInterest
-        public async Task<IActionResult> AddInterest()
+        public async Task<IActionResult> AddInterest(string id)
         {
+            // Add interest to userinterest junction table
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+            UserInterest userInterest = new UserInterest();
+            userInterest.InterestId = id;
+            userInterest.StandardUserId = standardUser.Id;
+            await _context.UserInterests.AddAsync(userInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+        }
 
-            return View();
+        //RemoveInterest
+        public async Task<IActionResult> RemoveInterest(string id)
+        {
+            // Add interest to userinterest junction table
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+            //UserInterest userInterest = new UserInterest();
+            //userInterest.InterestId = id;
+            //userInterest.StandardUserId = standardUser.Id;
+            var currentUserInterests = await _context.UserInterests.Where(u => u.StandardUserId == standardUser.Id).ToListAsync();
+            UserInterest deletingInterest = currentUserInterests.Where(u => u.InterestId == id).SingleOrDefault();
+            _context.UserInterests.Remove(deletingInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
         }
 
         // GET: Venues
