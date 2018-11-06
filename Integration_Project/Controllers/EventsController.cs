@@ -46,7 +46,20 @@ namespace Integration_Project.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            return View();
+            Event Event = new Event();
+            var venues = _context.Venues.ToList();
+            var interests = _context.Interests.ToList();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            foreach(var item in venues)
+            {
+                listItems.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id
+                });
+            }
+            EventViewModel VM = new EventViewModel() { Event = Event, Interests = interests, SelectList = listItems };
+            return View(VM);
         }
 
         // POST: Events/Create

@@ -10,6 +10,7 @@ namespace Integration_Project.Models
     {
         [Key]
         public string Id { get; set; }
+        public string Name { get; set; }
         public int VenueId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
