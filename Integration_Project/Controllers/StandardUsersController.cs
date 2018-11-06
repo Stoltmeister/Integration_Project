@@ -66,14 +66,16 @@ namespace Integration_Project.Controllers
             }
             UserInterestsViewModel userInterests = new UserInterestsViewModel();
             List<Interest> likedInterests = new List<Interest>();
-            userInterests.StandardUser = standardUser;
-            userInterests.Interests = await _context.Interests.ToListAsync();
+            userInterests.StandardUser = standardUser;            
             var interestEntries = await _context.UserInterests.Where(i => i.StandardUserId == standardUser.Id).ToListAsync(); //try catch?
-            foreach(UserInterest i in interestEntries)
+            var interests = await _context.Interests.ToListAsync();
+            foreach (UserInterest i in interestEntries)
             {
                 likedInterests.Add(i.Interest);
+                interests.Remove(i.Interest);
             }
             userInterests.AddedInterests = likedInterests;
+            userInterests.Interests = interests;
 
             return View(userInterests);
         }
@@ -104,6 +106,26 @@ namespace Integration_Project.Controllers
             return RedirectToAction("InterestSelection", new { id = standardUser.Id });
         }
 
+        public IActionResult CreateInterest()
+        {
+            Interest newInterest = new Interest();
+            return View(newInterest);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateInterest([Bind("Name,Description")] Interest newInterest)
+        {
+            if (ModelState.IsValid)
+            {
+                newInterest.CreationDate = DateTime.Today;
+                newInterest.Verified = false;
+                await _context.AddAsync(newInterest);
+                await _context.SaveChangesAsync();
+                var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+                return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+            }
+            return View(newInterest);
+        }
 
         // GET: StandardUsers/Create
         public IActionResult Create()

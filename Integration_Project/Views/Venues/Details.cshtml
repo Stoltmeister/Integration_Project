@@ -10,74 +10,78 @@
 <div>
     <h4>@Model.Name</h4>
     <hr />
-    <div class="col-md-6">
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.State)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.State)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Zipcode)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Zipcode)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsPrivate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsPrivate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.WebsiteUrl)
-        </dt>
-        <dd>
-            <a href="http://www.@Model.WebsiteUrl">@Model.WebsiteUrl</a>
-        </dd>
-        </br></br>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
+    <div class="row">
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.State)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.State)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Zipcode)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Zipcode)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreationDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsPrivate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsPrivate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.WebsiteUrl)
+            </dt>
+            <dd>
+                <a href="http://www.@Model.WebsiteUrl">@Model.WebsiteUrl</a>
+            </dd>
+            <dt>Intrests</dt>
+            @*@foreach(Interest interest in logicGoesHere)
+            {
+                <dd>interest, maybe a link or something.</dd>
+            }*@
+            <a asp-action="InterestSelection">Add or Remove Interests</a>
+            </br></br>
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                <a asp-action="Index">Back to List</a>
+            </div>
         </div>
-    </div>
-</div>
 
-
-
-<style>
-    #map{
-        height:400px;
-        width:100%;
-    }
-</style>
-<div class="col-md-6">
-    <div id="map"></div>
-    <script>
+        <div class="col-md-6">
+            <style>
+                #map {
+                    height: 400px;
+                    width: 100%;
+                }
+            </style>
+            <div id="map"></div>
+            <script>
         function initMap() {
 
             var location = {
@@ -114,9 +118,29 @@
                 infowindow.open(map, marker);
             });
         }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-            async defer><</script>
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
+                    async defer><</script>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6"></div>
+        <div class="col-lg-6">
+            @{ 
+                string twitterLink = "https://twitter.com/" + Model.TwitterHandle + "?ref_src=twsrc%5Etfw";
+            }
+            <a class="twitter-timeline" data-height="600" href="@twitterLink"></a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            @*How to generate the href attribute from the users twitter url?*@
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
+
 
 

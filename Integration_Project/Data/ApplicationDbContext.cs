@@ -20,5 +20,6 @@ namespace Integration_Project.Data
         public DbSet<StandardUser> StandardUsers { get; set; }
         public DbSet<EventInterest> EventInterests { get; set; }     
         public DbSet<UserInterest> UserInterests { get; set; }
+        public DbSet<VenueInterest> VenueInterests { get; set; }
     }
 }

@@ -29,6 +29,8 @@ namespace Integration_Project.Models
         [Display(Name = "Website")]
         public string WebsiteUrl { get; set; }
         public byte[] ProfilePicture { get; set; }
+        [Display(Name="Twitter Handle")]
+        public string TwitterHandle { get; set; }
 
         public void UpdateLatitudeAndLongitude()
         {
