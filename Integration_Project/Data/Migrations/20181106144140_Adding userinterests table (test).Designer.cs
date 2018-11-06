@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181106144140_Adding userinterests table (test)")]
+    partial class Addinguserintereststabletest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,13 +125,15 @@ namespace Integration_Project.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("InterestId");
+                    b.Property<int>("InterestId");
+
+                    b.Property<string>("InterestId1");
 
                     b.Property<string>("StandardUserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InterestId");
+                    b.HasIndex("InterestId1");
 
                     b.HasIndex("StandardUserId");
 
@@ -366,7 +370,7 @@ namespace Integration_Project.Data.Migrations
                 {
                     b.HasOne("Integration_Project.Models.Interest", "Interest")
                         .WithMany()
-                        .HasForeignKey("InterestId");
+                        .HasForeignKey("InterestId1");
 
                     b.HasOne("Integration_Project.Models.StandardUser", "StandardUser")
                         .WithMany()
