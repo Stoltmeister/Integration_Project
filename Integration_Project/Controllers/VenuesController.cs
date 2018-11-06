@@ -26,8 +26,8 @@ namespace Integration_Project.Controllers
 
 
 
-        
 
+        //AddInterest
 
         // GET: Venues
         public async Task<IActionResult> Index()
@@ -77,7 +77,7 @@ namespace Integration_Project.Controllers
                 venue.UpdateLatitudeAndLongitude();
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", _context.Venues.Where(v => v.Id == venue.Id).Single());
             }
             return View(venue);
         }

@@ -60,6 +60,12 @@
             <dd>
                 <a href="http://www.@Model.WebsiteUrl">@Model.WebsiteUrl</a>
             </dd>
+            <dt>Intrests</dt>
+            @*@foreach(Interest interest in logicGoesHere)
+            {
+                <dd>interest, maybe a link or something.</dd>
+            }*@
+            <a asp-action="AddInterest">Add or Remove Interests</a>
             </br></br>
             <div>
                 <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
