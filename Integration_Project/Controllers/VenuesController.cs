@@ -65,10 +65,13 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,ProfilePicture")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,TwitterHandle,ProfilePicture")] Venue venue, IFormFile picture)
         {
+            // Picture does not get saved
+            venue = await StorePicture(venue, picture);
             if (ModelState.IsValid)
             {
+                
                 venue.CreatedBy = User.Identity.GetUserId();
                 venue.CreationDate = DateTime.Now;
                 venue.UpdateLatitudeAndLongitude();
@@ -94,27 +97,52 @@ namespace Integration_Project.Controllers
             }
             return View(venue);
         }
+        private async Task<Venue> StorePicture(Venue _venue, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    _venue.ProfilePicture = stream.ToArray();
+                }
+            }
 
+            // Database gets upset
+            //else
+            //{
+            //    try
+            //    {
+            //        var pictureInDatabase = _context.Venues.Where(v => v.Id == _venue.Id).Single().ProfilePicture;
+            //        if (pictureInDatabase != null)
+            //        {
+            //            _venue.ProfilePicture = pictureInDatabase;
+            //        }
+            //    }
+            //    catch (InvalidOperationException)
+            //    {
+            //        Either no user in database(create), or 2 users have the same primary key.
+            //    }
+            //}
+
+            return _venue;
+        }
         // POST: Venues/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue, IFormFile picture)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl,TwitterHandle,ProfilePicture")] Venue venue, IFormFile picture)
         {
             if (id != venue.Id)
             {
                 return NotFound();
             }
-            if(picture != null )
-            {
-                using(var stream = new MemoryStream())
-                {
-                    await picture.CopyToAsync(stream);
-                    venue.ProfilePicture = stream.ToArray();
-                }
-            }
-            
+            // If the user does not upload an image, the image will be the default image, even if the venue already had an image
+            venue = await StorePicture(venue, picture);
+
+
+
 
             if (ModelState.IsValid)
             {
