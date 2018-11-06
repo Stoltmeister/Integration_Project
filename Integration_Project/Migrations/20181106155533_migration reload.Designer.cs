@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Integration_Project.Data.Migrations
+namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181105172148_database setup")]
-    partial class databasesetup
+    [Migration("20181106155533_migration reload")]
+    partial class migrationreload
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,24 @@ namespace Integration_Project.Data.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EventId");
+
+                    b.Property<string>("InterestId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("InterestId");
+
+                    b.ToTable("EventInterests");
+                });
+
             modelBuilder.Entity("Integration_Project.Models.Interest", b =>
                 {
                     b.Property<string>("Id")
@@ -73,10 +91,63 @@ namespace Integration_Project.Data.Migrations
                     b.ToTable("Interests");
                 });
 
+            modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Bio");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("State");
+
+                    b.Property<int>("ZipCode");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("StandardUsers");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.UserInterest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("InterestId");
+
+                    b.Property<string>("StandardUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InterestId");
+
+                    b.HasIndex("StandardUserId");
+
+                    b.ToTable("UserInterests");
+                });
+
             modelBuilder.Entity("Integration_Project.Models.Venue", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("CreationDate");
 
@@ -90,9 +161,17 @@ namespace Integration_Project.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<byte[]>("ProfilePicture");
+
+                    b.Property<string>("State");
+
                     b.Property<string>("WebsiteUrl");
 
+                    b.Property<int>("Zipcode");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Venues");
                 });
@@ -151,6 +230,9 @@ namespace Integration_Project.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -190,6 +272,8 @@ namespace Integration_Project.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -256,6 +340,52 @@ namespace Integration_Project.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+
+                    b.ToTable("ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
+                {
+                    b.HasOne("Integration_Project.Models.Event", "Events")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("Integration_Project.Models.Interest", "Interests")
+                        .WithMany()
+                        .HasForeignKey("InterestId");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
+                {
+                    b.HasOne("Integration_Project.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.UserInterest", b =>
+                {
+                    b.HasOne("Integration_Project.Models.Interest", "Interest")
+                        .WithMany()
+                        .HasForeignKey("InterestId");
+
+                    b.HasOne("Integration_Project.Models.StandardUser", "StandardUser")
+                        .WithMany()
+                        .HasForeignKey("StandardUserId");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.Venue", b =>
+                {
+                    b.HasOne("Integration_Project.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
