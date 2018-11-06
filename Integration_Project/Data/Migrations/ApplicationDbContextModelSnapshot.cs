@@ -15,7 +15,7 @@ namespace Integration_Project.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -115,6 +115,25 @@ namespace Integration_Project.Data.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("StandardUsers");
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.UserInterest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("InterestId");
+
+                    b.Property<string>("StandardUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InterestId");
+
+                    b.HasIndex("StandardUserId");
+
+                    b.ToTable("UserInterests");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.Venue", b =>
@@ -348,12 +367,22 @@ namespace Integration_Project.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
                 });
-
+            
             modelBuilder.Entity("Integration_Project.Models.Venue", b =>
                 {
                     b.HasOne("Integration_Project.Models.ApplicationUser", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatedBy");
+                });
+            modelBuilder.Entity("Integration_Project.Models.UserInterest", b =>
+                {
+                    b.HasOne("Integration_Project.Models.Interest", "Interest")
+                        .WithMany()
+                        .HasForeignKey("InterestId");
+
+                    b.HasOne("Integration_Project.Models.StandardUser", "StandardUser")
+                        .WithMany()
+                        .HasForeignKey("StandardUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
