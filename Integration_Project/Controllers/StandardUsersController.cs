@@ -65,30 +65,67 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
             UserInterestsViewModel userInterests = new UserInterestsViewModel();
-            userInterests.StandardUser = standardUser;
-            userInterests.Interests = await _context.Interests.ToListAsync();
-            // Correct Code: userInterests.AddedInterests = await _context.UserInterests.Where(Userid?).ToListAsnc();
-            userInterests.AddedInterests = userInterests.Interests; // CHANGE TO ABOVE LINE DATABASE IS UPDATED
-            
+            List<Interest> likedInterests = new List<Interest>();
+            userInterests.StandardUser = standardUser;            
+            var interestEntries = await _context.UserInterests.Where(i => i.StandardUserId == standardUser.Id).ToListAsync(); //try catch?
+            var interests = await _context.Interests.ToListAsync();
+            foreach (UserInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interest);
+                interests.Remove(i.Interest);
+            }
+            userInterests.AddedInterests = likedInterests;
+            userInterests.Interests = interests;
+
             return View(userInterests);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddInterest(int id)
+        public async Task<IActionResult> AddInterest(string id)
         {
             // Add interest to userinterest junction table
-            return View("Index");
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+            UserInterest userInterest = new UserInterest();
+            userInterest.InterestId = id;
+            userInterest.StandardUserId = standardUser.Id;
+            await _context.UserInterests.AddAsync(userInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+        }
+        
+        public async Task<IActionResult> RemoveInterest(string id)
+        {
+            // Add interest to userinterest junction table
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+            //UserInterest userInterest = new UserInterest();
+            //userInterest.InterestId = id;
+            //userInterest.StandardUserId = standardUser.Id;
+            var currentUserInterests = await _context.UserInterests.Where(u => u.StandardUserId == standardUser.Id).ToListAsync();
+            UserInterest deletingInterest = currentUserInterests.Where(u => u.InterestId == id).SingleOrDefault();
+            _context.UserInterests.Remove(deletingInterest); 
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
         }
 
+        public IActionResult CreateInterest()
+        {
+            Interest newInterest = new Interest();
+            return View(newInterest);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveInterest(int id)
+        public async Task<IActionResult> CreateInterest([Bind("Name,Description")] Interest newInterest)
         {
-            // Remove interest from userinterest junction table
-            return View("Index");
+            if (ModelState.IsValid)
+            {
+                newInterest.CreationDate = DateTime.Today;
+                newInterest.Verified = false;
+                await _context.AddAsync(newInterest);
+                await _context.SaveChangesAsync();
+                var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+                return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+            }
+            return View(newInterest);
         }
-
 
         // GET: StandardUsers/Create
         public IActionResult Create()

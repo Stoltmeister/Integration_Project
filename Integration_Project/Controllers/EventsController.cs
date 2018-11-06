@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Integration_Project.Data;
 using Integration_Project.Models;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Integration_Project.Controllers
 {
@@ -46,7 +48,20 @@ namespace Integration_Project.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            return View();
+            Event Event = new Event();
+            var venues = _context.Venues.ToList();
+            var interests = _context.Interests.ToList();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            foreach(var item in venues)
+            {
+                listItems.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id
+                });
+            }
+            EventViewModel VM = new EventViewModel() { Event = Event, Interests = interests, SelectList = listItems };
+            return View(VM);
         }
 
         // POST: Events/Create
@@ -54,15 +69,33 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Create(IFormCollection form, [Bind("Id,Name,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                string vId = form["Event.VenueId"];
+                @event.VenueId = vId;
+                string serializedEvent = JsonConvert.SerializeObject(@event);
+                return RedirectToAction("ConfirmCreate", new {Event = serializedEvent});
             }
             return View(@event);
+        }
+
+        public ActionResult ConfirmCreate(string Event)
+        {
+            Event eve = JsonConvert.DeserializeObject<Event>(Event);
+            TempData["EventRedirect"] = JsonConvert.SerializeObject(eve);
+            return View(eve);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmCreate()
+        {
+            string eventString = (string)TempData["EventRedirect"];
+            Event eve = JsonConvert.DeserializeObject<Event>(eventString);
+            _context.Add(eve);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = eve.Id});
         }
 
         // GET: Events/Edit/5

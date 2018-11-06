@@ -1,4 +1,4 @@
-﻿@model Integration_Project.Models.UserInterestsViewModel
+﻿@model VenueInterestsViewModel
 
 @{
     ViewData["Title"] = "Interests";
@@ -95,7 +95,7 @@
                         @Html.ActionLink("Remove Interest", "RemoveInterest", new { id = Model.AddedInterests[i].Id })
                     </td>
                 </tr>
-            }           
+            }
         </tbody>
     </table>
 }

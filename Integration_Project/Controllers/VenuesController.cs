@@ -26,8 +26,60 @@ namespace Integration_Project.Controllers
 
 
 
-        
+        public async Task<IActionResult> InterestSelection(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var currentVenue = await _context.Venues.FirstOrDefaultAsync(v => v.Id == id);
+            if (currentVenue == null)
+            {
+                return NotFound();
+            }
+            VenueInterestsViewModel venueInterests = new VenueInterestsViewModel();
+            List<Interest> likedInterests = new List<Interest>();
+            venueInterests.CurrentVenue = currentVenue;
+            var interestEntries = await _context.VenueInterests.Where(i => i.VenueID == currentVenue.Id).ToListAsync(); //try catch?
+            var interests = await _context.Interests.ToListAsync();
+            foreach (VenueInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interest);
+                interests.Remove(i.Interest);
+            }
+            venueInterests.AddedInterests = likedInterests;
+            venueInterests.Interests = interests;
 
+            return View(venueInterests);
+        }
+
+        //AddInterest
+        public async Task<IActionResult> AddInterest(string id)
+        {
+            // Add interest to userinterest junction table
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+            UserInterest userInterest = new UserInterest();
+            userInterest.InterestId = id;
+            userInterest.StandardUserId = standardUser.Id;
+            await _context.UserInterests.AddAsync(userInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+        }
+
+        //RemoveInterest
+        public async Task<IActionResult> RemoveInterest(string id)
+        {
+            // Add interest to userinterest junction table
+            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
+            //UserInterest userInterest = new UserInterest();
+            //userInterest.InterestId = id;
+            //userInterest.StandardUserId = standardUser.Id;
+            var currentUserInterests = await _context.UserInterests.Where(u => u.StandardUserId == standardUser.Id).ToListAsync();
+            UserInterest deletingInterest = currentUserInterests.Where(u => u.InterestId == id).SingleOrDefault();
+            _context.UserInterests.Remove(deletingInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+        }
 
         // GET: Venues
         public async Task<IActionResult> Index()
@@ -65,16 +117,19 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,ProfilePicture")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,TwitterHandle,ProfilePicture")] Venue venue, IFormFile picture)
         {
+            // Picture does not get saved
+            venue = await StorePicture(venue, picture);
             if (ModelState.IsValid)
             {
+                
                 venue.CreatedBy = User.Identity.GetUserId();
                 venue.CreationDate = DateTime.Now;
                 venue.UpdateLatitudeAndLongitude();
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", _context.Venues.Where(v => v.Id == venue.Id).Single());
             }
             return View(venue);
         }
@@ -94,27 +149,52 @@ namespace Integration_Project.Controllers
             }
             return View(venue);
         }
+        private async Task<Venue> StorePicture(Venue _venue, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    _venue.ProfilePicture = stream.ToArray();
+                }
+            }
 
+            // Database gets upset
+            //else
+            //{
+            //    try
+            //    {
+            //        var pictureInDatabase = _context.Venues.Where(v => v.Id == _venue.Id).Single().ProfilePicture;
+            //        if (pictureInDatabase != null)
+            //        {
+            //            _venue.ProfilePicture = pictureInDatabase;
+            //        }
+            //    }
+            //    catch (InvalidOperationException)
+            //    {
+            //        Either no user in database(create), or 2 users have the same primary key.
+            //    }
+            //}
+
+            return _venue;
+        }
         // POST: Venues/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue, IFormFile picture)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl,TwitterHandle,ProfilePicture")] Venue venue, IFormFile picture)
         {
             if (id != venue.Id)
             {
                 return NotFound();
             }
-            if(picture != null )
-            {
-                using(var stream = new MemoryStream())
-                {
-                    await picture.CopyToAsync(stream);
-                    venue.ProfilePicture = stream.ToArray();
-                }
-            }
-            
+            // If the user does not upload an image, the image will be the default image, even if the venue already had an image
+            venue = await StorePicture(venue, picture);
+
+
+
 
             if (ModelState.IsValid)
             {

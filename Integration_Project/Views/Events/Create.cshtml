@@ -1,4 +1,4 @@
-﻿@model Integration_Project.Models.Event
+﻿@model Integration_Project.Models.EventViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,68 +13,72 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="VenueId" class="control-label"></label>
-                <input asp-for="VenueId" class="form-control" />
-                <span asp-validation-for="VenueId" class="text-danger"></span>
+                <label asp-for="Event.Name" class="control-label"></label>
+                <input asp-for="Event.Name" class="form-control" />
+                <span asp-validation-for="Event.Name" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+                <label asp-for="Event.StartDate" class="control-label"></label>
+                <input asp-for="Event.StartDate" class="form-control" />
+                <span asp-validation-for="Event.StartDate" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
+                <label asp-for="Event.EndDate" class="control-label"></label>
+                <input asp-for="Event.EndDate" class="form-control" />
+                <span asp-validation-for="Event.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Desciption" class="control-label"></label>
-                <input asp-for="Desciption" class="form-control" />
-                <span asp-validation-for="Desciption" class="text-danger"></span>
+                <label asp-for="Event.Desciption" class="control-label"></label>
+                <input asp-for="Event.Desciption" class="form-control" />
+                <span asp-validation-for="Event.Desciption" class="text-danger"></span>
+            </div>
+            <div class="form-group container">
+                <div class="row">
+                    <div name="venueId">
+                        Choose from pre-selected Venues<br />
+                        @Html.DropDownListFor(Model => Model.Event.VenueId, Model.SelectList, "--Select Venue--")
+                    </div>
+                    <br />
+                    <div>
+                        or @Html.ActionLink("Create a new Venue +", "Create", "Venues")
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="Premium" class="control-label"></label>
-                <input asp-for="Premium" class="form-control" />
-                <span asp-validation-for="Premium" class="text-danger"></span>
+                <label asp-for="Event.Premium" class="control-label"></label>
+                <input asp-for="Event.Premium" class="form-control" />
+                <span asp-validation-for="Event.Premium" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="IsPrivate" /> @Html.DisplayNameFor(model => model.IsPrivate)
+                        <input asp-for="Event.IsPrivate" /> @Html.DisplayNameFor(model => model.Event.IsPrivate)
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="IsWeatherDependent" /> @Html.DisplayNameFor(model => model.IsWeatherDependent)
+                        <input asp-for="Event.IsWeatherDependent" /> @Html.DisplayNameFor(model => model.Event.IsWeatherDependent)
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                <label asp-for="Event.MinParticipants" class="control-label"></label>
+                <input asp-for="Event.MinParticipants" class="form-control" />
+                <span asp-validation-for="Event.MinParticipants" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MinParticipants" class="control-label"></label>
-                <input asp-for="MinParticipants" class="form-control" />
-                <span asp-validation-for="MinParticipants" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxParticipants" class="control-label"></label>
-                <input asp-for="MaxParticipants" class="form-control" />
-                <span asp-validation-for="MaxParticipants" class="text-danger"></span>
+                <label asp-for="Event.MaxParticipants" class="control-label"></label>
+                <input asp-for="Event.MaxParticipants" class="form-control" />
+                <span asp-validation-for="Event.MaxParticipants" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="CanInviteParticipants" /> @Html.DisplayNameFor(model => model.CanInviteParticipants)
+                        <input asp-for="Event.CanInviteParticipants" /> @Html.DisplayNameFor(model => model.Event.CanInviteParticipants)
                     </label>
                 </div>
             </div>

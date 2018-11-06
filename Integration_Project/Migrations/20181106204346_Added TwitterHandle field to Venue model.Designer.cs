@@ -4,18 +4,20 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181106204346_Added TwitterHandle field to Venue model")]
+    partial class AddedTwitterHandlefieldtoVenuemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -42,17 +44,13 @@ namespace Integration_Project.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<string>("Name");
-
                     b.Property<int>("Premium");
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<string>("VenueId");
+                    b.Property<int>("VenueId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VenueId");
 
                     b.ToTable("Events");
                 });
@@ -178,25 +176,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.ToTable("Venues");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.VenueInterest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("InterestId");
-
-                    b.Property<string>("VenueID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InterestId");
-
-                    b.HasIndex("VenueID");
-
-                    b.ToTable("VenueInterests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -375,13 +354,6 @@ namespace Integration_Project.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("Integration_Project.Models.Event", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Venue", "Venues")
-                        .WithMany()
-                        .HasForeignKey("VenueId");
-                });
-
             modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
                 {
                     b.HasOne("Integration_Project.Models.Event", "Events")
@@ -416,17 +388,6 @@ namespace Integration_Project.Migrations
                     b.HasOne("Integration_Project.Models.ApplicationUser", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatedBy");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.VenueInterest", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Interest", "Interest")
-                        .WithMany()
-                        .HasForeignKey("InterestId");
-
-                    b.HasOne("Integration_Project.Models.Venue", "Venue")
-                        .WithMany()
-                        .HasForeignKey("VenueID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

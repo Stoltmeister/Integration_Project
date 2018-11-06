@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181106211314_VenueInterests table created")]
+    partial class VenueIntereststablecreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,11 +50,9 @@ namespace Integration_Project.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<string>("VenueId");
+                    b.Property<int>("VenueId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VenueId");
 
                     b.ToTable("Events");
                 });
@@ -373,13 +373,6 @@ namespace Integration_Project.Migrations
                     b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.Event", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Venue", "Venues")
-                        .WithMany()
-                        .HasForeignKey("VenueId");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
