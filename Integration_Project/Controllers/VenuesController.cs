@@ -9,6 +9,8 @@ using Integration_Project.Data;
 using Integration_Project.Models;
 using Integration_Project.Assets;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Integration_Project.Controllers
 {
@@ -62,7 +64,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,ProfilePicture")] Venue venue)
         {
             if (ModelState.IsValid)
             {
@@ -97,12 +99,21 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Address,City,State,Zipcode,Description,CreationDate,IsPrivate,WebsiteUrl")] Venue venue, IFormFile picture)
         {
             if (id != venue.Id)
             {
                 return NotFound();
             }
+            if(picture.Length > 0)
+            {
+                using(var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    venue.ProfilePicture = stream.ToArray();
+                }
+            }
+            
 
             if (ModelState.IsValid)
             {

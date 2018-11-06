@@ -28,6 +28,7 @@ namespace Integration_Project.Models
         public bool IsPrivate { get; set; }
         [Display(Name = "Website")]
         public string WebsiteUrl { get; set; }
+        public byte[] ProfilePicture { get; set; }
 
         public void UpdateLatitudeAndLongitude()
         {
