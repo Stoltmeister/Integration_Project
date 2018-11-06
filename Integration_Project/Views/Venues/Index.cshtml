@@ -7,9 +7,19 @@
 
 <h2>Venues</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole("Standard"))
+{
+    <p>
+        <a asp-action="Create">Add New</a>
+    </p>
+}
+else
+{
+    <p>
+        Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
+    </p>
+}
+    
 <div class="row">
     @{
         foreach (Venue venue in Model)

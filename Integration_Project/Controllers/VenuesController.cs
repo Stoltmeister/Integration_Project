@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Integration_Project.Data;
 using Integration_Project.Models;
 using Integration_Project.Assets;
+using Microsoft.AspNet.Identity;
 
 namespace Integration_Project.Controllers
 {
@@ -65,6 +66,7 @@ namespace Integration_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                venue.CreatedBy = User.Identity.GetUserId();
                 venue.CreationDate = DateTime.Now;
                 venue.UpdateLatitudeAndLongitude();
                 _context.Add(venue);
