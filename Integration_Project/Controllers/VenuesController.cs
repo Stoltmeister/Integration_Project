@@ -28,6 +28,11 @@ namespace Integration_Project.Controllers
 
 
         //AddInterest
+        public async Task<IActionResult> AddInterest()
+        {
+
+            return View();
+        }
 
         // GET: Venues
         public async Task<IActionResult> Index()
