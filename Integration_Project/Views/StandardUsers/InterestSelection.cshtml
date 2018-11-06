@@ -26,68 +26,72 @@
         </tr>
     </thead>
     <tbody>
-    @for (int i = 0; i < Model.Interests.Count; i++)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => Model.Interests[i].Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Interests[0].Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Interests[0].Verified)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Interests[0].CreationDate)
-            </td>
-            <td>
-                <a asp-action="AddInterest" asp-route-id="@Model.Interests[i].Id">Add Interest</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-<br />
-<h4>Added Interests</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => Model.Interests[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Interests[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Interests[0].Verified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Interests[0].CreationDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
         @for (int i = 0; i < Model.Interests.Count; i++)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => Model.AddedInterests[i].Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.AddedInterests[i].Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.AddedInterests[i].Verified)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.AddedInterests[i].CreationDate)
-            </td>
-            <td>
-                <a asp-action="RemoveInterest" asp-route-id="@Model.Interests[i].Id">Remove Interest</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => Model.Interests[i].Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Interests[i].Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Interests[i].Verified)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Interests[i].CreationDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Add Interest", "AddInterest", new { id = Model.Interests[i].Id })
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<br />
+@if (Model.AddedInterests.Count > 0)
+{
+    <h4>Added Interests</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => Model.Interests[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Interests[0].Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Interests[0].Verified)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Interests[0].CreationDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.Interests.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => Model.AddedInterests[i].Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.AddedInterests[i].Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.AddedInterests[i].Verified)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.AddedInterests[i].CreationDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { id = Model.Interests[i].Id })
+                    </td>
+                </tr>
+            }           
+        </tbody>
+    </table>
+}
