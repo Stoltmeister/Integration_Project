@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +12,9 @@ namespace Integration_Project.Models
     {
         [Key]
         public string Id { get; set; }
-        // FK CreatedBy
+        [ForeignKey("Creator")]
+        public string CreatedBy { get; set; }
+        public ApplicationUser Creator { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -25,6 +28,7 @@ namespace Integration_Project.Models
         public bool IsPrivate { get; set; }
         [Display(Name = "Website")]
         public string WebsiteUrl { get; set; }
+        public byte[] ProfilePicture { get; set; }
 
         public void UpdateLatitudeAndLongitude()
         {

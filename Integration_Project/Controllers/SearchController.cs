@@ -24,18 +24,25 @@ namespace Integration_Project.Controllers
         public async Task<IActionResult> Index()
         {
             var Model = new SearchViewModel();
-            return View(await _context.Events.ToListAsync());
+            var currentEvents = await _context.Events.ToListAsync();
+            var currentInterests = await _context.Interests.ToListAsync();
+            Model.Events = currentEvents;
+            Model.Interests = currentInterests;
+            return View(Model);
         }
 
         [HttpPost]
-        public IActionResult Index(List<Interest> interests, string text)
+        public IActionResult Index(List<Interest> interests, string text, string Id)
         {
             var eventInterest = _context.EventInterests.ToList();
             var currentEvents = _context.Events.ToList();
+            var currentInt = _context.Interests.ToList();
             List<string> interestIds = new List<string>();
             List<List<string>> eventIds = new List<List<string>>();
             List<Event> Events = new List<Event>();
-            
+            SearchViewModel VM = new SearchViewModel() { Interests = currentInt};
+
+
             if (!string.IsNullOrEmpty(text))
             {
                 interests = _context.Interests.FullTextSearchQuery(text).ToList();
@@ -56,9 +63,26 @@ namespace Integration_Project.Controllers
                         Events.Add(addEvent);
                     }
                 }
-
+                VM.Events = Events;
+                return View(VM);
             }
-            return View(Events);
+            else if (!string.IsNullOrEmpty(Id))
+            {
+                var filteredEvents = eventInterest.Where(x => x.EventId == Id).Select(x => x.EventId).ToList();
+                foreach(var id in filteredEvents)
+                {
+                    var eve = currentEvents.Where(x => x.Id == id).FirstOrDefault();
+                    Events.Add(eve);
+                }
+                VM.Events = Events;
+                return View(VM);
+            }
+            else
+            {
+                VM.Events = currentEvents;
+                return View(VM);
+            }
+            
         }
 
         // GET: Search/Details/5

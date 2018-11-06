@@ -1,65 +1,48 @@
-﻿@model IEnumerable<Integration_Project.Models.Event>
+﻿@model Integration_Project.Models.SearchViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+
 @using (Html.BeginForm())
 {
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-
-
-    <div class="form-group">
-        <input type="search" id="text" name="text" />
+    <div class="form-group text-center container col-md-12 ">
+        <div class="col-md-8 col-md-offset-2">
+        <input type="search" id="text" name="text" placeholder="Whats your interest"class="input-lg" />
         <input type="submit" class="btn" />
+        </div>
     </div>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Desciption)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <a href="~/Views/Search/Index.cshtml">~/Views/Search/Index.cshtml</a>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPrivate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+<hr />
+    <div class="col-md-2">
+        Categories<br />
+        <br />
+        @foreach(var cat in Model.Interests)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Desciption)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsPrivate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            <div>
+                <button type="submit" value="@cat.Id" name="Id">@cat.Name</button>
+            </div>
+            <br />
         }
-    </tbody>
-</table>
+    </div>
+    <div class="container col-md-10">
+        <div class="row text-center">
+            @foreach (var item in Model.Events)
+            {
+            <div class="col-md-3">
+                <div class="card-body mb-3" style="width: 22rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Desciption</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+                
+            }
+        </div>
+    </div>
+       
+
 }
