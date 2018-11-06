@@ -11,6 +11,7 @@ using Integration_Project.Assets;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Web;
 
 namespace Integration_Project.Controllers
 {
@@ -105,7 +106,7 @@ namespace Integration_Project.Controllers
             {
                 return NotFound();
             }
-            if(picture.Length > 0)
+            if(picture != null )
             {
                 using(var stream = new MemoryStream())
                 {
