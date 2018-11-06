@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration_Project", "Integration_Project\Integration_Project.csproj", "{79F6709D-5FA2-4FEC-9B14-98896A85E758}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration_Project", "Integration_Project\Integration_Project.csproj", "{79F6709D-5FA2-4FEC-9B14-98896A85E758}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{231992A4-0BEF-4F08-8347-313A2C46271C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
