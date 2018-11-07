@@ -41,7 +41,7 @@
                     @Html.DisplayFor(model => model.Interests[i].CreationDate)
                 </td>
                 <td>
-                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, venueId = Model.CurrentEvent.Id })
+                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, eventId = Model.CurrentEvent.Id })
                 </td>
             </tr>
         }
@@ -49,6 +49,9 @@
 </table>
 <br />
 <p>If you don't see the interest you want to add you can create it below.</p>
+@Html.ActionLink("Create New Interest", "CreateInterest", "Events", new { id = Model.CurrentEvent.Id })
+<br />
+<br />
 @if (Model.AddedInterests.Count > 0)
 {
     <h4>Added Interests</h4>
@@ -94,5 +97,6 @@
             }
         </tbody>
     </table>
+    @Html.ActionLink("Return to Event Details", "Details", "Events", new { id = Model.CurrentEvent.Id })
 }
 

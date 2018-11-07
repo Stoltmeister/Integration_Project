@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181107163258_DatabaseCleanup1")]
+    partial class DatabaseCleanup1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,25 +91,6 @@ namespace Integration_Project.Migrations
                     );
                 });
 
-            modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EventId");
-
-                    b.Property<bool>("IsCreator");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventOrganizers");
-                });
-
             modelBuilder.Entity("Integration_Project.Models.Interest", b =>
                 {
                     b.Property<string>("Id")
@@ -131,26 +114,6 @@ namespace Integration_Project.Migrations
                         new { Id = "3", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Computer Coding", Name = "Coding", Verified = false },
                         new { Id = "4", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Football", Name = "American Football", Verified = false }
                     );
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.Rating", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Rank");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("VenueId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
@@ -477,23 +440,6 @@ namespace Integration_Project.Migrations
                     b.HasOne("Integration_Project.Models.Interest", "Interests")
                         .WithMany()
                         .HasForeignKey("InterestId");
-                });
-            
-            modelBuilder.Entity("Integration_Project.Models.Rating", b =>
-                {
-                    b.HasOne("Integration_Project.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("Integration_Project.Models.Venue", "Venue")
-                        .WithMany("Ratings")
-                        .HasForeignKey("VenueId");
-                });
-            modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Event", "Events")
-                        .WithMany()
-                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>

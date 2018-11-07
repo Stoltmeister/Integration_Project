@@ -86,7 +86,30 @@ namespace Integration_Project.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("InterestSelection", new { id = standardUser.Id });
         }
-       
+
+        public IActionResult CreateInterest(string id)
+        {
+            VenueInterestCreator venueInterest = new VenueInterestCreator();
+            Interest newInterest = new Interest();
+            venueInterest.CurrentVenueID = id;
+            venueInterest.NewInterest = newInterest;
+            return View(venueInterest);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateInterest([Bind("Name,Description")] Interest newInterest, VenueInterestCreator venueInterest)
+        {
+            if (ModelState.IsValid)
+            {
+                newInterest.CreationDate = DateTime.Today;
+                newInterest.Verified = false;
+                await _context.AddAsync(newInterest);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("InterestSelection", new { id = venueInterest.CurrentVenueID });
+            }
+            return View(newInterest);
+        }
+
 
         // GET: Venues
         public async Task<IActionResult> Index()

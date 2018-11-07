@@ -21,7 +21,11 @@ namespace Integration_Project.Data
         public DbSet<EventInterest> EventInterests { get; set; }
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<VenueInterest> VenueInterests { get; set; }
+<<<<<<< HEAD
         public DbSet<Rating> Ratings { get; set; }
+=======
+        public DbSet<EventOrganizer> EventOrganizers { get; set; }
+>>>>>>> c5422a925c52b34aa44ddd4b1223e40a6e4a96a9
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -158,7 +162,7 @@ namespace Integration_Project.Data
                     VenueId = "1",
                     StartDate = new DateTime(2018, 11, 14, 16, 00, 00),
                     EndDate = new DateTime(2018, 11, 14, 18, 00, 00),
-                    Desciption = "Doubles or Singles Tennis",
+                    Description = "Doubles or Singles Tennis",
                     Premium = 0,
                     IsPrivate = false,
                     IsWeatherDependent = true,
@@ -174,7 +178,7 @@ namespace Integration_Project.Data
                     VenueId = "2",
                     StartDate = new DateTime(2018, 11, 18, 9, 00, 00),
                     EndDate = new DateTime(2018, 11, 18, 11, 00, 00),
-                    Desciption = "Weekly Practice",
+                    Description = "Weekly Practice",
                     Premium = 1,
                     IsPrivate = false,
                     IsWeatherDependent = false,
@@ -190,7 +194,7 @@ namespace Integration_Project.Data
                     VenueId = "3",
                     StartDate = new DateTime(2018, 11, 12, 6, 30, 00),
                     EndDate = new DateTime(2018, 11, 12, 7, 00, 00),
-                    Desciption = "Weekly morning meditation sit.",
+                    Description = "Weekly morning meditation sit.",
                     Premium = 0,
                     IsPrivate = true,
                     IsWeatherDependent = false,

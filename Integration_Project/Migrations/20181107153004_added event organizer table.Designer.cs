@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181107153004_added event organizer table")]
+    partial class addedeventorganizertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,7 @@ namespace Integration_Project.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Desciption");
 
                     b.Property<DateTime>("EndDate");
 
@@ -57,12 +59,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("VenueId");
 
                     b.ToTable("Events");
-
-                    b.HasData(
-                        new { Id = "1", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Doubles or Singles Tennis", EndDate = new DateTime(2018, 11, 14, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = true, MaxParticipants = 4, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 0, StartDate = new DateTime(2018, 11, 14, 16, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "1" },
-                        new { Id = "2", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly Practice", EndDate = new DateTime(2018, 11, 18, 11, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 15, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 1, StartDate = new DateTime(2018, 11, 18, 9, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "2" },
-                        new { Id = "3", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly morning meditation sit.", EndDate = new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = true, IsWeatherDependent = false, MaxParticipants = 8, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 0, StartDate = new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "3" }
-                    );
                 });
 
             modelBuilder.Entity("Integration_Project.Models.EventInterest", b =>
@@ -81,12 +77,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("InterestId");
 
                     b.ToTable("EventInterests");
-
-                    b.HasData(
-                        new { Id = "1", EventId = "1", InterestId = "1" },
-                        new { Id = "2", EventId = "2", InterestId = "2" },
-                        new { Id = "3", EventId = "3", InterestId = "2" }
-                    );
                 });
 
             modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
@@ -124,33 +114,6 @@ namespace Integration_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Interests");
-
-                    b.HasData(
-                        new { Id = "1", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Tennis", Name = "Tennis", Verified = false },
-                        new { Id = "2", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Vipassana Meditation", Name = "Meditation", Verified = false },
-                        new { Id = "3", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Computer Coding", Name = "Coding", Verified = false },
-                        new { Id = "4", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Football", Name = "American Football", Verified = false }
-                    );
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.Rating", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Rank");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("VenueId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
@@ -179,10 +142,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("StandardUsers");
-
-                    b.HasData(
-                        new { Id = "b7813711-0140-4696-b984-8bd4569c7bba", ApplicationUserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", Bio = "Tennis. Code. Meditation.", City = "Milwaukee", Email = "c.james.obrien@gmail.com", FirstName = "Casey", LastName = "O'Brien", State = "WI", ZipCode = 53202 }
-                    );
                 });
 
             modelBuilder.Entity("Integration_Project.Models.UserInterest", b =>
@@ -202,12 +161,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("StandardUserId");
 
                     b.ToTable("UserInterests");
-
-                    b.HasData(
-                        new { Id = 1, InterestId = "1", StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
-                        new { Id = 2, InterestId = "2", StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
-                        new { Id = 3, InterestId = "3", StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba" }
-                    );
                 });
 
             modelBuilder.Entity("Integration_Project.Models.Venue", b =>
@@ -248,12 +201,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.ToTable("Venues");
-
-                    b.HasData(
-                        new { Id = "1", Address = "1750 N Lincoln Memorial Dr", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "6 public hard court tennis courts", IsPrivate = false, Latitude = 43.05395f, Longitude = -87.88557f, Name = "McKinley Park Tennis Courts", State = "WI", WebsiteUrl = "https://county.milwaukee.gov/EN/Parks/Explore/Lakefront/McKinley-Marina", Zipcode = 53202 },
-                        new { Id = "2", Address = "2344 N Oakland Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Local meditation center in Milwaukee in Shambhala tradition.", IsPrivate = false, Latitude = 43.06116f, Longitude = -87.88788f, Name = "Shambhala Meditation Center of Milwaukee", State = "WI", WebsiteUrl = "https://milwaukee.shambhala.org", Zipcode = 53211 },
-                        new { Id = "3", Address = "1660 N Prospect Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Morning meditation group.Meets on Mondays for 30 minutes.", IsPrivate = true, Latitude = 43.05191f, Longitude = -87.89092f, Name = "Morning Meditation Group", State = "WI", Zipcode = 53202 }
-                    );
                 });
 
             modelBuilder.Entity("Integration_Project.Models.VenueInterest", b =>
@@ -273,12 +220,6 @@ namespace Integration_Project.Migrations
                     b.HasIndex("VenueID");
 
                     b.ToTable("VenueInterests");
-
-                    b.HasData(
-                        new { Id = 1, InterestId = "1", VenueID = "1" },
-                        new { Id = 2, InterestId = "2", VenueID = "2" },
-                        new { Id = 3, InterestId = "2", VenueID = "3" }
-                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -455,10 +396,6 @@ namespace Integration_Project.Migrations
                     b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-
-                    b.HasData(
-                        new { Id = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", AccessFailedCount = 0, ConcurrencyStamp = "baddab696890", Email = "c.james.obrien@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "C.JAMES.OBRIEN@GMAIL.COM", NormalizedUserName = "C.JAMES.OBRIEN@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEJG8SzwSAu8tIzIHfAIwjt+5rY6LxLg5k3mXSBRGKxGwIzDWkQT1TpQUozpuBjY1ng==", PhoneNumberConfirmed = false, SecurityStamp = "GSZ7JNO4GZ7JR6W2NU7MQZIZGU5BBEJS", TwoFactorEnabled = false, UserName = "c.james.obrien@gmail.com" }
-                    );
                 });
 
             modelBuilder.Entity("Integration_Project.Models.Event", b =>
@@ -478,17 +415,7 @@ namespace Integration_Project.Migrations
                         .WithMany()
                         .HasForeignKey("InterestId");
                 });
-            
-            modelBuilder.Entity("Integration_Project.Models.Rating", b =>
-                {
-                    b.HasOne("Integration_Project.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
-                    b.HasOne("Integration_Project.Models.Venue", "Venue")
-                        .WithMany("Ratings")
-                        .HasForeignKey("VenueId");
-                });
             modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
                 {
                     b.HasOne("Integration_Project.Models.Event", "Events")
