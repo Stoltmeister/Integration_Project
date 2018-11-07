@@ -42,7 +42,7 @@
                     @Html.DisplayFor(model => model.Interests[i].CreationDate)
                 </td>
                 <td>
-                    @Html.ActionLink("Add Interest", "AddInterest", new { id = Model.Interests[i].Id })
+                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, venueId = Model.CurrentVenue.Id })
                 </td>
             </tr>
         }
@@ -92,7 +92,7 @@
                         @Html.DisplayFor(model => model.AddedInterests[i].CreationDate)
                     </td>
                     <td>
-                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { id = Model.AddedInterests[i].Id })
+                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { interestId = Model.AddedInterests[i].Id, venueId = Model.CurrentVenue.Id })
                     </td>
                 </tr>
             }

@@ -46,7 +46,7 @@ namespace Integration_Project.Controllers
             VenueInterestsViewModel venueInterests = new VenueInterestsViewModel();
             List<Interest> likedInterests = new List<Interest>();
             venueInterests.CurrentVenue = currentVenue;
-            var interestEntries = await _context.VenueInterests.Where(i => i.VenueID == currentVenue.Id).ToListAsync(); //try catch?
+            var interestEntries = await _context.VenueInterests.Include(v => v.Interest).Where(i => i.VenueID == currentVenue.Id).ToListAsync(); //try catch?
             var interests = await _context.Interests.ToListAsync();
             foreach (VenueInterest i in interestEntries)
             {
@@ -60,31 +60,30 @@ namespace Integration_Project.Controllers
         }
 
         //AddInterest
-        public async Task<IActionResult> AddInterest(string id)
+        public async Task<IActionResult> AddInterest(string interestId, string venueId)
         {
-            // Add interest to userinterest junction table
-            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
-            UserInterest userInterest = new UserInterest();
-            userInterest.InterestId = id;
-            userInterest.StandardUserId = standardUser.Id;
-            await _context.UserInterests.AddAsync(userInterest);
+            var currentVenue = await _context.Venues.FirstOrDefaultAsync(v => v.Id == venueId);
+            if (currentVenue == null)
+            {
+                return NotFound();
+            }
+            VenueInterest venueInterest = new VenueInterest();
+            venueInterest.InterestId = interestId;
+            venueInterest.VenueID = venueId;
+            await _context.VenueInterests.AddAsync(venueInterest);
             await _context.SaveChangesAsync();
-            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+            return RedirectToAction("InterestSelection", new { id = venueId });
         }
 
         //RemoveInterest
-        public async Task<IActionResult> RemoveInterest(string id)
+        public async Task<IActionResult> RemoveInterest(string interestId, string venueId)
         {
-            // Add interest to userinterest junction table
-            var standardUser = await _context.StandardUsers.Where(u => u.ApplicationUserId == User.Identity.GetUserId()).SingleAsync();
-            //UserInterest userInterest = new UserInterest();
-            //userInterest.InterestId = id;
-            //userInterest.StandardUserId = standardUser.Id;
-            var currentUserInterests = await _context.UserInterests.Where(u => u.StandardUserId == standardUser.Id).ToListAsync();
-            UserInterest deletingInterest = currentUserInterests.Where(u => u.InterestId == id).SingleOrDefault();
-            _context.UserInterests.Remove(deletingInterest);
+            var currentVenue = await _context.Venues.FirstOrDefaultAsync(v => v.Id == venueId);
+            var currentVenueInterests = await _context.VenueInterests.Include(v => v.Interest).Where(v => v.VenueID == venueId).ToListAsync();
+            VenueInterest deletingInterest = currentVenueInterests.Where(u => u.InterestId == interestId).SingleOrDefault();
+            _context.VenueInterests.Remove(deletingInterest);
             await _context.SaveChangesAsync();
-            return RedirectToAction("InterestSelection", new { id = standardUser.Id });
+            return RedirectToAction("InterestSelection", new { id = venueId });
         }
 
         // GET: Venues
@@ -101,15 +100,23 @@ namespace Integration_Project.Controllers
             {
                 return NotFound();
             }
-
+            VenueInterestsViewModel venueInterests = new VenueInterestsViewModel();
             var venue = await _context.Venues
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (venue == null)
             {
                 return NotFound();
             }
-
-            return View(venue);
+            List<Interest> likedInterests = new List<Interest>();            
+            var interestEntries = await _context.VenueInterests.Include(v => v.Interest).Where(i => i.VenueID == venue.Id).ToListAsync();
+            foreach (VenueInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interest);                
+            }
+            venueInterests.AddedInterests = likedInterests;
+            venueInterests.Interests = likedInterests;
+            venueInterests.CurrentVenue = venue;
+            return View(venueInterests);
         }
 
         // GET: Venues/Create
