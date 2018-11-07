@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181107190603_Created Rating model")]
+    partial class CreatedRatingmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,7 @@ namespace Integration_Project.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Desciption");
 
                     b.Property<DateTime>("EndDate");
 
@@ -59,9 +61,9 @@ namespace Integration_Project.Migrations
                     b.ToTable("Events");
 
                     b.HasData(
-                        new { Id = "1", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Doubles or Singles Tennis", EndDate = new DateTime(2018, 11, 14, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = true, MaxParticipants = 4, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 0, StartDate = new DateTime(2018, 11, 14, 16, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "1" },
-                        new { Id = "2", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly Practice", EndDate = new DateTime(2018, 11, 18, 11, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 15, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 1, StartDate = new DateTime(2018, 11, 18, 9, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "2" },
-                        new { Id = "3", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly morning meditation sit.", EndDate = new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = true, IsWeatherDependent = false, MaxParticipants = 8, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 0, StartDate = new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "3" }
+                        new { Id = "1", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Desciption = "Doubles or Singles Tennis", EndDate = new DateTime(2018, 11, 14, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = true, MaxParticipants = 4, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 0, StartDate = new DateTime(2018, 11, 14, 16, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "1" },
+                        new { Id = "2", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Desciption = "Weekly Practice", EndDate = new DateTime(2018, 11, 18, 11, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 15, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 1, StartDate = new DateTime(2018, 11, 18, 9, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "2" },
+                        new { Id = "3", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Desciption = "Weekly morning meditation sit.", EndDate = new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = true, IsWeatherDependent = false, MaxParticipants = 8, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Premium = 0, StartDate = new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "3" }
                     );
                 });
 
@@ -89,25 +91,6 @@ namespace Integration_Project.Migrations
                     );
                 });
 
-            modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EventId");
-
-                    b.Property<bool>("IsCreator");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventOrganizers");
-                });
-
             modelBuilder.Entity("Integration_Project.Models.Interest", b =>
                 {
                     b.Property<string>("Id")
@@ -131,26 +114,6 @@ namespace Integration_Project.Migrations
                         new { Id = "3", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Computer Coding", Name = "Coding", Verified = false },
                         new { Id = "4", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Football", Name = "American Football", Verified = false }
                     );
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.Rating", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Rank");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("VenueId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
@@ -233,8 +196,6 @@ namespace Integration_Project.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<decimal>("OverallRating");
-
                     b.Property<byte[]>("ProfilePicture");
 
                     b.Property<string>("State");
@@ -252,9 +213,9 @@ namespace Integration_Project.Migrations
                     b.ToTable("Venues");
 
                     b.HasData(
-                        new { Id = "1", Address = "1750 N Lincoln Memorial Dr", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "6 public hard court tennis courts", IsPrivate = false, Latitude = 43.05395f, Longitude = -87.88557f, Name = "McKinley Park Tennis Courts", OverallRating = 0m, State = "WI", WebsiteUrl = "https://county.milwaukee.gov/EN/Parks/Explore/Lakefront/McKinley-Marina", Zipcode = 53202 },
-                        new { Id = "2", Address = "2344 N Oakland Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Local meditation center in Milwaukee in Shambhala tradition.", IsPrivate = false, Latitude = 43.06116f, Longitude = -87.88788f, Name = "Shambhala Meditation Center of Milwaukee", OverallRating = 0m, State = "WI", WebsiteUrl = "https://milwaukee.shambhala.org", Zipcode = 53211 },
-                        new { Id = "3", Address = "1660 N Prospect Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Morning meditation group.Meets on Mondays for 30 minutes.", IsPrivate = true, Latitude = 43.05191f, Longitude = -87.89092f, Name = "Morning Meditation Group", OverallRating = 0m, State = "WI", Zipcode = 53202 }
+                        new { Id = "1", Address = "1750 N Lincoln Memorial Dr", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "6 public hard court tennis courts", IsPrivate = false, Latitude = 43.05395f, Longitude = -87.88557f, Name = "McKinley Park Tennis Courts", State = "WI", WebsiteUrl = "https://county.milwaukee.gov/EN/Parks/Explore/Lakefront/McKinley-Marina", Zipcode = 53202 },
+                        new { Id = "2", Address = "2344 N Oakland Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Local meditation center in Milwaukee in Shambhala tradition.", IsPrivate = false, Latitude = 43.06116f, Longitude = -87.88788f, Name = "Shambhala Meditation Center of Milwaukee", State = "WI", WebsiteUrl = "https://milwaukee.shambhala.org", Zipcode = 53211 },
+                        new { Id = "3", Address = "1660 N Prospect Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Morning meditation group.Meets on Mondays for 30 minutes.", IsPrivate = true, Latitude = 43.05191f, Longitude = -87.89092f, Name = "Morning Meditation Group", State = "WI", Zipcode = 53202 }
                     );
                 });
 
@@ -479,24 +440,6 @@ namespace Integration_Project.Migrations
                     b.HasOne("Integration_Project.Models.Interest", "Interests")
                         .WithMany()
                         .HasForeignKey("InterestId");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Event", "Events")
-                        .WithMany()
-                        .HasForeignKey("EventId");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.Rating", b =>
-                {
-                    b.HasOne("Integration_Project.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("Integration_Project.Models.Venue", "Venue")
-                        .WithMany()
-                        .HasForeignKey("VenueId");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
