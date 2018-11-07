@@ -21,6 +21,13 @@ namespace Integration_Project.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> EventsAroundMe()
+        {
+            var events = await _context.Events.ToListAsync();
+            return PartialView(events);
+        }
+
+
         // GET: StandardUsers
         public async Task<IActionResult> Index()
         {
