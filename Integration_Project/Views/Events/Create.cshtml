@@ -8,6 +8,10 @@
 
 <h4>Event</h4>
 <hr />
+@using (Html.BeginForm())
+{
+
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -34,18 +38,7 @@
                 <input asp-for="Event.Desciption" class="form-control" />
                 <span asp-validation-for="Event.Desciption" class="text-danger"></span>
             </div>
-            <div class="form-group container">
-                <div class="row">
-                    <div name="venueId">
-                        Choose from pre-selected Venues<br />
-                        @Html.DropDownListFor(Model => Model.Event.VenueId, Model.SelectList, "--Select Venue--")
-                    </div>
-                    <br />
-                    <div>
-                        or @Html.ActionLink("Create a new Venue +", "Create", "Venues")
-                    </div>
-                </div>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Event.Premium" class="control-label"></label>
                 <input asp-for="Event.Premium" class="form-control" />
@@ -83,12 +76,17 @@
                 </div>
             </div>
             <div class="form-group">
+                <label asp-for="Event.EventPicture" class="control-label"></label>
+                <input name="EventPicture" type="file" id="EventPicture" asp-for="Event.EventPicture" />
+                <span asp-validation-for="Event.EventPicture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-
+}
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
