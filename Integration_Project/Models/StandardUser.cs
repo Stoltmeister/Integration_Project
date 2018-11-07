@@ -15,11 +15,14 @@ namespace Integration_Project.Models
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public string Bio { get; set; }
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Email { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        [Display(Name = "Zipcode")]
         public int ZipCode { get; set; }
     }
 }
