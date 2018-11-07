@@ -1,5 +1,6 @@
 ﻿using Integration_Project.Assets;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -40,5 +41,7 @@ namespace Integration_Project.Models
 
             return;
         }
+        
+        public decimal OverallRating{ get; set; }
     }
 }

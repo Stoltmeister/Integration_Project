@@ -1,0 +1,109 @@
+﻿@model Integration_Project.Models.EventVenueViewModel
+@{
+    ViewData["Title"] = "SelectVenue";
+}
+
+<h2>SelectVenue</h2>
+
+<h2>Venues</h2>
+
+@if (User.IsInRole("Standard"))
+{
+    <p>
+        <a asp-action="Create">Add New</a>
+    </p>
+}
+else
+{
+    <p>
+        Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
+    </p>
+}
+
+<div class="row">
+    @{
+        foreach (Venue venue in Model.Venues)
+        {
+            @Html.Partial("VenueSummary", venue)
+        }
+    }
+</div>
+
+<div class="row">
+    <br />
+    <br />
+    <h3>This table should be removed in the final product.</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.Zipcode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.IsPrivate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.currentVenue.WebsiteUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Venues)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zipcode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsPrivate)
+                    </td>
+                    <td>
+                        <a href="http://www.@item.WebsiteUrl">@item.WebsiteUrl</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

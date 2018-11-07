@@ -88,7 +88,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public ActionResult Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -296,6 +296,30 @@ namespace Integration_Project.Controllers
             }
 
             return eve;
+        }
+
+        public IActionResult SelectVenue(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            TempData["controllerCheck"] = "Event";
+            TempData["eventId"] = id;
+            var currentVenueId =  _context.Events.Where(x => x.Id == id).Select(x => x.VenueId).FirstOrDefault();
+            var currentVenue = _context.Venues.Where(x => x.Id == currentVenueId).FirstOrDefault();
+            if (currentVenue == null)
+            {
+                return NotFound();
+            }
+            Event currentEvent = _context.Events.Where(x => x.Id == id).FirstOrDefault();
+            EventVenueViewModel eventVenue = new EventVenueViewModel();
+            eventVenue.currentVenue = currentVenue;
+            eventVenue.currentEvent = currentEvent;
+            var Venues = _context.Venues.ToList();
+            eventVenue.Venues = Venues;
+            
+            return View(eventVenue);
         }
     }
 }
