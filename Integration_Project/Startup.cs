@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Integration_Project.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stripe;
+using Integration_Project.Assets;
 
 namespace Integration_Project
 {
@@ -43,6 +45,8 @@ namespace Integration_Project
                 .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +75,7 @@ namespace Integration_Project
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            StripeConfiguration.SetApiKey(ApiKeys.stripeSecretKey);
         }
     }
 }
