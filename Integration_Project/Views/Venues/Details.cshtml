@@ -61,17 +61,25 @@
                 <a href="http://www.@Model.CurrentVenue.WebsiteUrl">@Model.CurrentVenue.WebsiteUrl</a>
             </dd>
             <dt>Interests</dt>
-            @foreach(Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
+            @foreach (Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
             {
                 <dd>@i.Name: @i.Description</dd>
             }
             <br />
-            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentVenue.Id">Add or Remove Interests</a>
-            </br></br>
-            <div>
-                <a asp-action="Edit" asp-route-id="@Model.CurrentVenue.Id">Edit</a> |
-                <a asp-action="Index">Back to List</a>
-            </div>
+            @if (Model.controller == "Event")
+            {
+                <a asp-controller="Events" asp-route-id="@Model.eventId" asp-action="SelectVenue">Back to List</a>
+            }
+            else
+            {
+                <a asp-action="InterestSelection" asp-route-id="@Model.CurrentVenue.Id">Add or Remove Interests</a>
+                <br /><br />
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.CurrentVenue.Id">Edit</a> |
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            }
+
         </div>
 
         <div class="col-md-6">
