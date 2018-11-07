@@ -114,6 +114,8 @@ namespace Integration_Project.Controllers
         // GET: Venues
         public async Task<IActionResult> Index()
         {
+            TempData["controllerCheck"] = "";
+            TempData["eventId"] = "";
             return View(await _context.Venues.ToListAsync());
         }
 
@@ -144,8 +146,16 @@ namespace Integration_Project.Controllers
             }
             venueInterests.AddedInterests = likedInterests;
             venueInterests.Interests = likedInterests;
+<<<<<<< HEAD
+            venueInterests.CurrentVenue = venue;
+            string cCheck = (string)TempData["controllerCheck"];
+            string eId = (string)TempData["eventId"];
+            venueInterests.controller = cCheck;
+            venueInterests.eventId = eId;
+=======
 
 
+>>>>>>> 58baf0ca1d915145cae59f24593eba3daf9e6af8
             return View(venueInterests);
         }
 
