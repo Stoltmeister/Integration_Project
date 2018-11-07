@@ -1,0 +1,16 @@
+﻿@model Integration_Project.Models.Venue
+@{
+    <p>The overall rating for @Model.Name is @Model.OverallRating</p>
+}
+
+@{using (Html.BeginForm("SetRating", "Ratings", new { Model.Id }))
+    {
+
+        @for (int i = 1; i <= 5; i++)
+        {
+            <input type="radio" id="Rank" name="Rank" value="@i" /> @i
+        }
+        <input type="submit" value="Submit" />
+    }
+
+}

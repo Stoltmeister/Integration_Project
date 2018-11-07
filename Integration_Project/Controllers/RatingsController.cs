@@ -36,5 +36,11 @@ namespace Integration_Project.Controllers
 
             return RedirectToAction("Details", "Venues", _context.Venues.Where(v => v.Id == Id).Single());
         }
+
+        public PartialViewResult RatingsControl(string venueId)
+        {
+            Venue model = _context.Venues.Where(v => v.Id == venueId).Single();
+            return PartialView("_RatingsControl", model);
+        }
     }
 }
