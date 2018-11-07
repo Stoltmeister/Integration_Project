@@ -21,5 +21,6 @@ namespace Integration_Project.Data
         public DbSet<EventInterest> EventInterests { get; set; }     
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<VenueInterest> VenueInterests { get; set; }
+        public DbSet<EventOrganizer> EventOrganizers { get; set; }
     }
 }
