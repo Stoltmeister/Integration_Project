@@ -9,7 +9,7 @@ namespace Integration_Project.Assets
 {
     public static class Sendgrid
     {
-        // The email this sends only shows World! (no Hello)
+        // The email this sends only shows 'World!' (no 'Hello')
         public static async Task Execute()
         {
             var apiKey = ApiKeys.sendgridKey;
@@ -22,8 +22,7 @@ namespace Integration_Project.Assets
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }
-
-        //Sendgrid deffered this message idk why
+        
         public static async Task SendMail(string recipient, string subject, string body)
         {
             var apiKey = ApiKeys.sendgridKey;
