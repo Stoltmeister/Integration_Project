@@ -88,7 +88,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -142,7 +142,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
             if (id != @event.Id)
             {
@@ -205,6 +205,60 @@ namespace Integration_Project.Controllers
         {
             return _context.Events.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> InterestSelection(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var currentEvent = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
+            if (currentEvent == null)
+            {
+                return NotFound();
+            }
+            EventInterestsViewModel eventInterests = new EventInterestsViewModel();
+            List<Interest> likedInterests = new List<Interest>();
+            eventInterests.CurrentEvent = currentEvent;
+            var interestEntries = await _context.EventInterests.Include(e => e.Interests).Where(i => i.EventId == currentEvent.Id).ToListAsync(); //try catch?
+            var interests = await _context.Interests.ToListAsync();
+            foreach (EventInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interests);
+                interests.Remove(i.Interests);
+            }
+            eventInterests.AddedInterests = likedInterests;
+            eventInterests.Interests = interests;
+
+            return View(eventInterests);
+        }
+
+        //AddInterest
+        public async Task<IActionResult> AddInterest(string interestId, string eventId)
+        {
+            var currentEvent = await _context.Events.FirstOrDefaultAsync(v => v.Id == eventId);
+            if (currentEvent == null)
+            {
+                return NotFound();
+            }
+            EventInterest eventInterest = new EventInterest();
+            eventInterest.InterestId = interestId;
+            eventInterest.EventId = eventId;            
+            await _context.EventInterests.AddAsync(eventInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = eventId });
+        }
+
+        //RemoveInterest
+        public async Task<IActionResult> RemoveInterest(string interestId, string eventId)
+        {
+            var currentVenue = await _context.Events.FirstOrDefaultAsync(v => v.Id == eventId);
+            var currentEventInterests = await _context.EventInterests.Include(v => v.Interests).Where(v => v.EventId == eventId).ToListAsync();
+            EventInterest deletingInterest = currentEventInterests.Where(u => u.InterestId == interestId).SingleOrDefault();
+            _context.EventInterests.Remove(deletingInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("InterestSelection", new { id = eventId });
+        }        
 
         private async Task<Event> StorePicture(Event eve, IFormFile picture)
         {

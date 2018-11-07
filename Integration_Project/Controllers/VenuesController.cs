@@ -25,6 +25,12 @@ namespace Integration_Project.Controllers
         }
 
 
+        public async Task<IActionResult> SendgridTest()
+        {
+            string emailAddress = "esoemad5@gmail.com";
+            Sendgrid.SendMail(emailAddress, "It's me!", ", Todd Kraines! Why do you keep hanging up on me? It's Todd Kraines!!").Wait();
+            return View("Index", await _context.Venues.ToListAsync());
+        }
 
         public async Task<IActionResult> InterestSelection(string id)
         {
@@ -79,6 +85,30 @@ namespace Integration_Project.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("InterestSelection", new { id = venueId });
         }
+
+        public IActionResult CreateInterest(string id)
+        {
+            VenueInterestCreator venueInterest = new VenueInterestCreator();
+            Interest newInterest = new Interest();
+            venueInterest.CurrentVenueID = id;
+            venueInterest.NewInterest = newInterest;
+            return View(venueInterest);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateInterest([Bind("Name,Description")] Interest newInterest, VenueInterestCreator venueInterest)
+        {
+            if (ModelState.IsValid)
+            {
+                newInterest.CreationDate = DateTime.Today;
+                newInterest.Verified = false;
+                await _context.AddAsync(newInterest);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("InterestSelection", new { id = venueInterest.CurrentVenueID });
+            }
+            return View(newInterest);
+        }
+
 
         // GET: Venues
         public async Task<IActionResult> Index()

@@ -1,0 +1,39 @@
+﻿@model Integration_Project.Models.VenueInterestCreator
+
+@{
+    ViewData["Title"] = "CreateInterest";
+}
+
+<h2>CreateInterest</h2>
+
+<h4>Interest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateInterest">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NewInterest.Name" class="control-label"></label>
+                <input asp-for="NewInterest.Name" class="form-control" />
+                <span asp-validation-for="NewInterest.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewInterest.Description" class="control-label"></label>
+                <input asp-for="NewInterest.Description" class="form-control" />
+                <span asp-validation-for="NewInterest.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(model => model.CurrentVenueID)
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

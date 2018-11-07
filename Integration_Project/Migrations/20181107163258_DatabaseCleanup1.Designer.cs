@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181107163258_DatabaseCleanup1")]
+    partial class DatabaseCleanup1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,25 +89,6 @@ namespace Integration_Project.Migrations
                         new { Id = "2", EventId = "2", InterestId = "2" },
                         new { Id = "3", EventId = "3", InterestId = "2" }
                     );
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EventId");
-
-                    b.Property<bool>("IsCreator");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventOrganizers");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.Interest", b =>
@@ -457,13 +440,6 @@ namespace Integration_Project.Migrations
                     b.HasOne("Integration_Project.Models.Interest", "Interests")
                         .WithMany()
                         .HasForeignKey("InterestId");
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.EventOrganizer", b =>
-                {
-                    b.HasOne("Integration_Project.Models.Event", "Events")
-                        .WithMany()
-                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("Integration_Project.Models.StandardUser", b =>
