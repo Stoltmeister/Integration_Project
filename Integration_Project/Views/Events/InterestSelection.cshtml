@@ -1,7 +1,6 @@
-﻿@model VenueInterestsViewModel
-
+﻿@model Integration_Project.Models.EventInterestsViewModel
 @{
-    ViewData["Title"] = "Interests";
+    ViewData["Title"] = "InterestSelection";
 }
 
 <h2>Interest Selection</h2>
@@ -42,14 +41,14 @@
                     @Html.DisplayFor(model => model.Interests[i].CreationDate)
                 </td>
                 <td>
-                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, venueId = Model.CurrentVenue.Id })
+                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, venueId = Model.CurrentEvent.Id })
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <br />
-<p>If you don't see the interest you want to add you can create a new interest later!</p>
+<p>If you don't see the interest you want to add you can create it below.</p>
 @if (Model.AddedInterests.Count > 0)
 {
     <h4>Added Interests</h4>
@@ -89,10 +88,11 @@
                         @Html.DisplayFor(model => model.AddedInterests[i].CreationDate)
                     </td>
                     <td>
-                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { interestId = Model.AddedInterests[i].Id, venueId = Model.CurrentVenue.Id })
+                        @Html.ActionLink("Remove Interest", "RemoveInterest", new { interestId = Model.AddedInterests[i].Id, eventId = Model.CurrentEvent.Id })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
+

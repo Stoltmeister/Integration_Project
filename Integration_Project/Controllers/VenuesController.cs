@@ -86,6 +86,7 @@ namespace Integration_Project.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("InterestSelection", new { id = standardUser.Id });
         }
+       
 
         // GET: Venues
         public async Task<IActionResult> Index()
