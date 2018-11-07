@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Integration_Project.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 

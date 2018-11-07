@@ -41,7 +41,7 @@
                     @Html.DisplayFor(model => model.Interests[i].CreationDate)
                 </td>
                 <td>
-                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, venueId = Model.CurrentEvent.Id })
+                    @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, eventId = Model.CurrentEvent.Id })
                 </td>
             </tr>
         }

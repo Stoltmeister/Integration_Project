@@ -10,6 +10,7 @@ using Integration_Project.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace Integration_Project.Controllers
 {
@@ -43,7 +44,24 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            return View(@event);
+            EventInterestsViewModel eveInterests = new EventInterestsViewModel();
+            var eve = await _context.Events
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (eve == null)
+            {
+                return NotFound();
+            }
+            List<Interest> likedInterests = new List<Interest>();
+            var interestEntries = await _context.EventInterests.Include(v => v.Interests).Where(i => i.EventId == eve.Id).ToListAsync();
+            foreach (EventInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interests);
+            }
+            eveInterests.AddedInterests = likedInterests;
+            eveInterests.Interests = likedInterests;
+            eveInterests.CurrentEvent = eve;
+
+            return View(eveInterests);
         }
 
         // GET: Events/Create
@@ -72,10 +90,8 @@ namespace Integration_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
-           
             if (ModelState.IsValid)
             {
-                //await StorePicture(@event, EventPicture);
                 string serializedEvent = JsonConvert.SerializeObject(@event);
                 return RedirectToAction("ConfirmCreate", new { Event = serializedEvent });
             }
@@ -90,14 +106,17 @@ namespace Integration_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmCreate(IFormFile picture)
+        public async Task<IActionResult> ConfirmCreate()
         {
             string eventString = (string)TempData["EventRedirect"];
             Event eve = JsonConvert.DeserializeObject<Event>(eventString);
             eve.CreatedDate = DateTime.Today;
             eve.ModifiedDate = DateTime.Today;
-            eve = await StorePicture(eve, picture);
-            _context.Add(eve);
+            var userId = User.Identity.GetUserId();
+            _context.Events.Add(eve);
+            await _context.SaveChangesAsync();
+            EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = userId, IsCreator = true };
+            _context.EventOrganizers.Add(creator);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = eve.Id });
         }
