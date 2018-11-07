@@ -9,6 +9,7 @@ using Integration_Project.Data;
 using Integration_Project.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Integration_Project.Controllers
 {
@@ -52,7 +53,7 @@ namespace Integration_Project.Controllers
             var venues = _context.Venues.ToList();
             var interests = _context.Interests.ToList();
             List<SelectListItem> listItems = new List<SelectListItem>();
-            foreach(var item in venues)
+            foreach (var item in venues)
             {
                 listItems.Add(new SelectListItem
                 {
@@ -69,14 +70,14 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormCollection form, [Bind("Id,Name,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
+           
             if (ModelState.IsValid)
             {
-                string vId = form["Event.VenueId"];
-                @event.VenueId = vId;
+                //await StorePicture(@event, EventPicture);
                 string serializedEvent = JsonConvert.SerializeObject(@event);
-                return RedirectToAction("ConfirmCreate", new {Event = serializedEvent});
+                return RedirectToAction("ConfirmCreate", new { Event = serializedEvent });
             }
             return View(@event);
         }
@@ -89,13 +90,16 @@ namespace Integration_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmCreate()
+        public async Task<IActionResult> ConfirmCreate(IFormFile picture)
         {
             string eventString = (string)TempData["EventRedirect"];
             Event eve = JsonConvert.DeserializeObject<Event>(eventString);
+            eve.CreatedDate = DateTime.Today;
+            eve.ModifiedDate = DateTime.Today;
+            eve = await StorePicture(eve, picture);
             _context.Add(eve);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = eve.Id});
+            return RedirectToAction("Details", new { id = eve.Id });
         }
 
         // GET: Events/Edit/5
@@ -236,5 +240,19 @@ namespace Integration_Project.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("InterestSelection", new { id = eventId });
         }        
+
+        private async Task<Event> StorePicture(Event eve, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    eve.EventPicture = stream.ToArray();
+                }
+            }
+
+            return eve;
+        }
     }
 }

@@ -25,6 +25,12 @@ namespace Integration_Project.Controllers
         }
 
 
+        public async Task<IActionResult> SendgridTest()
+        {
+            string emailAddress = "esoemad5@gmail.com";
+            Sendgrid.SendMail(emailAddress, "It's me!", ", Todd Kraines! Why do you keep hanging up on me? It's Todd Kraines!!").Wait();
+            return View("Index", await _context.Venues.ToListAsync());
+        }
 
         public async Task<IActionResult> InterestSelection(string id)
         {
