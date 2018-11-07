@@ -41,23 +41,7 @@ namespace Integration_Project.Models
 
             return;
         }
-
-        [InverseProperty("Venue")]
-        public virtual ICollection<Rating> Ratings { get; set; } = new HashSet<Rating>();
-        [NotMapped]
-        public decimal OverallRating
-        {
-            get
-            {
-                if (Ratings.Count > 0)
-                {
-                    return Ratings.Average(x => x.Rank);
-                }
-                else
-                {
-                    return 5;
-                }
-            }
-        }
+        
+        public decimal OverallRating{ get; set; }
     }
 }

@@ -60,14 +60,7 @@
             </dt>
             <dd>
                 @{
-                    if (Model.CurrentVenue.Ratings.Count > 0)
-                    {
-                        <p>The overall rating for @Model.CurrentVenue.Name is @Model.CurrentVenue.OverallRating</p>
-                    }
-                    else
-                    {
-                        <p>Be the first to rate @Model.CurrentVenue.Name</p>
-                    }
+                    <p>The overall rating for @Model.CurrentVenue.Name is @Model.CurrentVenue.OverallRating</p>
                 }
 
                 @{using (Html.BeginForm("SetRating", "Ratings", new { Model.CurrentVenue.Id }))
