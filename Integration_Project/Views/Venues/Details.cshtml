@@ -1,4 +1,4 @@
-﻿@model Integration_Project.Models.Venue
+﻿@model Integration_Project.Models.VenueInterestsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -8,67 +8,68 @@
 <h2>Details</h2>
 
 <div>
-    <h4>@Model.Name</h4>
+    <h4>@Model.CurrentVenue.Name</h4>
     <hr />
     <div class="row">
         <div class="col-md-6">
             <dt>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.CurrentVenue.Address)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Address)
+                @Html.DisplayFor(model => model.CurrentVenue.Address)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.CurrentVenue.City)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.City)
+                @Html.DisplayFor(model => model.CurrentVenue.City)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.State)
+                @Html.DisplayNameFor(model => model.CurrentVenue.State)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.State)
+                @Html.DisplayFor(model => model.CurrentVenue.State)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Zipcode)
+                @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Zipcode)
+                @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.CurrentVenue.Description)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Description)
+                @Html.DisplayFor(model => model.CurrentVenue.Description)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                @Html.DisplayNameFor(model => model.CurrentVenue.CreationDate)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.CreationDate)
+                @Html.DisplayFor(model => model.CurrentVenue.CreationDate)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.IsPrivate)
+                @Html.DisplayNameFor(model => model.CurrentVenue.IsPrivate)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.IsPrivate)
+                @Html.DisplayFor(model => model.CurrentVenue.IsPrivate)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.WebsiteUrl)
+                @Html.DisplayNameFor(model => model.CurrentVenue.WebsiteUrl)
             </dt>
             <dd>
-                <a href="http://www.@Model.WebsiteUrl">@Model.WebsiteUrl</a>
+                <a href="http://www.@Model.CurrentVenue.WebsiteUrl">@Model.CurrentVenue.WebsiteUrl</a>
             </dd>
-            <dt>Intrests</dt>
-            @*@foreach(Interest interest in logicGoesHere)
+            <dt>Interests</dt>
+            @foreach(Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
             {
-                <dd>interest, maybe a link or something.</dd>
-            }*@
-            <a asp-action="InterestSelection">Add or Remove Interests</a>
+                <dd>@i.Name: @i.Description</dd>
+            }
+            <br />
+            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentVenue.Id">Add or Remove Interests</a>
             </br></br>
             <div>
-                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@Model.CurrentVenue.Id">Edit</a> |
                 <a asp-action="Index">Back to List</a>
             </div>
         </div>
@@ -85,8 +86,8 @@
         function initMap() {
 
             var location = {
-                lat: @Model.Latitude,
-                lng: @Model.Longitude
+                lat: @Model.CurrentVenue.Latitude,
+                lng: @Model.CurrentVenue.Longitude
             }
 
             var options = {
@@ -96,7 +97,7 @@
 
             var map = new google.maps.Map(document.getElementById('map'), options);
 
-            addMarker(location.lat, location.lng, '@Model.Name', '@Model.Address', map);
+            addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
         }
 
         function addMarker(latitude, longitude, title, description, map) {
@@ -127,7 +128,7 @@
         <div class="col-lg-6"></div>
         <div class="col-lg-6">
             @{ 
-                string twitterLink = "https://twitter.com/" + Model.TwitterHandle + "?ref_src=twsrc%5Etfw";
+                string twitterLink = "https://twitter.com/" + Model.CurrentVenue.TwitterHandle + "?ref_src=twsrc%5Etfw";
             }
             <a class="twitter-timeline" data-height="600" href="@twitterLink"></a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
