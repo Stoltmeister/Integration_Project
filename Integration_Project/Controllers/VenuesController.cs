@@ -110,7 +110,20 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
 
-            return View(venue);
+            VenueInterestsViewModel venueInterests = new VenueInterestsViewModel();
+            List<Interest> likedInterests = new List<Interest>();
+            venueInterests.CurrentVenue = venue;
+            var interestEntries = await _context.VenueInterests.Include(i => i.Interest).Where(i => i.VenueID == venue.Id).ToListAsync(); //try catch?
+            
+            foreach (VenueInterest i in interestEntries)
+            {
+                likedInterests.Add(i.Interest);
+            }
+            venueInterests.AddedInterests = likedInterests;
+            venueInterests.Interests = likedInterests;
+
+
+            return View(venueInterests);
         }
 
         // GET: Venues/Create

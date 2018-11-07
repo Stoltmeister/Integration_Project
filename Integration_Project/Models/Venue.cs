@@ -1,5 +1,6 @@
 ﻿using Integration_Project.Assets;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,6 +40,24 @@ namespace Integration_Project.Models
             Longitude = latLng[1];
 
             return;
+        }
+
+        [InverseProperty("Venue")]
+        public virtual ICollection<Rating> Ratings { get; set; } = new HashSet<Rating>();
+        [NotMapped]
+        public decimal OverallRating
+        {
+            get
+            {
+                if (Ratings.Count > 0)
+                {
+                    return Ratings.Average(x => x.Rank);
+                }
+                else
+                {
+                    return 5;
+                }
+            }
         }
     }
 }
