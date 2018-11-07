@@ -70,7 +70,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Create(IFormFile EventPicture, [Bind("Id,Name,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
            
             if (ModelState.IsValid)
@@ -123,7 +123,7 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Desciption,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
         {
             if (id != @event.Id)
             {
