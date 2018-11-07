@@ -55,6 +55,34 @@
                 @Html.DisplayFor(model => model.CurrentVenue.IsPrivate)
             </dd>
             <dt>
+                @Html.DisplayName("Rate this venue!")
+                @*@Html.DisplayNameFor(model => model.CurrentVenue.Rating)*@
+            </dt>
+            <dd>
+                @{
+                    if (Model.CurrentVenue.Ratings.Count > 0)
+                    {
+                        <p>The overall rating for @Model.CurrentVenue.Name is @Model.CurrentVenue.OverallRating</p>
+                    }
+                    else
+                    {
+                        <p>Be the first to rate @Model.CurrentVenue.Name</p>
+                    }
+                }
+
+                @{using (Html.BeginForm("SetRating", "Ratings", new { Model.CurrentVenue.Id }))
+                    {
+
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <input type="radio" id="Rank" name="Rank" value="@i" /> @i
+                        }
+                        <input type="submit" value="Submit" />
+                    }
+
+                }
+            </dd>
+            <dt>
                 @Html.DisplayNameFor(model => model.CurrentVenue.WebsiteUrl)
             </dt>
             <dd>
@@ -64,7 +92,7 @@
             @foreach (Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
             {
                 <dd>@i.Name: @i.Description</dd>
-            }
+                        }
             <br />
             @if (Model.controller == "Event")
             {
@@ -93,26 +121,26 @@
             <script>
         function initMap() {
 
-            var location = {
+                        var location = {
                 lat: @Model.CurrentVenue.Latitude,
                 lng: @Model.CurrentVenue.Longitude
             }
 
-            var options = {
+                    var options = {
                 zoom: 13,
                 center: location
             }
 
             var map = new google.maps.Map(document.getElementById('map'), options);
 
-            addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
+                    addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
         }
 
         function addMarker(latitude, longitude, title, description, map) {
-            var latLng = new google.maps.LatLng(latitude, longitude);
-            var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
+                        var latLng = new google.maps.LatLng(latitude, longitude);
+                        var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
 
-            var infowindow = new google.maps.InfoWindow({
+                        var infowindow = new google.maps.InfoWindow({
                 content: contentString
             });
 
@@ -124,9 +152,9 @@
             });
 
             google.maps.event.addListener(marker, 'click', function () {
-                infowindow.open(map, marker);
-            });
-        }
+                        infowindow.open(map, marker);
+                    });
+                    }
             </script>
             <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
                     async defer><</script>
