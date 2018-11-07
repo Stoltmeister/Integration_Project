@@ -49,6 +49,9 @@
 </table>
 <br />
 <p>If you don't see the interest you want to add you can create it below.</p>
+@Html.ActionLink("Create New Interest", "CreateInterest", "Events", new { id = Model.CurrentEvent.Id })
+<br />
+<br />
 @if (Model.AddedInterests.Count > 0)
 {
     <h4>Added Interests</h4>

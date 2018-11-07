@@ -239,7 +239,31 @@ namespace Integration_Project.Controllers
             _context.EventInterests.Remove(deletingInterest);
             await _context.SaveChangesAsync();
             return RedirectToAction("InterestSelection", new { id = eventId });
-        }        
+        }
+
+        public IActionResult CreateInterest(string id)
+        {
+            EventInterestCreator eventInterest = new EventInterestCreator();
+            Interest newInterest = new Interest();
+            eventInterest.CurrentEventID = id;
+            eventInterest.NewInterest = newInterest;
+            return View(eventInterest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateInterest([Bind("Name,Description")] Interest newInterest, EventInterestCreator eventInterest)
+        {
+            if (ModelState.IsValid)
+            {
+                newInterest.CreationDate = DateTime.Today;
+                newInterest.Verified = false;
+                await _context.AddAsync(newInterest);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("InterestSelection", new { id = eventInterest.CurrentEventID });
+            }
+            return View(newInterest);
+        }
 
         private async Task<Event> StorePicture(Event eve, IFormFile picture)
         {
