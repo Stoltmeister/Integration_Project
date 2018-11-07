@@ -3,18 +3,33 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+@{
+    var imgSrc = "Hello";
+    if (Model.EventPicture != null)
+    {
+        var base64 = Convert.ToBase64String(Model.EventPicture);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    }
+    else
+    {
+        imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg";
+    }
+}
+<img src=@imgSrc alt="" height="200" width="300"/>
 <h2>Details</h2>
+
+
+
 
 <div>
     <h4>Event</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.VenueId)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.VenueId)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.StartDate)
@@ -51,18 +66,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.IsWeatherDependent)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.MinParticipants)

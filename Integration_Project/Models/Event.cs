@@ -29,5 +29,7 @@ namespace Integration_Project.Models
         public int MaxParticipants { get; set; }
         [Display(Name="Can Invite Participats")]
         public bool CanInviteParticipants { get; set; }
+        public byte[] EventPicture { get; set; }
+
     }
 }
