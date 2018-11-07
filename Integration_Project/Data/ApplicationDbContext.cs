@@ -22,8 +22,11 @@ namespace Integration_Project.Data
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<VenueInterest> VenueInterests { get; set; }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
                 {
@@ -42,12 +45,12 @@ namespace Integration_Project.Data
                     LockoutEnd = null
                 }
             );
-
+            
             modelBuilder.Entity<StandardUser>().HasData(
                 new StandardUser
                 {
                     Id = "b7813711-0140-4696-b984-8bd4569c7bba",
-                    ApplicationUserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6",
+                    ApplicationUserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
                     Bio = "Tennis. Code. Meditation.",
                     FirstName = "Casey",
                     LastName = "O'Brien",
@@ -57,6 +60,7 @@ namespace Integration_Project.Data
                     ZipCode = 53202
                 }
             );
+           
 
             modelBuilder.Entity<Interest>().HasData(
                 new Interest
@@ -97,7 +101,7 @@ namespace Integration_Project.Data
                 new Venue
                 {
                     Id = "1",
-                    CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6",
+                    CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
                     Name = "McKinley Park Tennis Courts",
                     Address = "1750 N Lincoln Memorial Dr",
                     City = "Milwaukee",
@@ -114,7 +118,7 @@ namespace Integration_Project.Data
                 new Venue
                 {
                     Id = "2",
-                    CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6",
+                    CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
                     Name = "Shambhala Meditation Center of Milwaukee",
                     Address = "2344 N Oakland Ave",
                     City = "Milwaukee",
@@ -131,7 +135,7 @@ namespace Integration_Project.Data
                 new Venue
                 {
                     Id = "3",
-                    CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6",
+                    CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
                     Name = "Morning Meditation Group",
                     Address = "1660 N Prospect Ave",
                     City = "Milwaukee",
@@ -207,11 +211,17 @@ namespace Integration_Project.Data
             modelBuilder.Entity<UserInterest>().HasData(
                 new UserInterest { Id = 1, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "1" },
                 new UserInterest { Id = 2, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "2" },
-                                new UserInterest { Id = 2, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "3" }
+                new UserInterest { Id = 3, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "3" }
                 );
 
-
-
+            modelBuilder.Entity<VenueInterest>().HasData(
+                new VenueInterest { Id = 1, VenueID = "1", InterestId = "1"},
+                new VenueInterest { Id = 2, VenueID = "2", InterestId = "2"},
+                new VenueInterest { Id = 3, VenueID = "3", InterestId = "2"}
+            );
+    
+            
         }
     }
 }
+ 
