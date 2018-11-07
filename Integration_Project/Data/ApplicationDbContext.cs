@@ -21,11 +21,8 @@ namespace Integration_Project.Data
         public DbSet<EventInterest> EventInterests { get; set; }
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<VenueInterest> VenueInterests { get; set; }
-<<<<<<< HEAD
         public DbSet<Rating> Ratings { get; set; }
-=======
         public DbSet<EventOrganizer> EventOrganizers { get; set; }
->>>>>>> c5422a925c52b34aa44ddd4b1223e40a6e4a96a9
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
