@@ -4,6 +4,8 @@
 }
 
 <h2>Confirm</h2>
+@using (Html.BeginForm())
+{
 
 <div>
     <h4>Are you sure you want to join this event?</h4>
@@ -27,3 +29,4 @@
     <button type="submit">Confirm</button>
     <a asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
 </div>
+}
