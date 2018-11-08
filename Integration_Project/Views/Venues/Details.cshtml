@@ -70,8 +70,8 @@
             <dt>Interests</dt>
             @foreach (Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
             {
-                <dd>@i.Name: @i.Description</dd>
-                        }
+            <dd>&nbsp &nbsp @i.Name: <i>@i.Description</i></dd>
+            }
             <br />
             @if (Model.controller == "Event")
             {

@@ -29,8 +29,14 @@ namespace Integration_Project.Controllers
             rating.VenueId = Id;
             rating.UserId = User.Identity.GetUserId();
 
-            _context.Venues.Where(v => v.Id == Id).Single().OverallRating = _context.Ratings.Where(r => r.VenueId == Id).ToList().Average(r => r.Rank);
-
+            try
+            {
+                _context.Venues.Where(v => v.Id == Id).Single().OverallRating = _context.Ratings.Where(r => r.VenueId == Id).ToList().Average(r => r.Rank);
+            }
+            catch (InvalidOperationException)
+            {
+                _context.Venues.Where(v => v.Id == Id).Single().OverallRating = rank;
+            }
             _context.Ratings.Add(rating);
             _context.SaveChanges();
 
