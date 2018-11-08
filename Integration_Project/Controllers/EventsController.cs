@@ -407,5 +407,10 @@ namespace Integration_Project.Controllers
             _context.SaveChanges();
             return RedirectToAction("Details", new { id = eveId});
         }
+
+        //public List<Participants> GetParticipants(string EventId)
+        //{
+        //    var participants = _context.Participants.Where(x => x.Ev)
+        //}
     }
 }
