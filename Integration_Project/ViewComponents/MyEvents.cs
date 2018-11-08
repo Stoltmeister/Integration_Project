@@ -31,6 +31,8 @@ namespace Integration_Project.ViewComponents
             var query = from p in myParticipants
                         join e in _db.Events on p.EventId equals e.Id
                         select e;
+            query = query.Take(maxEvents);
+
             return query.AsQueryable().ToListAsync();
         }
     }
