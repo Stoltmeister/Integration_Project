@@ -440,14 +440,15 @@ namespace Integration_Project.Controllers
         [HttpPost]
         public IActionResult JoinConfirm(string id, string eveId)
         {
-            var userId = User.Identity.GetUserId();
+            var appId = User.Identity.GetUserId();
+            var userId = _context.StandardUsers.Where(x => x.ApplicationUser.Id == appId).Select(x => x.Id).FirstOrDefault();
             Participant part = new Participant();
             part.EventId = id;
             part.UserId = userId;
             part.ConfirmedDate = DateTime.Today;
             _context.Participants.Add(part);
             _context.SaveChanges();
-            return RedirectToAction();
+            return RedirectToAction("Details", new {id = id });
         }
     }
 }
