@@ -249,6 +249,12 @@ namespace Integration_Project.Data
                 }
             );
 
+            modelBuilder.Entity<EventOrganizer>().HasData(
+                new EventOrganizer { Id = 1, EventId = "1", IsCreator = true, UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
+                new EventOrganizer { Id = 2, EventId = "2", IsCreator = true, UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
+                new EventOrganizer { Id = 3, EventId = "3", IsCreator = true, UserId = "b7813711-0140-4696-b984-8bd4569c7bba" }
+            );
+
             modelBuilder.Entity<EventInterest>().HasData(
                 new EventInterest { Id = "1", EventId = "1", InterestId = "1" },
                 new EventInterest { Id = "2", EventId = "2", InterestId = "2" },

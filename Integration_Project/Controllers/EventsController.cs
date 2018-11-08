@@ -74,6 +74,7 @@ namespace Integration_Project.Controllers
             eveInterests.AddedInterests = likedInterests;
             eveInterests.Interests = likedInterests;
             eveInterests.CurrentEvent = @event;
+            ViewBag.googleMapsKey = ApiKeys.googleMapsKey;
             return View(eveInterests);
         }
 
