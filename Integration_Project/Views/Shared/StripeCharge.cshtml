@@ -2,7 +2,10 @@
 @inject IOptions<StripeSettings> Stripe
 
 <form action="/Events/Charge" method="POST">
+    <br />
     <article>
+        <h3>Premium Upgrade</h3>
+        <p>Premium events will be featured and given priority in search. This is a great way to help spread the word about your awesome event!</p>
         <label>Amount: $5.00</label>
     </article>
     <script src="//checkout.stripe.com/v2/checkout.js"

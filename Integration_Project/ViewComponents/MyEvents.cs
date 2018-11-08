@@ -28,10 +28,16 @@ namespace Integration_Project.ViewComponents
             string userId = User.Identity.GetUserId();
             var standardUser = _db.StandardUsers.Where(u => u.ApplicationUserId.Equals(userId)).FirstOrDefault();
             var myParticipants = _db.Participants.Where(p => p.UserId.Equals(standardUser.Id));
-            var query = from p in myParticipants
+            var participantsQuery = from p in myParticipants
                         join e in _db.Events on p.EventId equals e.Id
                         select e;
-            return query.AsQueryable().ToListAsync();
+            participantsQuery = participantsQuery.Take(maxEvents);
+            var organizerQuery = from su in _db.StandardUsers
+                                 join eo in _db.EventOrganizers on su.Id equals eo.UserId
+                                 join e in _db.Events on eo.EventId equals e.Id
+                                 select e;
+
+            return participantsQuery.Union(organizerQuery).AsQueryable().ToListAsync();
         }
     }
 }

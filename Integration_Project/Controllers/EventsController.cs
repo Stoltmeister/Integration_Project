@@ -425,17 +425,31 @@ namespace Integration_Project.Controllers
             return participants;
         }
 
-        public int ParticipantsCount(string EventId) 
+        public int? ParticipantsCount(string EventId) 
         {
             var participantFilter = _context.Participants.Where(x => x.EventId == EventId).Select(x => x.UserId).ToList();
-            int count = participantFilter.Count();
+            int? count = participantFilter.Count();
             return count;
         }
 
         public IActionResult JoinConfirm (string id)
         {
+            var eve = _context.Events.Where(x => x.Id == id).FirstOrDefault();
+            return View(eve);
+        }
 
-            return View();
+        [HttpPost]
+        public IActionResult JoinConfirm(string id, string eveId)
+        {
+            var appId = User.Identity.GetUserId();
+            var userId = _context.StandardUsers.Where(x => x.ApplicationUser.Id == appId).Select(x => x.Id).FirstOrDefault();
+            Participant part = new Participant();
+            part.EventId = id;
+            part.UserId = userId;
+            part.ConfirmedDate = DateTime.Today;
+            _context.Participants.Add(part);
+            _context.SaveChanges();
+            return RedirectToAction("Details", new {id = id });
         }
     }
 }

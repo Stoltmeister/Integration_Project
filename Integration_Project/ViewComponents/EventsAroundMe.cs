@@ -18,17 +18,19 @@ namespace Integration_Project.ViewComponents
             _db = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int maxEvents)
+        public async Task<IViewComponentResult> InvokeAsync(int maxEvents, bool includePrivate)
         {
-            var items = await GetEventsAsync(maxEvents);
+            var items = await GetEventsAsync(maxEvents, includePrivate);
             return View(items);
         }
-        private Task<List<Event>> GetEventsAsync(int maxEvents)
+        private Task<List<Event>> GetEventsAsync(int maxEvents, bool includePrivate)
         {
             string userId = User.Identity.GetUserId();
             var standardUser = _db.StandardUsers.Where(u => u.ApplicationUserId.Equals(userId)).FirstOrDefault();
             int standardUserZipcode = standardUser.ZipCode;
-            return _db.Events.Where(e => e.Venues.Zipcode == standardUserZipcode).Take(maxEvents).ToListAsync();
+            var eventsAroundMe = _db.Events.Where(e => e.Venues.Zipcode == standardUserZipcode).Take(maxEvents);
+            eventsAroundMe = (includePrivate) ? eventsAroundMe : eventsAroundMe.Where(e => e.IsPrivate == false);
+            return eventsAroundMe.ToListAsync();
         }
     }
 }

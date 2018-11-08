@@ -1,7 +1,32 @@
-﻿
+﻿@model Integration_Project.Models.Event
 @{
     ViewData["Title"] = "JoinConfirm";
 }
 
-<h2>JoinConfirm</h2>
+<h2>Confirm</h2>
+@using (Html.BeginForm())
+{
 
+<div>
+    <h4>Are you sure you want to join this event?</h4>
+</div>
+<div>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    @Html.HiddenFor(model => model.Id)
+    <button type="submit">Confirm</button>
+    <a asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+</div>
+}

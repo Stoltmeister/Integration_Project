@@ -212,34 +212,33 @@
     <h4>No Venue Assigned yet</h4>
     }
 </div>
-        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+<a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
+<a asp-action="Index">Back to List</a>
 
-<div class="container">
-        <h2>Participants</h2>
-        @if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
-        {
-            @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
-        }
-        else
-        {
-            <p>
-                This Event is currently full
-            </p>
-        }
+<h2>Participants</h2>
+@if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+{
+    @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
+}
+else
+{
+    <p>
+        This Event is currently full
+    </p>
+}
 
-    @foreach(var person in Model.Participants)
-    {
-        <div>
-            @person.FirstName @person.LastName
-        </div>
-    }
 
-    <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-    </br>
-    <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
+@foreach(var person in Model.Participants)
+{
+<div>
+    @person.FirstName @person.LastName
 </div>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
+<a asp-action="Index">Back to List</a> | 
+<a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
+
 
 
 
