@@ -24,12 +24,29 @@ else
     @{
         foreach (Venue venue in Model)
         {
-    <div class="col-sm-4">
-        @Html.Partial("_VenueSummary", venue)
-    </div>
+            <div class="col-sm-4">
+                @Html.Partial("_VenueSummary", venue)
+            </div>
         }
+
+
     }
 </div>
+<p>----------------------------------------------------------------------------------------------------------------------------------------------</p>
+@{ 
+    for(int i = 0; i < Model.Count(); i++)
+    {
+        if (i % 3 == 0)
+        {
+            <div class="row">
+        }
+                <div class="col-sm-4">@Html.Partial("_VenueSummary", Model.ElementAt(i))</div>
+        if(i%3 == 2)
+        {
+            </div>
+        }
+    }
+}
 
 <div class="row">
     </br></br>
