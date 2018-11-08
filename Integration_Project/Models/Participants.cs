@@ -11,6 +11,9 @@ namespace Integration_Project.Models
     {
         [Key]
         public string Id { get; set; }
+        [ForeignKey("Event")]
+        public string EventId { get; set; }
+        public Event Event { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
         public StandardUser User { get; set; }
