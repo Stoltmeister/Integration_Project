@@ -30,6 +30,7 @@ namespace Integration_Project.ViewComponents
             int standardUserZipcode = standardUser.ZipCode;
             var eventsAroundMe = _db.Events.Where(e => e.Venues.Zipcode == standardUserZipcode).Take(maxEvents);
             eventsAroundMe = (includePrivate) ? eventsAroundMe : eventsAroundMe.Where(e => e.IsPrivate == false);
+
             return eventsAroundMe.ToListAsync();
         }
     }

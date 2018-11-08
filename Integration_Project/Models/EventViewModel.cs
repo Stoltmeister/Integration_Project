@@ -12,5 +12,6 @@ namespace Integration_Project.Models
         public List<Event> Events { get; set; }
         public Event Event { get; set; }
         public List<SelectListItem> SelectList { get; set; }
+        public bool IsOrganizer { get; set; }
     }
 }

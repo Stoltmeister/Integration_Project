@@ -21,9 +21,9 @@ namespace Integration_Project.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int maxEvents)
         {
             var items = await GetEventsAsync(maxEvents);
-            return View(items);
+            return View("/Views/Shared/Components/EventList/Default.cshtml", items);
         }
-        private Task<List<Event>> GetEventsAsync(int maxEvents)
+        private async Task<List<EventViewModel>> GetEventsAsync(int maxEvents)
         {
             string userId = User.Identity.GetUserId();
             var standardUser = _db.StandardUsers.Where(u => u.ApplicationUserId.Equals(userId)).FirstOrDefault();
@@ -37,7 +37,19 @@ namespace Integration_Project.ViewComponents
                                  join e in _db.Events on eo.EventId equals e.Id
                                  select e;
 
-            return participantsQuery.Union(organizerQuery).AsQueryable().ToListAsync();
+            var eventsResults = participantsQuery.Union(organizerQuery);
+
+            var viewModelResults = new List<EventViewModel>();
+            foreach (Event e in eventsResults)
+            {
+                EventViewModel viewModel = new EventViewModel
+                {
+                    Event = e,
+                    IsOrganizer = organizerQuery.Contains(e)
+                };
+                viewModelResults.Add(viewModel);
+            }
+            return viewModelResults;
         }
     }
 }
