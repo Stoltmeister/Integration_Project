@@ -4,77 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<div>
-    @await Component.InvokeAsync("EventsAroundMe")
+<h2>Hello, User!</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        @await Component.InvokeAsync("MyEvents")
+    </div>
+    <div class="col-lg-6">
+        @await Component.InvokeAsync("EventsAroundMe")
+    </div>
 </div>
 
-<h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Model.ApplicationUser.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Bio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.ZipCode)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
-                <a asp-action="InterestSelection" asp-route-id="@Model.Id">InterestSelection</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
