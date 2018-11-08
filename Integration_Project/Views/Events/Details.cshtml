@@ -223,7 +223,7 @@
         <div class="table-bordered">
             @foreach (var person in Model.Participants)
             {
-                @person.FirstName @person.LastName<br>
+                @Html.ActionLink(@person.FirstName+" "+@person.LastName, "Profile", new { id = person.Id, eId = Model.CurrentEvent.Id})<br>
             }
         </div>
         @if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
