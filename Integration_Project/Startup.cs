@@ -75,7 +75,7 @@ namespace Integration_Project
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            StripeConfiguration.SetApiKey(ApiKeys.stripeSecretKey);
+            StripeConfiguration.SetApiKey("sk_test_Jlew9ceAAyewSm37S0p88q00");
         }
     }
 }

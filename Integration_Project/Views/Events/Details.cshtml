@@ -26,8 +26,6 @@
     <hr />
     <div class="container">
         <div class="row">
-
-<<<<<<< HEAD
     <dl class="dl-horizontal col-md-4">
         <dt>
             @Html.DisplayNameFor(model => model.CurrentEvent.Name)
@@ -204,7 +202,7 @@
                     }
                        </script>
                        <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                               async defer><</script>
+                               async defer></script>
                    </div>
                }
                else
@@ -214,7 +212,6 @@
                    </div>
                }
                </div>
-=======
             <dl class="dl-horizontal col-md-4">
                 <dt>
                     @Html.DisplayNameFor(model => model.CurrentEvent.Name)
@@ -299,9 +296,9 @@
                 <a asp-action="Index">Back to List</a>
             </div>
         </div>
+            <div>
                 <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
             </div>
->>>>>>> d075a7192470edb9ac87de354228058aabfd7365
     </div>
 
 
