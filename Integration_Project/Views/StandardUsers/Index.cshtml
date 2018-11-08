@@ -4,14 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Hello, User!</h2>
+<h2>Hello, @Model.FirstName!</h2>
 
 <div class="row">
     <div class="col-lg-6">
-        @await Component.InvokeAsync("MyEvents")
+        @await Component.InvokeAsync("MyEvents", new { maxEvents = 5 })
     </div>
     <div class="col-lg-6">
-        @await Component.InvokeAsync("EventsAroundMe")
+        @await Component.InvokeAsync("EventsAroundMe", new { maxEvents = 5 })
     </div>
 </div>
 

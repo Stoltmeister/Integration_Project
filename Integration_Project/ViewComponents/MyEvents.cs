@@ -17,14 +17,14 @@ namespace Integration_Project.ViewComponents
             _db = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int maxEvents)
         {
-            var items = await GetEventsAsync();
+            var items = await GetEventsAsync(maxEvents);
             return View(items);
         }
-        private Task<List<Event>> GetEventsAsync()
+        private Task<List<Event>> GetEventsAsync(int maxEvents)
         {
-            return _db.Events.ToListAsync();
+            return _db.Events.Take(maxEvents).ToListAsync();
         }
     }
 }
