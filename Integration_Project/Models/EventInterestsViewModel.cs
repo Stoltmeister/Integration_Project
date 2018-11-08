@@ -11,6 +11,8 @@ namespace Integration_Project.Models
         public List<Interest> Interests { get; set; }
         public List<Interest> AddedInterests { get; set; }
         public Venue CurrentVenue { get; set; }
+        public List<StandardUser> Participants { get; set; }
+        public int particpantCount { get; set; }
         public string Forecast = "Not Available";
     }
 }
