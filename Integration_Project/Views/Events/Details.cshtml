@@ -17,11 +17,8 @@
 }
 </br>
 <div class="row">
-    <div class="col-md-2">
-        <h2>Details</h2>
-        <h4>@Model.CurrentEvent.Name</h4>
-    </div>
-    <div class="col-md-10">
+
+    <div class="text-center">
         <img src=@imgSrc alt="" height="200" width="300" />
     </div>
 </div>
@@ -29,102 +26,100 @@
 
 
 
-
+<style>
+    .table-bordered{
+        padding: 5px;
+    }
+    .col-md-4{
+        border: groove;
+    }
+    .col-md-6{
+        border: groove;
+    }
+    .col-md-8{
+        border:groove;
+    }
+</style>
 
 <div class="row">
     <hr />
     
-    <dl class="dl-horizontal col-md-4">
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.StartDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.EndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.EndDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.Premium)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.IsPrivate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.IsPrivate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.IsWeatherDependent)
-        </dd>
-        @if(Model.CurrentEvent.IsWeatherDependent == true)
-        {
+    <div class="col-md-4">
+        <div class="text-center"><h2>Event Information</h2></div>
+        <dl class="table-bordered">
             <dt>
-                @Html.DisplayNameFor(model => model.Forecast)
+                @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Forecast)
+                @Html.DisplayFor(model => model.CurrentEvent.StartDate)
             </dd>
-        }
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.MinParticipants)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.MinParticipants)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.MaxParticipants)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.CanInviteParticipants)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
-        </dd>
-    </dl>
-
-    <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-    <a asp-action="Index" asp-controller="Search">Back to Search</a>
-
-</div>
-
-<div class="col-md-4">
-    @foreach(var item in Model.AddedInterests)
-    {
-        <p>
-            @item.Name : <i>@item.Description</i>
-        </p>
-    }
-        <div>
-            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>  | 
-            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add or Change Venue</a>
-        </div>
-</div>
-
-
-<h2>Venue</h2>
-<div class="row">
-    @if (Model.CurrentVenue != null)
-     {
-        <div class="col-md-6">
-            <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.EndDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.EndDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.Premium)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.IsPrivate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.IsPrivate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.IsWeatherDependent)
+            </dd>
+            @if (Model.CurrentEvent.IsWeatherDependent == true)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Forecast)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Forecast)
+                </dd>
+            }
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.MinParticipants)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.MinParticipants)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.MaxParticipants)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentEvent.CanInviteParticipants)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
+            </dd>
+        </dl>
+        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
+        <a asp-action="Index" asp-controller="Search">Back to Search</a>
+    </div>
+    <div class="col-md-8">
+        <div class="text-center"><h2>Venue Information</h2></div>
+        @if (Model.CurrentVenue != null)
+         {
+         <div class="col-md-6">
+            <dl class="table-bordered">
                 <dt>
                     @Html.DisplayNameFor(model => model.CurrentVenue.Name)
                 </dt>
@@ -155,17 +150,18 @@
                 <dd>
                     @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
                 </dd>
-            </dl> 
+            </dl>
+            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
         </div>
-        <div class="col-md-6">
-            <style>
-                #map {
-                    height: 400px;
-                    width: 100%;
-                }
-            </style>
-            <div id="map"></div>
-            <script>
+            <div class="col-md-6">
+                <style>
+                    #map {
+                        height: 400px;
+                        width: 100%;
+                    }
+                </style>
+                <div id="map"></div>
+                <script>
                 function initMap() {
                     var location = {
                         lat: @Model.CurrentVenue.Latitude,
@@ -201,38 +197,58 @@
                             infowindow.open(map, marker);
                     });
                 }
-            </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                    async defer></script>
-        </div>
-     }
-     else
-     {
-     <h4>No Venue Assigned yet</h4>
-     }
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
+                        async defer></script>
+            </div>
+        }
+        else
+        {
+            <h4>No Venue Assigned yet</h4>
+        }
+    </div>
 </div>
 
-<h2>Participants</h2>
-@if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
- {
-    @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
- }
-else
-{
-    <p>
-        This Event is currently full
-    </p>
-}
 
 
-@foreach(var person in Model.Participants)
- {
-    @person.FirstName @person.LastName
- }
+<div class="row">
+    <hr />
+    <div class="col-md-6">
+        <h3>Interests</h3>
+        <div class="table-bordered">
+            @foreach (var item in Model.AddedInterests)
+            {
+                <p>
+                    @item.Name : <i>@item.Description</i>
+                </p>
+            }
+        </div>
+        <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
 
-<a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-<a asp-action="Index">Back to List</a> | 
-<a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
+    </div>
+    <div class="col-md-6">
+        <h2>Participants</h2>
+        <div class="table-bordered">
+            @foreach (var person in Model.Participants)
+            {
+                @person.FirstName @person.LastName<br>
+            }
+        </div>
+        @if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+        {
+            @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id })
+        }
+        else
+        {
+            <p>
+                This Event is currently full
+            </p>
+        }
+    </div>
+</div>
+
+
+
 
 
 
