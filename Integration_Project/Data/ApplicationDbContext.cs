@@ -23,6 +23,7 @@ namespace Integration_Project.Data
         public DbSet<VenueInterest> VenueInterests { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<EventOrganizer> EventOrganizers { get; set; }
+        public DbSet<Participants> Participants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
