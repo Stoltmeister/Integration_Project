@@ -24,7 +24,9 @@ else
     @{
         foreach (Venue venue in Model)
         {
-            @Html.Partial("VenueSummary", venue)
+    <div class="col-sm-4">
+        @Html.Partial("VenueSummary", venue)
+    </div>
         }
     }
 </div>

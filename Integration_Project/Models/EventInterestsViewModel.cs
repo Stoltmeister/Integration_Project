@@ -10,5 +10,7 @@ namespace Integration_Project.Models
         public Event CurrentEvent { get; set; }
         public List<Interest> Interests { get; set; }
         public List<Interest> AddedInterests { get; set; }
+        public Venue CurrentVenue { get; set; }
+        public string Forecast = "Not Available";
     }
 }

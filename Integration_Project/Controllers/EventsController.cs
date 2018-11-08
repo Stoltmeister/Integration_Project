@@ -36,31 +36,37 @@ namespace Integration_Project.Controllers
             {
                 return NotFound();
             }
-
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
                 return NotFound();
             }
-
             EventInterestsViewModel eveInterests = new EventInterestsViewModel();
-            var eve = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (eve == null)
-            {
-                return NotFound();
-            }
             List<Interest> likedInterests = new List<Interest>();
-            var interestEntries = await _context.EventInterests.Include(v => v.Interests).Where(i => i.EventId == eve.Id).ToListAsync();
+            var currentVenue = _context.Venues.Where(x => x.Id == @event.VenueId).FirstOrDefault();
+            var interestEntries = await _context.EventInterests.Include(v => v.Interests).Where(i => i.EventId == @event.Id).ToListAsync();
             foreach (EventInterest i in interestEntries)
             {
                 likedInterests.Add(i.Interests);
             }
+            if(currentVenue != null)
+            {
+                WeatherApi weather = new WeatherApi();
+                bool checkDate = weather.CheckDateRange(@event.StartDate);
+                if(checkDate != false)
+                {
+                    string request = weather.SetRequestString(currentVenue.City, currentVenue.State);
+                    var forecastData = weather.GetForecast(request);
+                    TimeSpan dayIndex = @event.StartDate - DateTime.Today;
+                    var forecastDay = forecastData[dayIndex.Days];
+                    eveInterests.Forecast = forecastDay["text"];
+                }
+                
+            }
+            eveInterests.CurrentVenue = currentVenue;
             eveInterests.AddedInterests = likedInterests;
             eveInterests.Interests = likedInterests;
-            eveInterests.CurrentEvent = eve;
-
+            eveInterests.CurrentEvent = @event;
             return View(eveInterests);
         }
 
@@ -316,10 +322,57 @@ namespace Integration_Project.Controllers
             EventVenueViewModel eventVenue = new EventVenueViewModel();
             eventVenue.currentVenue = currentVenue;
             eventVenue.currentEvent = currentEvent;
+            TempData["startDate"] = currentEvent.StartDate;
+            TempData["endDate"] = currentEvent.EndDate;
+            TempData["eveId"] = currentEvent.Id;
             var Venues = _context.Venues.ToList();
             eventVenue.Venues = Venues;
-            
             return View(eventVenue);
+        }
+        [HttpPost]
+        public IActionResult SelectVenue(string venueChoice, string id)
+        {
+            
+            return RedirectToAction("ConfirmVenuePick", new { venueId = venueChoice});
+        }
+
+        public IActionResult ConfirmVenuePick(string venueId)
+        {
+            WeatherApi weather = new WeatherApi();
+            var start = (DateTime)TempData["startDate"];
+            var eveId = (string)TempData["eveId"];
+            EventVenueViewModel vm = new EventVenueViewModel();
+            var ven = _context.Venues.Where(x => x.Id == venueId).FirstOrDefault();
+            var eve = _context.Events.Where(x => x.Id == eveId).FirstOrDefault();
+            vm.currentVenue = ven;
+            vm.currentEvent = eve;
+            bool withinRange = weather.CheckDateRange(start);
+            if(withinRange == true)
+            {
+                string location = weather.SetRequestString(ven.City, ven.State);
+                var forecast = weather.GetForecast(location);
+                TimeSpan day = start - DateTime.Today;
+                var startForecast = forecast[day.Days];
+                vm.Forecast = forecast[0].text;
+                int code = forecast[0].code;            
+                if(code < 20 || (code > 36 && code < 44) || (code > 44 && code < 48))
+                {
+                    string warning = "Warning, the weather forecast for this venue is poor";
+                    vm.Warning = warning;
+                }
+            }
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmVenuePick(IFormCollection form)
+        {
+            var eveId = form["currentEvent.Id"];
+            var venId = form["currentVenue.Id"];
+            var eve = _context.Events.Where(x => x.Id == eveId).FirstOrDefault();
+            eve.VenueId = venId;
+            _context.SaveChanges();
+            return RedirectToAction("Details", new { id = eveId});
         }
     }
 }

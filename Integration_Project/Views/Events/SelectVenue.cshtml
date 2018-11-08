@@ -6,6 +6,9 @@
 <h2>SelectVenue</h2>
 
 <h2>Venues</h2>
+@using (Html.BeginForm())
+{
+
 
 @if (User.IsInRole("Standard"))
 {
@@ -24,7 +27,15 @@ else
     @{
         foreach (Venue venue in Model.Venues)
         {
-            @Html.Partial("VenueSummary", venue)
+
+        <div class="col-sm-4">
+            <div class="row">
+                <button value="@venue.Id" type="submit" name="venueChoice">Select Venue</button><br />
+            </div>
+            <div class="row">
+                @Html.Partial("VenueSummary", venue)
+            </div>
+        </div>
         }
     }
 </div>
@@ -107,3 +118,4 @@ else
         </tbody>
     </table>
 </div>
+ }
