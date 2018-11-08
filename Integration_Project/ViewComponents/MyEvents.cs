@@ -1,5 +1,6 @@
 ﻿using Integration_Project.Data;
 using Integration_Project.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,7 +25,13 @@ namespace Integration_Project.ViewComponents
         }
         private Task<List<Event>> GetEventsAsync(int maxEvents)
         {
-            return _db.Events.Take(maxEvents).ToListAsync();
+            string userId = User.Identity.GetUserId();
+            var standardUser = _db.StandardUsers.Where(u => u.ApplicationUserId.Equals(userId)).FirstOrDefault();
+            var myParticipants = _db.Participants.Where(p => p.UserId.Equals(standardUser.Id));
+            var query = from p in myParticipants
+                        join e in _db.Events on p.EventId equals e.Id
+                        select e;
+            return query.AsQueryable().ToListAsync();
         }
     }
 }

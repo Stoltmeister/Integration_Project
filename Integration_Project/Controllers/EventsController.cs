@@ -66,6 +66,10 @@ namespace Integration_Project.Controllers
                 }
                 
             }
+            var participants = GetParticipants(@event.Id);
+            var PCount = ParticipantsCount(@event.Id);
+            eveInterests.Participants = participants;
+            eveInterests.particpantCount = PCount;
             eveInterests.CurrentVenue = currentVenue;
             eveInterests.AddedInterests = likedInterests;
             eveInterests.Interests = likedInterests;
@@ -261,7 +265,7 @@ namespace Integration_Project.Controllers
         //RemoveInterest
         public async Task<IActionResult> RemoveInterest(string interestId, string eventId)
         {
-            var currentVenue = await _context.Events.FirstOrDefaultAsync(v => v.Id == eventId);
+            var currentEvent = await _context.Events.FirstOrDefaultAsync(v => v.Id == eventId); //uneeded?
             var currentEventInterests = await _context.EventInterests.Include(v => v.Interests).Where(v => v.EventId == eventId).ToListAsync();
             EventInterest deletingInterest = currentEventInterests.Where(u => u.InterestId == interestId).SingleOrDefault();
             _context.EventInterests.Remove(deletingInterest);
@@ -408,9 +412,29 @@ namespace Integration_Project.Controllers
             return RedirectToAction("Details", new { id = eveId});
         }
 
-        //public List<Participants> GetParticipants(string EventId)
-        //{
-        //    var participants = _context.Participants.Where(x => x.Ev)
-        //}
+        public List<StandardUser> GetParticipants(string EventId)
+        {
+            var participantFilter = _context.Participants.Where(x => x.EventId == EventId).Select(x => x.UserId).ToList();
+            List<StandardUser> participants = new List<StandardUser>();
+            foreach(var userId in participantFilter)
+            {
+                var person = _context.StandardUsers.Where(x => x.Id == userId).FirstOrDefault();
+                participants.Add(person);
+            }
+            return participants;
+        }
+
+        public int ParticipantsCount(string EventId) 
+        {
+            var participantFilter = _context.Participants.Where(x => x.EventId == EventId).Select(x => x.UserId).ToList();
+            int count = participantFilter.Count();
+            return count;
+        }
+
+        public IActionResult JoinConfirm (string id)
+        {
+
+            return View();
+        }
     }
 }

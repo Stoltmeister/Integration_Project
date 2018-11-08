@@ -26,7 +26,6 @@
     <hr />
     <div class="container">
         <div class="row">
-<<<<<<< HEAD
             <dl class="dl-horizontal col-md-4">
                 <dt>
                     @Html.DisplayNameFor(model => model.CurrentEvent.Name)
@@ -103,7 +102,7 @@
             <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
             <a asp-action="Index">Back to List</a>
         </div>
-=======
+
 
     <dl class="dl-horizontal col-md-4">
         <dt>
@@ -181,7 +180,6 @@
     <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
     </div>
->>>>>>> 4a8e892fd3fd2cff041fbc98d4395a8eb42a2ce8
     </div>
     <div class="col-md-4">
         @foreach(var item in Model.AddedInterests)
@@ -575,12 +573,15 @@
             </p>
         }
     </div>
+    <div>
     @foreach(var person in Model.Participants)
     {
-        @Html.Display(person.FirstName) @Html.Display(person.LastName)
+        <div>
+            @person.FirstName @person.LastName
+        </div>
     }
-</div>
-
+    </div>
+    <div>
         <div>
             <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
             <a asp-action="Index">Back to List</a>
