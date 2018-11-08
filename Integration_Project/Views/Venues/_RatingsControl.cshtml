@@ -1,7 +1,5 @@
 ﻿@model Integration_Project.Models.Venue
-@{
-    <p>The overall rating for @Model.Name is @Model.OverallRating</p>
-}
+
 
 @{
     for (int i = 1; i <= 5; i++)
@@ -19,6 +17,10 @@
         @*<a href="#" name="Rank" data-rank="@i" data-Id="@Model.Id"><i class="@star"></i></a>*@
         <a asp-action="SetRating" asp-controller="Ratings" asp-route-id="@Model.Id" asp-route-rank=@i name="Rank" data-rank="@i" data-Id="@Model.Id"><i class="@star"></i></a>
     }
+}
+
+@{
+    <p>The overall rating for @Model.Name is @Model.OverallRating</p>
 }
 
 @*@{using (Html.BeginForm("SetRating", "Ratings", new { Model.Id }))
