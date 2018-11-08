@@ -20,11 +20,18 @@
         <div class="row">
             <div class="caption">
                 <div class="col-sm-12">
-                    <h4><a asp-controller="Events" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></h4>
+                    <h4><a asp-controller="Events" asp-action="Details" asp-route-id="@Model.Id">
+                        @{if (Model.Name == null)
+                            {
+                                @:ThisEventHasNoName
+                                  }
+                            else
+                            {
+                                @:@Model.Name
+                            }
+                        }
+                    </a></h4>
                 </div>
-                @*<div class="col-sm-6">
-                        <p>@Model.Description</p>
-                    </div>*@
             </div>
         </div>
     </div>
