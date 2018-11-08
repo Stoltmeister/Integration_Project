@@ -13,6 +13,7 @@ namespace Integration_Project.Models
         public Venue CurrentVenue { get; set; }
         public List<StandardUser> Participants { get; set; }
         public int? particpantCount { get; set; }
+        public bool isOrganizer { get; set; }
         public string Forecast = "Not Available";
     }
 }

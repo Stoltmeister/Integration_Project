@@ -33,7 +33,7 @@
 
 <div class="row">
     <hr />
-    
+
     <dl class="dl-horizontal col-md-4">
         <dt>
             @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
@@ -71,7 +71,7 @@
         <dd>
             @Html.DisplayFor(model => model.CurrentEvent.IsWeatherDependent)
         </dd>
-        @if(Model.CurrentEvent.IsWeatherDependent == true)
+        @if (Model.CurrentEvent.IsWeatherDependent == true)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.Forecast)
@@ -106,16 +106,16 @@
 </div>
 
 <div class="col-md-4">
-    @foreach(var item in Model.AddedInterests)
+    @foreach (var item in Model.AddedInterests)
     {
         <p>
             @item.Name : <i>@item.Description</i>
         </p>
     }
-        <div>
-            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>  | 
-            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add or Change Venue</a>
-        </div>
+    <div>
+        <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>  |
+        <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add or Change Venue</a>
+    </div>
 </div>
 
 
@@ -155,7 +155,7 @@
                 <dd>
                     @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
                 </dd>
-            </dl> 
+            </dl>
         </div>
         <div class="col-md-6">
             <style>
@@ -209,16 +209,16 @@
     }
     else
     {
-    <h4>No Venue Assigned yet</h4>
+        <h4>No Venue Assigned yet</h4>
     }
 </div>
 <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
 <a asp-action="Index">Back to List</a>
 
 <h2>Participants</h2>
-@if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+@if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
 {
-    @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
+    @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id })
 }
 else
 {
@@ -228,17 +228,22 @@ else
 }
 
 
-@foreach(var person in Model.Participants)
+@foreach (var person in Model.Participants)
 {
-<div>
-    @person.FirstName @person.LastName
-</div>
+    <div>
+        @person.FirstName @person.LastName
+    </div>
 }
 
 <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-<a asp-action="Index">Back to List</a> | 
+<a asp-action="Index">Back to List</a> |
 <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
 
 
 
 
+
+@if (Model.isOrganizer)
+{
+    @Html.ActionLink("Invite People", "Invite", new { Id = Model.CurrentEvent.Id })
+}

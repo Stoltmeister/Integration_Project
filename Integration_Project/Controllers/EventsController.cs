@@ -44,8 +44,13 @@ namespace Integration_Project.Controllers
             {
                 return NotFound();
             }
+            var currentUserId = User.Identity.GetUserId();
+            var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
+            var organizerId = await _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).SingleAsync();
+            bool isOrganizer = standardUserId == organizerId;
             EventInterestsViewModel eveInterests = new EventInterestsViewModel();
             List<Interest> likedInterests = new List<Interest>();
+
             var currentVenue = _context.Venues.Where(x => x.Id == @event.VenueId).FirstOrDefault();
             var interestEntries = await _context.EventInterests.Include(v => v.Interests).Where(i => i.EventId == @event.Id).ToListAsync();
             foreach (EventInterest i in interestEntries)
@@ -74,6 +79,7 @@ namespace Integration_Project.Controllers
             eveInterests.AddedInterests = likedInterests;
             eveInterests.Interests = likedInterests;
             eveInterests.CurrentEvent = @event;
+            eveInterests.isOrganizer = isOrganizer;
             ViewBag.googleMapsKey = ApiKeys.googleMapsKey;
             return View(eveInterests);
         }
@@ -127,9 +133,10 @@ namespace Integration_Project.Controllers
             eve.CreatedDate = DateTime.Today;
             eve.ModifiedDate = DateTime.Today;
             var userId = User.Identity.GetUserId();
+            var standardUserId = _context.StandardUsers.Where(x => x.ApplicationUserId == userId).Select(x => x.Id).FirstOrDefault();
             _context.Events.Add(eve);
             await _context.SaveChangesAsync();
-            EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = userId, IsCreator = true };
+            EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = standardUserId, IsCreator = true };
             _context.EventOrganizers.Add(creator);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = eve.Id });
@@ -450,6 +457,29 @@ namespace Integration_Project.Controllers
             _context.Participants.Add(part);
             _context.SaveChanges();
             return RedirectToAction("Details", new {id = id });
+        }
+
+        public IActionResult Invite(string id)
+        {
+            TempData["Id"] = id;
+            return View();          
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Invite(string email, int x)
+        {
+            string eventId = (string)TempData["Id"];
+            var eo = _context.EventOrganizers.Where(e => e.EventId == eventId).Select(u => u.UserId).Single();
+            var standardUser = _context.StandardUsers.Where(u => u.Id == eo).Single();
+            var currentEvent = _context.Events.Where(e => e.Id == eventId).Single();
+            string body = standardUser.FirstName + " has invited you to their event " + currentEvent.Name + "!" + "\n" +
+                "Please follow these instructions to join: \n" +
+                "1. If you do not have an account yet please go to localhost and sign up \n" +
+                "2. After registering your account please enter the following URL:\n" +
+                "localhost:1111/Details/" + eventId + "\n" +
+                "3. On the event page click join event if you are able to attend";
+            await Sendgrid.SendMail(email, "Your Invited!", body);
+            return RedirectToAction("Details", eventId);
         }
     }
 }
