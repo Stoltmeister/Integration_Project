@@ -34,13 +34,18 @@ namespace Integration_Project.Controllers
             _context.Ratings.Add(rating);
             _context.SaveChanges();
 
+            //rating = _context.Ratings.Include(r => r.Rating);
+            //rating = _context.Ratings.
+
+            //return rating;
+
             return RedirectToAction("Details", "Venues", _context.Venues.Where(v => v.Id == Id).Single());
         }
 
-        public PartialViewResult RatingsControl(string venueId)
-        {
-            Venue model = _context.Venues.Where(v => v.Id == venueId).Single();
-            return PartialView("_RatingsControl", model);
-        }
+        //public PartialViewResult RatingsControl(string venueId)
+        //{
+        //    Venue model = _context.Venues.Where(v => v.Id == venueId).Single();
+        //    return PartialView("_RatingsControl", model);
+        //}
     }
 }
