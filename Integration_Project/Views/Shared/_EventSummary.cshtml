@@ -1,0 +1,38 @@
+﻿@model Integration_Project.Models.Event
+
+<div>
+
+    <div class="thumbnail">
+        @{
+            var imgSrc = "Hello";
+            if (Model.EventPicture != null)
+            {
+                var base64 = Convert.ToBase64String(Model.EventPicture);
+                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+            else
+            {
+                imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg";
+            }
+
+        }
+        <img src=@imgSrc alt=<img src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg" />
+        <div class="row">
+            <div class="caption">
+                <div class="col-sm-12">
+                    <h4><a asp-controller="Events" asp-action="Details" asp-route-id="@Model.Id">
+                        @{if (Model.Name == null)
+                            {
+                                @:ThisEventHasNoName
+                                  }
+                            else
+                            {
+                                @:@Model.Name
+                            }
+                        }
+                    </a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
