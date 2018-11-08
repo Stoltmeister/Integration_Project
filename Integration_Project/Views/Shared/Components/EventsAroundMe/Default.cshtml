@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Integration_Project.Models.Event>
+
+@{
+    ViewData["Title"] = "Events Around Me";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">@ViewData["Title"]</h3>
+    </div>
+
+    <table class="table">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)<br />
+                    @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+Show All

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Integration_Project.Models;
+using Stripe;
+using Integration_Project.Assets;
 
 namespace Integration_Project.Controllers
 {
@@ -20,7 +22,7 @@ namespace Integration_Project.Controllers
             {
                 return View();
             }            
-        }
+        }        
 
         public IActionResult About()
         {

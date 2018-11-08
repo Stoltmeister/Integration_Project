@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.IO;
 using Microsoft.AspNet.Identity;
+using Stripe;
+using Integration_Project.Assets;
+using Event = Integration_Project.Models.Event;
 
 namespace Integration_Project.Controllers
 {
@@ -106,7 +109,7 @@ namespace Integration_Project.Controllers
 
         public ActionResult ConfirmCreate(string Event)
         {
-            Event eve = JsonConvert.DeserializeObject<Event>(Event);
+            Event eve = JsonConvert.DeserializeObject<Models.Event>(Event);
             TempData["EventRedirect"] = JsonConvert.SerializeObject(eve);
             return View(eve);
         }
@@ -249,7 +252,7 @@ namespace Integration_Project.Controllers
             }
             EventInterest eventInterest = new EventInterest();
             eventInterest.InterestId = interestId;
-            eventInterest.EventId = eventId;            
+            eventInterest.EventId = eventId;
             await _context.EventInterests.AddAsync(eventInterest);
             await _context.SaveChangesAsync();
             return RedirectToAction("InterestSelection", new { id = eventId });
@@ -304,6 +307,36 @@ namespace Integration_Project.Controllers
             return eve;
         }
 
+        public IActionResult GetCharge(string id)
+        {
+            TempData["EventId"] = id;
+            TempData["EventId1"] = id;
+            return View("StripeCharge");
+        }
+        [HttpPost]
+        public IActionResult Charge(string stripeEmail, string stripeToken)
+        {
+            var customers = new CustomerService();
+            var charges = new ChargeService();
+
+            var customer = customers.Create(new CustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new ChargeCreateOptions
+            {
+                Amount = 500,
+                Description = "Sample Charge",
+                Currency = "usd",
+                CustomerId = customer.Id
+            });
+            _context.Events.Where(e => e.Id == (string)TempData["EventId1"]).Single().Premium = 1;
+            _context.SaveChanges();
+            return View("ChargeConfirmation");
+        }
+
         public IActionResult SelectVenue(string id)
         {
             if (id == null)
@@ -312,7 +345,7 @@ namespace Integration_Project.Controllers
             }
             TempData["controllerCheck"] = "Event";
             TempData["eventId"] = id;
-            var currentVenueId =  _context.Events.Where(x => x.Id == id).Select(x => x.VenueId).FirstOrDefault();
+            var currentVenueId = _context.Events.Where(x => x.Id == id).Select(x => x.VenueId).FirstOrDefault();
             var currentVenue = _context.Venues.Where(x => x.Id == currentVenueId).FirstOrDefault();
             if (currentVenue == null)
             {
@@ -327,6 +360,10 @@ namespace Integration_Project.Controllers
             TempData["eveId"] = currentEvent.Id;
             var Venues = _context.Venues.ToList();
             eventVenue.Venues = Venues;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d075a7192470edb9ac87de354228058aabfd7365
             return View(eventVenue);
         }
         [HttpPost]
