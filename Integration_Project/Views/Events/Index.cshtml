@@ -9,6 +9,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+
+@{ 
+    foreach(Event _event in Model)
+    {
+        <div class="col-sm-4">@Html.Partial("_EventSummary", _event)</div>
+    }
+}
+
 <table class="table">
     <thead>
         <tr>

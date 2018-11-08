@@ -19,18 +19,24 @@ else
         Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
     </p>
 }
-    
-<div class="row">
-    @{
-        foreach (Venue venue in Model)
-        {
-    <div class="col-sm-4">
-        @Html.Partial("VenueSummary", venue)
-    </div>
-        }
-    }
-</div>
 
+@{ 
+    for(int i = 0; i < Model.Count(); i+=3)
+    {
+    <div class="row">
+        @{
+            for (int j = 0; j <= 2; j++)
+            {
+                @if (i + j == Model.Count()) { break; }
+                <div class="col-sm-4">
+
+                    @Html.Partial("_VenueSummary", Model.ElementAt(i + j))
+                </div>
+            }
+        }
+    </div>
+    }
+}
 <div class="row">
     </br></br>
     <h3>This table should be removed in the final product.</h3>

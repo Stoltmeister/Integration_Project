@@ -23,7 +23,7 @@ namespace Integration_Project.Data
         public DbSet<VenueInterest> VenueInterests { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<EventOrganizer> EventOrganizers { get; set; }
-        public DbSet<Participants> Participants { get; set; }
+        public DbSet<Participant> Participants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,25 @@ namespace Integration_Project.Data
                     LockoutEnd = null
                 }
             );
+
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
+                {
+                    Id = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6",
+                    UserName = "esoemad5@gmail.com",
+                    NormalizedUserName = "ESOEMAD5@GMAIL.COM",
+                    Email = "esoemad5@gmail.com",
+                    NormalizedEmail = "ESOEMAD5@GMAIL.COM",
+                    PasswordHash = "AQAAAAEAACcQAAAAEPDcXogAFBdXHB/ILP//pOgad2XY2YtsOMzQhutbq3vwWLMberWfDDTc5S0bKNtgiw==",
+                    SecurityStamp = "BEMZA2GJMIASDNCYCHHKQYFZCLX7TG3L",
+                    ConcurrencyStamp = "009d8a32-2338-41c6-8715-ba819eb861c2",
+                    PhoneNumber = null,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    LockoutEnd = null
+                }
+            );
             
             modelBuilder.Entity<StandardUser>().HasData(
                 new StandardUser
@@ -60,6 +79,21 @@ namespace Integration_Project.Data
                     City = "Milwaukee",
                     State = "WI",
                     ZipCode = 53202
+                }
+            );
+
+            modelBuilder.Entity<StandardUser>().HasData(
+                new StandardUser
+                {
+                    Id = "51e53b9a-f338-4211-9d7a-8be20bc068a9",
+                    ApplicationUserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6",
+                    Bio = "Code. Milwaukee. Games.",
+                    FirstName = "Elliot",
+                    LastName = "Soemadi",
+                    Email = "esoemad5@gmail.com",
+                    City = "Shorewood",
+                    State = "Wisconsin",
+                    ZipCode = 53211
                 }
             );
            
@@ -96,7 +130,15 @@ namespace Integration_Project.Data
                     Description = "American Football",
                     Verified = false,
                     CreationDate = new DateTime(2018, 11, 6)
-                }
+                },
+                new Interest
+                {
+                    Id = "5",
+                    Name = "Kites",
+                    Description = "Kite flying enthusiasts",
+                    Verified = false,
+                    CreationDate = new DateTime(2018, 11, 8)
+                } 
             );
 
             modelBuilder.Entity<Venue>().HasData(
@@ -216,13 +258,21 @@ namespace Integration_Project.Data
             modelBuilder.Entity<UserInterest>().HasData(
                 new UserInterest { Id = 1, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "1" },
                 new UserInterest { Id = 2, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "2" },
-                new UserInterest { Id = 3, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "3" }
+                new UserInterest { Id = 3, StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba", InterestId = "3" },
+                new UserInterest { Id = 4, StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9", InterestId = "4" }
                 );
 
             modelBuilder.Entity<VenueInterest>().HasData(
                 new VenueInterest { Id = 1, VenueID = "1", InterestId = "1"},
                 new VenueInterest { Id = 2, VenueID = "2", InterestId = "2"},
                 new VenueInterest { Id = 3, VenueID = "3", InterestId = "2"}
+            );
+
+            // Participants.
+
+            modelBuilder.Entity<Participant>().HasData(
+                new Participant { Id = "2", EventId = "1", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId= "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
+                new Participant { Id = "3", EventId = "2", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" }
             );
     
             
