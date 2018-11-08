@@ -12,105 +12,29 @@
     }
     else
     {
-        imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg";
+        imgSrc = "https://images.pexels.com/photos/534031/pexels-photo-534031.jpeg";
     }
 }
-<img src=@imgSrc alt="" height="200" width="300" />
-<h2>Details</h2>
+</br>
+<div class="row">
+    <div class="col-md-2">
+        <h2>Details</h2>
+        <h4>@Model.CurrentEvent.Name</h4>
+    </div>
+    <div class="col-md-10">
+        <img src=@imgSrc alt="" height="200" width="300" />
+    </div>
+</div>
 
 
 
 
-<div>
-    <h4>Event</h4>
+
+
+<div class="row">
     <hr />
-    <div class="container">
-        <div class="row">
-            <dl class="dl-horizontal col-md-4">
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.Name)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Name)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.StartDate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.EndDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.EndDate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.Description)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Description)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Premium)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.IsPrivate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.IsPrivate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.IsWeatherDependent)
-                </dd>
-                @if(Model.CurrentEvent.IsWeatherDependent == true)
-                {
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Forecast)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Forecast)
-                    </dd>
-                }
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.MinParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.MinParticipants)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.MaxParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.CanInviteParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
-                </dd>
-            </dl>
-        </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>
-
-
+    
     <dl class="dl-horizontal col-md-4">
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentEvent.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentEvent.Name)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
         </dt>
@@ -175,427 +99,141 @@
             @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
         </dd>
     </dl>
-</div>
-<div>
+
     <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-    </div>
-    </div>
-    <div class="col-md-4">
-        @foreach(var item in Model.AddedInterests)
-        {
-            <p>
-                @item.Name<br />
-                @item.Description
-            </p>
-        }
-            <div>
-                <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
-                <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add or Change Venue</a>
-            </div>
-    </div>
-    <div class="container">
-           <h2>Venue</h2>
-           <div class="row">
-               @if (Model.CurrentVenue != null)
-               {
-                   <div class="col-md-6">
-                       <dl>
-                           <dt>
-                               @Html.DisplayNameFor(model => model.CurrentVenue.Name)
-                           </dt>
-                           <dd>
-                               @Html.DisplayFor(model => model.CurrentVenue.Name)
-                           </dd>
-                           <dt>
-                               @Html.DisplayNameFor(model => model.CurrentVenue.Description)
-                           </dt>
-                           <dd>
-                               @Html.DisplayFor(model => model.CurrentVenue.Description)
-                           </dd>
-                           <dt>
-                               @Html.DisplayNameFor(model => model.CurrentVenue.City)
-                           </dt>
-                           <dd>
-                               @Html.DisplayFor(model => model.CurrentVenue.City)
-                           </dd>
-                           <dt>
-                               @Html.DisplayNameFor(model => model.CurrentVenue.State)
-                           </dt>
-                           <dd>
-                               @Html.DisplayFor(model => model.CurrentVenue.State)
-                           </dd>
-                           <dt>
-                               @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
-                           </dt>
-                           <dd>
-                               @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
-                           </dd>
-                       </dl> 
-                   </div>
-                   <div class="col-md-6">
-                       <style>
-                           #map {
-                               height: 400px;
-                               width: 100%;
-                           }
-                       </style>
-                       <div id="map"></div>
-                       <script>
-        function initMap() {
+    <a asp-action="Index" asp-controller="Search">Back to Search</a>
 
-                        var location = {
-                lat: @Model.CurrentVenue.Latitude,
-                lng: @Model.CurrentVenue.Longitude
-            }
+</div>
 
-                    var options = {
-                zoom: 13,
-                center: location
-            }
-
-            var map = new google.maps.Map(document.getElementById('map'), options);
-
-                    addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
-        }
-
-        function addMarker(latitude, longitude, title, description, map) {
-                        var latLng = new google.maps.LatLng(latitude, longitude);
-                        var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
-
-                        var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: title,
-                map: map,
-                draggable: false
-            });
-
-            google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.open(map, marker);
-                    });
-                    }
-                       </script>
-                       <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                               async defer></script>
-                   </div>
-               }
-               else
-               {
-                   <div>
-                       <h4>No Venue Assigned yet</h4>
-                   </div>
-               }
-               </div>
-            <dl class="dl-horizontal col-md-4">
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.Name)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Name)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.StartDate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.EndDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.EndDate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.Description)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Description)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Premium)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.IsPrivate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.IsPrivate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.IsWeatherDependent)
-                </dd>
-                @if (Model.CurrentEvent.IsWeatherDependent == true)
-                {
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Forecast)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Forecast)
-                    </dd>
-                }
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.MinParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.MinParticipants)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.MaxParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.CanInviteParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
-                </dd>
-            </dl>
-        </div>
+<div class="col-md-4">
+    @foreach(var item in Model.AddedInterests)
+    {
+        <p>
+            @item.Name : <i>@item.Description</i>
+        </p>
+    }
         <div>
-            <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        @foreach (var item in Model.AddedInterests)
-        {
-            <p>
-                @item.Name<br />
-                @item.Description
-            </p>
-        }
-        <div>
-            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
+            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>  | 
             <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add or Change Venue</a>
         </div>
-    </div>
-    <div class="container">
-        <h2>Venue</h2>
-        <div class="row">
-            @if (Model.CurrentVenue != null)
-            {
-                <div class="col-md-6">
-                    <dl>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.CurrentVenue.Name)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.CurrentVenue.Name)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.CurrentVenue.Description)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.CurrentVenue.Description)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.CurrentVenue.City)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.CurrentVenue.City)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.CurrentVenue.State)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.CurrentVenue.State)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
-                        </dd>
-                    </dl>
-                </div>
-                <div class="col-md-6">
-                    <style>
-                        #map {
-                            height: 400px;
-                            width: 100%;
-                        }
-                    </style>
-                    <div id="map"></div>
-                    <script>
-        function initMap() {
+</div>
 
-                        var location = {
-                lat: @Model.CurrentVenue.Latitude,
-                lng: @Model.CurrentVenue.Longitude
-            }
+
+<h2>Venue</h2>
+<div class="row">
+    @if (Model.CurrentVenue != null)
+     {
+        <div class="col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.City)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.State)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.State)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
+                </dd>
+            </dl> 
+        </div>
+        <div class="col-md-6">
+            <style>
+                #map {
+                    height: 400px;
+                    width: 100%;
+                }
+            </style>
+            <div id="map"></div>
+            <script>
+                function initMap() {
+                    var location = {
+                        lat: @Model.CurrentVenue.Latitude,
+                        lng: @Model.CurrentVenue.Longitude
+                    }
 
                     var options = {
-                zoom: 13,
-                center: location
-            }
+                        zoom: 13,
+                        center: location
+                    }
 
-            var map = new google.maps.Map(document.getElementById('map'), options);
+                    var map = new google.maps.Map(document.getElementById('map'), options);
 
                     addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
-        }
+                }
 
-        function addMarker(latitude, longitude, title, description, map) {
-                        var latLng = new google.maps.LatLng(latitude, longitude);
-                        var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
+                function addMarker(latitude, longitude, title, description, map) {
+                    var latLng = new google.maps.LatLng(latitude, longitude);
+                    var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
 
-                        var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: title,
-                map: map,
-                draggable: false
-            });
-
-            google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.open(map, marker);
+                    var infowindow = new google.maps.InfoWindow({
+                    content: contentString
                     });
-                    }
-                    </script>
-                    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                            async defer></script>
-                </div>
-            }
-            else
-            {
-                <div>
-                    <h4>No Venue Assigned yet</h4>
-                </div>
-            }
-        </div>
-        <dl class="dl-horizontal col-md-4">
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.Name)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.StartDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.StartDate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.EndDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.EndDate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.Description)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.Description)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.Premium)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.IsPrivate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.IsPrivate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.IsWeatherDependent)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.MinParticipants)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.MinParticipants)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.MaxParticipants)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentEvent.CanInviteParticipants)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
-            </dd>
-        </dl>
-        <div class="col-md-4">
-            <h3>Relevant Interests</h3>
-            @foreach (var item in Model.AddedInterests)
-            {
-                <p>
-                    @item.Name<br />
-                    @item.Description
-                </p>
-            }
-            <div>
-                <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            @Html.ActionLink("Get Premium", "GetCharge", "Events", new { id = Model.CurrentEvent.Id })
-        </div>
-            <div>
-                <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
-            </div>
 
-</div>
-<div class="container">
-    <div class="row">
-        <h2>Participants</h2>
-        @if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
-        {
-            @Html.ActionLink("Join This Event +", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
-        }
-        else
-        {
-            <p>
-                This Event is currently full
-            </p>
-        }
-    </div>
-    <div>
-        @if (Model.particpantCount != 0)
-        {
-            @foreach (var person in Model.Participants)
-            {
-                <div>
-                    @person.FirstName @person.LastName
-                </div>
-            }
-        }
-    </div>
-    }
-   
-    <div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        title: title,
+                        map: map,
+                        draggable: false
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                    });
+                }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
+                    async defer></script>
         </div>
-    </div>
-    <div>
-        <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
-    </div>
+     }
+     else
+     {
+     <h4>No Venue Assigned yet</h4>
+     }
 </div>
+
+<h2>Participants</h2>
+@if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+ {
+    @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
+ }
+else
+{
+    <p>
+        This Event is currently full
+    </p>
+}
+
+
+@foreach(var person in Model.Participants)
+ {
+    @person.FirstName @person.LastName
+ }
+
+<a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
+<a asp-action="Index">Back to List</a> | 
+<a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
+
 
 
 
