@@ -574,13 +574,18 @@
         }
     </div>
     <div>
-    @foreach(var person in Model.Participants)
-    {
-        <div>
-            @person.FirstName @person.LastName
-        </div>
-    }
+        @if (Model.particpantCount != 0)
+        {
+            @foreach (var person in Model.Participants)
+            {
+                <div>
+                    @person.FirstName @person.LastName
+                </div>
+            }
+        }
     </div>
+    }
+   
     <div>
         <div>
             <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
