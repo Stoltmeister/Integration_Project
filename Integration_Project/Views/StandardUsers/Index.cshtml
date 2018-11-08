@@ -11,7 +11,7 @@
         @await Component.InvokeAsync("MyEvents", new { maxEvents = 5 })
     </div>
     <div class="col-lg-6">
-        @await Component.InvokeAsync("EventsAroundMe", new { maxEvents = 5 })
+        @await Component.InvokeAsync("EventsAroundMe", new { maxEvents = 5, includePrviate = false })
     </div>
 </div>
 
