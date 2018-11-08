@@ -21,17 +21,22 @@ namespace Integration_Project.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int maxEvents, bool includePrivate)
         {
             var items = await GetEventsAsync(maxEvents, includePrivate);
-            return View(items);
+            return View("/Views/Shared/Components/EventList/Default.cshtml", items);
         }
-        private Task<List<Event>> GetEventsAsync(int maxEvents, bool includePrivate)
+        private async Task<List<EventViewModel>> GetEventsAsync(int maxEvents, bool includePrivate)
         {
             string userId = User.Identity.GetUserId();
             var standardUser = _db.StandardUsers.Where(u => u.ApplicationUserId.Equals(userId)).FirstOrDefault();
             int standardUserZipcode = standardUser.ZipCode;
             var eventsAroundMe = _db.Events.Where(e => e.Venues.Zipcode == standardUserZipcode).Take(maxEvents);
             eventsAroundMe = (includePrivate) ? eventsAroundMe : eventsAroundMe.Where(e => e.IsPrivate == false);
+            List<EventViewModel> resultsViewModels = new List<EventViewModel>();
+            foreach (Event e in eventsAroundMe)
+            {
+                resultsViewModels.Add(new EventViewModel { Event = e });
+            }
 
-            return eventsAroundMe.ToListAsync();
+            return resultsViewModels;
         }
     }
 }
