@@ -360,10 +360,6 @@ namespace Integration_Project.Controllers
             TempData["eveId"] = currentEvent.Id;
             var Venues = _context.Venues.ToList();
             eventVenue.Venues = Venues;
-<<<<<<< HEAD
-=======
-
->>>>>>> d075a7192470edb9ac87de354228058aabfd7365
             return View(eventVenue);
         }
         [HttpPost]

@@ -146,19 +146,13 @@ namespace Integration_Project.Controllers
             }
             venueInterests.AddedInterests = likedInterests;
             venueInterests.Interests = likedInterests;
-<<<<<<< HEAD
-=======
 
->>>>>>> d075a7192470edb9ac87de354228058aabfd7365
             venueInterests.CurrentVenue = venue;
             string cCheck = (string)TempData["controllerCheck"];
             string eId = (string)TempData["eventId"];
             venueInterests.controller = cCheck;
             venueInterests.eventId = eId;
-<<<<<<< HEAD
-=======
 
->>>>>>> d075a7192470edb9ac87de354228058aabfd7365
             return View(venueInterests);
         }
 

@@ -60,7 +60,10 @@ namespace Integration_Project.Controllers
                     foreach(var eve in lItem)
                     {
                         var addEvent = currentEvents.Where(x => x.Id == eve).FirstOrDefault();
-                        Events.Add(addEvent);
+                        if(addEvent.IsPrivate == false)
+                        {
+                            Events.Add(addEvent);
+                        }
                     }
                 }
                 VM.Events = Events;
