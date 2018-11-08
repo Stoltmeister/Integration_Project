@@ -451,5 +451,12 @@ namespace Integration_Project.Controllers
             _context.SaveChanges();
             return RedirectToAction("Details", new {id = id });
         }
+
+        public async Task<IActionResult> Profile(string id)
+        {
+            var profile = _context.StandardUsers.Where(x => x.Id == id).FirstOrDefault();
+            return View(profile);
+        }
+
     }
 }
