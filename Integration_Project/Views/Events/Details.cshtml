@@ -12,7 +12,7 @@
     }
     else
     {
-        imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=background-calm-clouds-747964.jpg&fm=jpg";
+        imgSrc = "https://images.pexels.com/photos/534031/pexels-photo-534031.jpeg";
     }
 }
 </br>
@@ -101,7 +101,7 @@
     </dl>
 
     <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Search">Back to Search</a>
 
 </div>
 
@@ -122,7 +122,7 @@
 <h2>Venue</h2>
 <div class="row">
     @if (Model.CurrentVenue != null)
-    {
+     {
         <div class="col-md-6">
             <dl>
                 <dt>
@@ -167,59 +167,56 @@
             <div id="map"></div>
             <script>
                 function initMap() {
+                    var location = {
+                        lat: @Model.CurrentVenue.Latitude,
+                        lng: @Model.CurrentVenue.Longitude
+                    }
 
-                var location = {
-                    lat: @Model.CurrentVenue.Latitude,
-                    lng: @Model.CurrentVenue.Longitude
-                }
+                    var options = {
+                        zoom: 13,
+                        center: location
+                    }
 
-                var options = {
-                    zoom: 13,
-                    center: location
-                }
+                    var map = new google.maps.Map(document.getElementById('map'), options);
 
-                var map = new google.maps.Map(document.getElementById('map'), options);
-
-                addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
+                    addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
                 }
 
                 function addMarker(latitude, longitude, title, description, map) {
-                var latLng = new google.maps.LatLng(latitude, longitude);
-                var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
+                    var latLng = new google.maps.LatLng(latitude, longitude);
+                    var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
 
-                var infowindow = new google.maps.InfoWindow({
-                content: contentString
-                });
+                    var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                    });
 
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    title: title,
-                    map: map,
-                    draggable: false
-                });
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        title: title,
+                        map: map,
+                        draggable: false
+                    });
 
-                google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.open(map, marker);
-                });
+                    google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                    });
                 }
             </script>
             <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
                     async defer></script>
         </div>
-    }
-    else
-    {
-    <h4>No Venue Assigned yet</h4>
-    }
+     }
+     else
+     {
+     <h4>No Venue Assigned yet</h4>
+     }
 </div>
-<a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
-<a asp-action="Index">Back to List</a>
 
 <h2>Participants</h2>
 @if(Model.particpantCount < Model.CurrentEvent.MaxParticipants)
-{
+ {
     @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id})
-}
+ }
 else
 {
     <p>
@@ -229,11 +226,9 @@ else
 
 
 @foreach(var person in Model.Participants)
-{
-<div>
+ {
     @person.FirstName @person.LastName
-</div>
-}
+ }
 
 <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
 <a asp-action="Index">Back to List</a> | 
