@@ -10,15 +10,25 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-
-@{ 
-    foreach(Event _event in Model)
+@{
+    for (int i = 0; i < Model.Count(); i += 3)
     {
-        <div class="col-sm-4">@Html.Partial("_EventSummary", _event)</div>
+        <div class="row">
+            @{
+                for (int j = 0; j <= 2; j++)
+                {
+                    @if (i + j == Model.Count()) { break; }
+                    <div class="col-sm-4">
+
+                        @Html.Partial("_EventSummary", Model.ElementAt(i + j))
+                    </div>
+                }
+            }
+        </div>
     }
 }
 
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -61,50 +71,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.VenueId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Premium)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPrivate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsWeatherDependent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MinParticipants)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxParticipants)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CanInviteParticipants)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VenueId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Premium)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsPrivate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsWeatherDependent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinParticipants)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxParticipants)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CanInviteParticipants)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
-</table>
+</table>*@
