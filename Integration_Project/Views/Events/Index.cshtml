@@ -6,9 +6,18 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole("Standard"))
+{
+    <p>
+        <a asp-action="Create">Add New</a>
+    </p>
+}
+else
+{
+    <p>
+        Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
+    </p>
+}
 
 @{
     for (int i = 0; i < Model.Count(); i += 3)
@@ -29,93 +38,93 @@
 }
 
 @*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VenueId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Premium)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPrivate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsWeatherDependent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MinParticipants)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaxParticipants)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CanInviteParticipants)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VenueId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Premium)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsPrivate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsWeatherDependent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MinParticipants)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaxParticipants)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CanInviteParticipants)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.VenueId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Premium)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsPrivate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsWeatherDependent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MinParticipants)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxParticipants)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CanInviteParticipants)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>*@
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VenueId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Premium)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsPrivate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsWeatherDependent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MinParticipants)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaxParticipants)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CanInviteParticipants)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
