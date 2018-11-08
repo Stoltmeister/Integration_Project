@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Integration_Project.Models
 {
-    public class Participants
+    public class Participant
     {
         [Key]
         public string Id { get; set; }
