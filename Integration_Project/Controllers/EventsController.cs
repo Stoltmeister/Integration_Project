@@ -265,7 +265,7 @@ namespace Integration_Project.Controllers
         //RemoveInterest
         public async Task<IActionResult> RemoveInterest(string interestId, string eventId)
         {
-            var currentVenue = await _context.Events.FirstOrDefaultAsync(v => v.Id == eventId);
+            var currentEvent = await _context.Events.FirstOrDefaultAsync(v => v.Id == eventId); //uneeded?
             var currentEventInterests = await _context.EventInterests.Include(v => v.Interests).Where(v => v.EventId == eventId).ToListAsync();
             EventInterest deletingInterest = currentEventInterests.Where(u => u.InterestId == interestId).SingleOrDefault();
             _context.EventInterests.Remove(deletingInterest);
