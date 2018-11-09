@@ -62,12 +62,20 @@
                 <input asp-for="TwitterHandle" class="form-control" />
                 <span asp-validation-for="TwitterHandle" class="text-danger"></span>
             </div>
+
+
+
+
             <div class="form-group">
                 @Html.HiddenFor(m => m.ProfilePicture)
                 <label asp-for="ProfilePicture" class="control-label"></label>
                 <input name="picture" type="file" id="ProfilePicture" asp-for="ProfilePicture" />
                 <span asp-validation-for="ProfilePicture" class="text-danger"></span>
             </div>
+
+
+
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
