@@ -79,6 +79,7 @@ namespace Integration_Project.Controllers
                 
             }
             var participants = GetParticipants(@event.Id);
+            participants.Add(organizer);
             var PCount = ParticipantsCount(@event.Id);
             eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
@@ -482,7 +483,7 @@ namespace Integration_Project.Controllers
         {
             string eventId = (string)TempData["Id"];
             var eo = _context.EventOrganizers.Where(e => e.EventId == eventId).Select(u => u.UserId).Single();
-            var standardUser = _context.StandardUsers.Where(u => u.Id == eo).Single();
+            var standardUser = _context.StandardUsers.Where(u => u.ApplicationUserId == eo).Single();
             var currentEvent = _context.Events.Where(e => e.Id == eventId).Single();
             string body = standardUser.FirstName + " has invited you to their event " + currentEvent.Name + "!" + "\n" +
                 "Please follow these instructions to join: \n" +
