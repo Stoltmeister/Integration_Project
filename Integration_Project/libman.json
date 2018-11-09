@@ -1,5 +1,16 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "jquery-datetimepicker@2.5.20",
+      "destination": "wwwroot/lib/jquery-datetimepicker/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "moment.js@2.22.2",
+      "destination": "wwwroot/lib/moment.js/"
+    }
+  ]
 }
