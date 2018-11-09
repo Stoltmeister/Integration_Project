@@ -135,6 +135,40 @@ namespace Integration_Project.Data
                 }
             );
 
+            modelBuilder.Entity<ApplicationRole>().HasData(
+                new ApplicationRole
+                {
+                    Id = "49573032-75a1-4a20-a956-9bc2b8f95fa6",
+                    Name = "Standard",
+                    NormalizedName = "STANDARD",
+                    ConcurrencyStamp = "fab9889c-afd4-40ff-91a5-ad7dbae0aedc"
+                }
+            );
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            );
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            );
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "b69a12da-22da-41b4-9cda-a58600ae433c",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            );
+
             
 
             // User Roles
