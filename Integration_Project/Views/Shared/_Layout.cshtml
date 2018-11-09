@@ -14,19 +14,28 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+
     </environment>    
 </head>
+
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <style>
+
+    </style>
+
+    <nav class="navbar ">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar" style="background-color:lightblue"></span>
+                    <span class="icon-bar" style="background-color:lightblue"></span>
+                    <span class="icon-bar" style="background-color:lightblue"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Meetup.Net</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="font-family:'Trebuchet MS';font-size:xx-large;">Meetup.Net</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -35,13 +44,13 @@
         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                     @if (User.IsInRole("Standard"))
                     {
-                        <li><a asp-area="" asp-controller="Events" asp-action="Create">Create an Event</a></li>
+                        <li><a asp-area="" asp-controller="Events" asp-action="Create" style="font-family:Verdana; font-size:large">Create an Event</a></li>
                     }
-                    <li><a asp-area="" asp-controller="Search" asp-action="Index">Search Events</a></li>
-                    <li><a asp-area="" asp-controller="Venues" asp-action="Index">Venues</a></li>
+                    <li><a asp-area="" asp-controller="Search" asp-action="Index" style="font-family:Verdana; font-size:large">Search Events</a></li>
+                    <li><a asp-area="" asp-controller="Venues" asp-action="Index" style="font-family:Verdana; font-size:large">Venues</a></li>
                     @if (User.IsInRole("Standard"))
                     {
-                        <li><a asp-area="" asp-controller="StandardUsers" asp-action="Index">My Profile</a></li>
+                        <li><a asp-area="" asp-controller="StandardUsers" asp-action="Index" style="font-family:Verdana; font-size:large">My Profile</a></li>
                     }
                 </ul>
                 <partial name="_LoginPartial" />
@@ -82,4 +91,6 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>
+

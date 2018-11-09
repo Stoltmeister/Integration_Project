@@ -63,10 +63,10 @@
             <dt>
                 @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
             </dt>
-            @if(Model.CurrentEvent.Premium == 0)
+            @if (Model.CurrentEvent.Premium == 0)
             {
                 <dd>
-                @Html.Display("No")
+                    @Html.Display("No")
                 </dd>
             }
             <dd>
@@ -114,51 +114,62 @@
         </dl>
         @if (Model.isOrganizer)
         {
-            @Html.ActionLink("Invite People ", "Invite", new { Id = Model.CurrentEvent.Id })
+            <p>
+                @Html.ActionLink("Invite People ", "Invite", new { Id = Model.CurrentEvent.Id })
+                |
+            </p>
+        }
+        @if (Model.isOrganizer)
+        {
+            <p>
+                <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">    Edit </a> |
+            </p>
+        }
 
-        }  | 
-        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">    Edit </a> |
         <a asp-action="Index" asp-controller="Search">Back to Search</a>
     </div>
     <div class="col-md-8">
         <div class="text-center"><h2>Venue Information</h2></div>
         @if (Model.CurrentVenue != null)
         {
-            <div class="col-md-6">
-                <dl class="table-bordered">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.Name)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.Name)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.Description)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.Description)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.City)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.City)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.State)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.State)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
-                    </dd>
-                </dl>
+        <div class="col-md-6">
+            <dl class="table-bordered">
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.City)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.State)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.State)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
+                </dd>
+            </dl>
+            @if (Model.isOrganizer)
+            {
                 <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
-            </div>
+            }
+        </div>
             <div class="col-md-6">
                 <style>
                     #map {
@@ -231,7 +242,10 @@
                 </p>
             }
         </div>
-        <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
+        @if (Model.isOrganizer)
+        {
+            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
+        }
 
     </div>
     <div class="col-md-6">
