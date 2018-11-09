@@ -52,7 +52,7 @@ namespace Integration_Project.Controllers
             {
                 var currentUserId = User.Identity.GetUserId();
                 var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
-                isOrganizer = standardUserId == organizerId;
+                isOrganizer = currentUserId == organizerId;
             }
 
             EventInterestsViewModel eveInterests = new EventInterestsViewModel();
