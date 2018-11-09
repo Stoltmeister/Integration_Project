@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Integration_Project.ViewComponents.MultiPinMap.PinData>
+<p>Hello World!</p>
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+<div id="map"></div>
+<script src="~/js/GoogleMaps.js"></script>
+<script>
+    function mapCallback() {
+        @{ 
+            try
+            {
+                @:var mapCenterLatitude = @Model.First().Latitude;
+                @:var mapCenterLongitude = @Model.First().Longitude;
+            }
+            catch (InvalidOperationException)
+            {
+                return;
+            }
+
+        }
+        var map = initMap(mapCenterLatitude, mapCenterLongitude);
+        @{ 
+            foreach(var pin in Model)
+            {
+                @:addMarker(@pin.Latitude, @pin.Longitude, "@pin.Name", "@pin.Address", map);
+            }
+        }
+        
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
+        async defer></script>

@@ -1,4 +1,4 @@
-﻿function initMap(name, address, latitude, longitude) {
+﻿function initMap(latitude, longitude) {
 
     var location = {
         lat: latitude,
