@@ -33,10 +33,10 @@ namespace Integration_Project.ViewComponents
                         join e in _db.Events on p.EventId equals e.Id
                         select e;
             participantsQuery = participantsQuery.Take(maxEvents);
-            var organizerQuery = from su in _db.StandardUsers
-                                 join eo in _db.EventOrganizers on su.Id equals eo.UserId
-                                 join e in _db.Events on eo.EventId equals e.Id
-                                 select e;
+            var organizerQuery = from ev in _db.Events
+                                 join eo in _db.EventOrganizers on ev.Id equals eo.EventId
+                                 where eo.UserId == userId
+                                 select ev;
 
             var eventsResults = participantsQuery.Union(organizerQuery);
 
