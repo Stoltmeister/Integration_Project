@@ -27,6 +27,7 @@ namespace Integration_Project.Models
         public bool IsPrivate { get; set; }
         [Display(Name="Outdoors")]
         public bool IsWeatherDependent { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         [Display(Name = "Minimum Participants")]
@@ -37,5 +38,12 @@ namespace Integration_Project.Models
         public bool CanInviteParticipants { get; set; }
         public byte[] EventPicture { get; set; }
 
+        public Event()
+        {
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+            CreatedDate = DateTime.Now;
+            ModifiedDate = DateTime.Now;
+        }
     }
 }
