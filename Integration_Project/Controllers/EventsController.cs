@@ -141,7 +141,7 @@ namespace Integration_Project.Controllers
             var standardUserId = _context.StandardUsers.Where(x => x.ApplicationUserId == userId).Select(x => x.Id).FirstOrDefault();
             _context.Events.Add(eve);
             await _context.SaveChangesAsync();
-            EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = standardUserId, IsCreator = true };
+            EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = userId, IsCreator = true };
             _context.EventOrganizers.Add(creator);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = eve.Id });
