@@ -51,11 +51,6 @@ body {
     box-shadow: inset -7px 4px 20px -2px rgba(163,158,163,0.62);
 }
 
-#conference-pic {
-    height: auto;
-    width: 100%;
-}
-#volleyball-pic {
-    height: 50%;
-    width: auto;
+.indexcaption {
+    color: white;    
 }
