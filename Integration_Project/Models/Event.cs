@@ -16,8 +16,10 @@ namespace Integration_Project.Models
         public string VenueId { get; set; }
         public Venue Venues { get; set; }
         [Display(Name = "Start Date")]
+        [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
         [Display(Name = "End Date")]
+        [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
         public string Description { get; set; }
         public int Premium { get; set; }
