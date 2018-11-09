@@ -171,12 +171,12 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
+        public async Task<IActionResult> Edit([Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
         {
-            if (id != @event.Id)
-            {
-                return NotFound();
-            }
+            //if (id != @event.Id)
+            //{
+            //    return NotFound();
+            //}
             @event = await StorePicture(@event, picture);
             if (ModelState.IsValid)
             {
@@ -201,6 +201,19 @@ namespace Integration_Project.Controllers
             return View(@event);
         }
 
+        private async Task<Event> StorePicture(Event eve, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    eve.EventPicture = stream.ToArray();
+                }
+            }
+
+            return eve;
+        }
 
 
         // GET: Events/Delete/5
@@ -315,19 +328,7 @@ namespace Integration_Project.Controllers
             return View(newInterest);
         }
 
-        private async Task<Event> StorePicture(Event eve, IFormFile picture)
-        {
-            if (picture != null)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    await picture.CopyToAsync(stream);
-                    eve.EventPicture = stream.ToArray();
-                }
-            }
-
-            return eve;
-        }
+     
 
         public IActionResult GetCharge(string id)
         {
