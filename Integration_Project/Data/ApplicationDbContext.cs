@@ -130,7 +130,7 @@ namespace Integration_Project.Data
                     Id = "51e53b9a-f338-4211-9d7a-8be20bc068a9",
                     ApplicationUserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6",
                     Bio = "Code. Milwaukee. Games.",
-                    FirstName = "Elliot",
+                    FirstName = "Elliott",
                     LastName = "Soemadi",
                     Email = "esoemad5@gmail.com",
                     City = "Shorewood",
