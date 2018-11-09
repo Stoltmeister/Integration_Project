@@ -44,10 +44,15 @@ namespace Integration_Project.Controllers
             {
                 return NotFound();
             }
-            var currentUserId = User.Identity.GetUserId();
-            var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
-            var organizerId = await _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).SingleAsync();
-            bool isOrganizer = standardUserId == organizerId;
+            bool isOrganizer = false;
+            if (User.IsInRole("Standard"))
+            {
+                var currentUserId = User.Identity.GetUserId();
+                var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
+                var organizerId = await _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).SingleAsync();
+                isOrganizer = standardUserId == organizerId;
+            }
+
             EventInterestsViewModel eveInterests = new EventInterestsViewModel();
             List<Interest> likedInterests = new List<Interest>();
 

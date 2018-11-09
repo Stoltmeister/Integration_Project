@@ -5,45 +5,120 @@
 }
 <style>
     .jumbotron {
-        background-image: Url("~/images/chase-clark-509066-unsplash.jpg");
+        background-image: url('/images/warren-wong-263024-unsplash.jpg');
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        margin-top: 2%;
+        margin-right: 0;
+        margin-left: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .helvetica {
+        font-family: 'Helvetica';
+    }
+
+    .Times {
+        font-family: 'Times New Roman';
+    }
+
+    .Georgia {
+        font-family: Georgia;
+    }
+
+    .container {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        padding: 0px;
+    }
+
+    .Inner {
+        display: inline-block;
+        text-align: center;
+    }
+
+
+
+
+    .Outer {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        overflow-x: scroll;
+        white-space: nowrap;
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 0;
+    }
+
+    .Category {
+        color: white;
+        background-color: black;
+        border: none;
+        font-size: larger;
+    }
+
+    .CategoryHolder {
+        text-align: center;
+    }
+
+    #main {
+        -webkit-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        margin-top: 2%;
+        margin-bottom: 2%;
     }
 </style>
-<div class="jumbotron">
-
-</div>
-
 @using (Html.BeginForm())
 {
-    <div class="form-group text-center container col-md-12 ">
-        <div class="col-md-8 col-md-offset-2">
-        <input type="search" id="text" name="text" placeholder="Whats your interest?"class="input-lg" />
-        <input type="submit" class="btn" />
+    <div class="jumbotron col-sm-12" style="border-radius: 0; margin-bottom: 0px">
+        <div class="col-sm-5">
+            <h1 class="Georgia">Search for what you're looking for!</h1>
+            <p class="Times">Here you can search for events based off your favorite hobbies and intersts.</p>
         </div>
     </div>
-<hr />
-    <div class="col-md-2">
-        <b><h3>Categories</h3></b>
-        <br />
-        @foreach(var cat in Model.Interests)
-        {
-            <div>
-                <button type="submit" value="@cat.Id" name="Id">@cat.Name</button>
-            </div>
-            <br />
-        }
-    </div>
-    <div class="container col-md-10">
-        <div class="row text-center">
-            @{ 
-                foreach(var eve in Model.Events)
+    <div class="container col-sm-12" id="main" style="margin-top: 0px">
+        <div class="col-md-12 Outer" style="background-color:black">
+            <div class="Inner">
+                @foreach (var cat in Model.Interests)
                 {
-                    <div class="col-sm-4">
-                        @Html.Partial("_EventSummary", eve)
-                    </div>
+                    <span>
+                        <button type="submit" class="Category" value="@cat.Id" name="Id">@cat.Name</button>
+                    </span>
+
                 }
-            }
+            </div>
+        </div>
+
+        <div class="form-group text-center container col-md-12">
+            <div class="col-md-8 col-md-offset-2">
+                <br />
+                <input type="search" id="text" name="text" placeholder="Whats your interest?" class="input-lg" />
+                <input type="submit" class="btn btn-info" />
+            </div>
+        </div>
+        <hr />
+
+        <div class="container col-md-10 text-center">
+            <div class="row Inner">
+                @{
+                    foreach (var eve in Model.Events)
+                    {
+                        <div class="col-sm-4" style="display:inline-block">
+                            @Html.Partial("_EventSummary", eve)
+                        </div>
+                    }
+                }
+            </div>
         </div>
     </div>
-       
-
 }
