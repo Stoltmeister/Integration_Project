@@ -45,11 +45,13 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
             bool isOrganizer = false;
+            StandardUser organizer = new StandardUser();
+            var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single();
+            organizer = _context.StandardUsers.Where(x => x.Id == organizerId).FirstOrDefault();
             if (User.IsInRole("Standard"))
             {
                 var currentUserId = User.Identity.GetUserId();
                 var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
-                var organizerId = await _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).SingleAsync();
                 isOrganizer = standardUserId == organizerId;
             }
 
@@ -78,6 +80,7 @@ namespace Integration_Project.Controllers
             }
             var participants = GetParticipants(@event.Id);
             var PCount = ParticipantsCount(@event.Id);
+            eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
             eveInterests.particpantCount = PCount;
             eveInterests.CurrentVenue = currentVenue;
