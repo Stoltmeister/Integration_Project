@@ -16,7 +16,7 @@ namespace Integration_Project.Models
         public Event Events { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public StandardUser User { get; set; }
+        public ApplicationUser User { get; set; }
         public bool IsCreator { get; set; }
     }
 
