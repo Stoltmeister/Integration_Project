@@ -172,13 +172,13 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
         {
             if (id != @event.Id)
             {
                 return NotFound();
             }
-
+            @event = await StorePicture(@event, picture);
             if (ModelState.IsValid)
             {
                 try
@@ -201,6 +201,8 @@ namespace Integration_Project.Controllers
             }
             return View(@event);
         }
+
+
 
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(string id)
