@@ -3,6 +3,10 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
+<<<<<<< HEAD
+      "library": "font-awesome@4.7.0",
+      "destination": "wwwroot/lib/font-awesome/"
+=======
       "provider": "cdnjs",
       "library": "jquery-datetimepicker@2.5.20",
       "destination": "wwwroot/lib/jquery-datetimepicker/"
@@ -11,6 +15,7 @@
       "provider": "cdnjs",
       "library": "moment.js@2.22.2",
       "destination": "wwwroot/lib/moment.js/"
+>>>>>>> 83925c967968a229231c7ab11a80ff7036d0920c
     }
   ]
 }

@@ -19,6 +19,11 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\chase-clark-509066-unsplash.jpg" />
   </ItemGroup>
 
   <ItemGroup>

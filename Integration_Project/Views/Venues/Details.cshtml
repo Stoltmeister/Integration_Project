@@ -5,9 +5,40 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<h4>@Model.CurrentVenue.Name</h4>
+
+
+
+@{
+    var imgSrc = "Hello";
+    if (Model.CurrentVenue.ProfilePicture != null)
+    {
+        var base64 = Convert.ToBase64String(Model.CurrentVenue.ProfilePicture);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    }
+    else
+    {
+        imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg";
+    }
+}
+</br>
+<style>
+    #id{
+        
+    }
+</style>
+<div class="row">
+    <div class="col-md-3">
+        <div class="bottom">
+            <h2>Details</h2>
+            <h4>@Model.CurrentVenue.Name</h4>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <img src=@imgSrc alt="" height="150" />
+    </div>
+</div>
+    
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -55,7 +86,6 @@
         </dd>
         <dt>
             @Html.DisplayName("Rate this venue!")
-            @*@Html.DisplayNameFor(model => model.CurrentVenue.Rating)*@
         </dt>
         <dd>
             @{ Html.RenderPartial("_RatingsControl", Model.CurrentVenue);}
@@ -69,7 +99,7 @@
         <dt>Interests</dt>
         @foreach (Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
         {
-        <dd>&nbsp &nbsp @i.Name: <i>@i.Description</i></dd>
+            <dd>&nbsp &nbsp @i.Name: <i>@i.Description</i></dd>
         }
         <br />
         @if (Model.controller == "Event")
@@ -110,14 +140,14 @@
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
                 async defer>
-            
+
         </script>
     </div>
 </div>
 <div class="row">
     <div class="col-lg-6"></div>
     <div class="col-lg-6">
-        @{ 
+        @{
             string twitterLink = "https://twitter.com/" + Model.CurrentVenue.TwitterHandle + "?ref_src=twsrc%5Etfw";
         }
         <a class="twitter-timeline" data-height="600" href="@twitterLink"></a>
