@@ -133,6 +133,7 @@
         @if (Model.CurrentVenue != null)
         {
         <div class="col-md-6">
+
             <dl class="table-bordered">
                 <dt>
                     @Html.DisplayNameFor(model => model.CurrentVenue.Name)
@@ -165,6 +166,7 @@
                     @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
                 </dd>
             </dl>
+<<<<<<< HEAD
             @if (Model.isOrganizer)
             {
                 <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
@@ -188,36 +190,33 @@
                     var options = {
                         zoom: 13,
                         center: location
+=======
+            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
+        </div>
+         <div class="col-md-6">
+             <style>
+                 #map {
+                     height: 400px;
+                     width: 100%;
+                 }
+             </style>
+             <div id="map"></div>
+             <script src="~/js/GoogleMaps.js"></script>
+             <script>
+                    function mapCallback() {
+                        var name = "@Model.CurrentVenue.Name"
+                        var address = "@Model.CurrentVenue.Address"
+                        var latitude = @Model.CurrentVenue.Latitude
+                        var longitude = @Model.CurrentVenue.Longitude
+                        var map = initMap(latitude, longitude);
+
+                        addMarker(latitude, longitude, name, address, map);
+>>>>>>> 83925c967968a229231c7ab11a80ff7036d0920c
                     }
-
-                    var map = new google.maps.Map(document.getElementById('map'), options);
-
-                    addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
-                }
-
-                function addMarker(latitude, longitude, title, description, map) {
-                    var latLng = new google.maps.LatLng(latitude, longitude);
-                    var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
-
-                    var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                    });
-
-                    var marker = new google.maps.Marker({
-                        position: latLng,
-                        title: title,
-                        map: map,
-                        draggable: false
-                    });
-
-                    google.maps.event.addListener(marker, 'click', function () {
-                            infowindow.open(map, marker);
-                    });
-                }
-                </script>
-                <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                        async defer></script>
-            </div>
+             </script>
+             <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
+                     async defer></script>
+         </div>
         }
         else
         {

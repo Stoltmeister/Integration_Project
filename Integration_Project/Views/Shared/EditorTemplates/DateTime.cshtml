@@ -1,0 +1,3 @@
+﻿@model DateTime
+@Html.TextBox("", Model.ToString("MM/dd/yyyy hh:mm tt"),
+  new { @class = "form-control datetimefield", type = "text", autocomplete="off"})

@@ -4,14 +4,16 @@ using Integration_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181109052326_Not sure what I changed.")]
+    partial class NotsurewhatIchanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,11 +63,7 @@ namespace Integration_Project.Migrations
                     b.HasData(
                         new { Id = "1", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Doubles or Singles Tennis Match", EndDate = new DateTime(2018, 11, 14, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = true, MaxParticipants = 4, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Doubles or Singles Tennis Match", Premium = 0, StartDate = new DateTime(2018, 11, 14, 16, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "1" },
                         new { Id = "2", CanInviteParticipants = true, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly Meditation Practice", EndDate = new DateTime(2018, 11, 18, 11, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 15, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Weekly Meditation Practice", Premium = 1, StartDate = new DateTime(2018, 11, 18, 9, 0, 0, 0, DateTimeKind.Unspecified), VenueId = "2" },
-                        new { Id = "3", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly morning meditation sit", EndDate = new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = true, IsWeatherDependent = false, MaxParticipants = 8, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Weekly Morning Meditation Sit", Premium = 0, StartDate = new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "3" },
-                        new { Id = "4", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Friday Night Magic", EndDate = new DateTime(2018, 11, 20, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 36, MinParticipants = 4, ModifiedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Friday Night Magic", Premium = 0, StartDate = new DateTime(2018, 11, 20, 15, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "5" },
-                        new { Id = "5", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "MTG Draft", EndDate = new DateTime(2018, 11, 21, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 8, MinParticipants = 6, ModifiedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "MTG Draft", Premium = 0, StartDate = new DateTime(2018, 11, 21, 15, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "6" },
-                        new { Id = "6", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "D&D homebrew group", EndDate = new DateTime(2018, 11, 22, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = true, IsWeatherDependent = false, MaxParticipants = 6, MinParticipants = 4, ModifiedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "D&D homebrew group", Premium = 0, StartDate = new DateTime(2018, 11, 22, 15, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "4" },
-                        new { Id = "7", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly One-Shot", EndDate = new DateTime(2018, 11, 23, 18, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = false, IsWeatherDependent = false, MaxParticipants = 6, MinParticipants = 4, ModifiedDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Weekly One-Shot", Premium = 0, StartDate = new DateTime(2018, 11, 23, 15, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "5" }
+                        new { Id = "3", CanInviteParticipants = false, CreatedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Weekly morning meditation sit", EndDate = new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), IsPrivate = true, IsWeatherDependent = false, MaxParticipants = 8, MinParticipants = 2, ModifiedDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Weekly Morning Meditation Sit", Premium = 0, StartDate = new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), VenueId = "3" }
                     );
                 });
 
@@ -89,13 +87,7 @@ namespace Integration_Project.Migrations
                     b.HasData(
                         new { Id = "1", EventId = "1", InterestId = "1" },
                         new { Id = "2", EventId = "2", InterestId = "2" },
-                        new { Id = "3", EventId = "3", InterestId = "2" },
-                        new { Id = "4", EventId = "4", InterestId = "6" },
-                        new { Id = "5", EventId = "5", InterestId = "6" },
-                        new { Id = "6", EventId = "6", InterestId = "7" },
-                        new { Id = "7", EventId = "7", InterestId = "7" },
-                        new { Id = "8", EventId = "6", InterestId = "8" },
-                        new { Id = "9", EventId = "7", InterestId = "8" }
+                        new { Id = "3", EventId = "3", InterestId = "2" }
                     );
                 });
 
@@ -120,13 +112,9 @@ namespace Integration_Project.Migrations
                     b.ToTable("EventOrganizers");
 
                     b.HasData(
-                        new { Id = 1, EventId = "1", IsCreator = true, UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f" },
-                        new { Id = 2, EventId = "2", IsCreator = true, UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f" },
-                        new { Id = 3, EventId = "3", IsCreator = true, UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f" },
-                        new { Id = 4, EventId = "4", IsCreator = true, UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6" },
-                        new { Id = 5, EventId = "5", IsCreator = true, UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6" },
-                        new { Id = 6, EventId = "6", IsCreator = true, UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6" },
-                        new { Id = 7, EventId = "7", IsCreator = true, UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6" }
+                        new { Id = 1, EventId = "1", IsCreator = true, UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
+                        new { Id = 2, EventId = "2", IsCreator = true, UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
+                        new { Id = 3, EventId = "3", IsCreator = true, UserId = "b7813711-0140-4696-b984-8bd4569c7bba" }
                     );
                 });
 
@@ -152,11 +140,7 @@ namespace Integration_Project.Migrations
                         new { Id = "2", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Vipassana Meditation", Name = "Meditation", Verified = false },
                         new { Id = "3", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Computer Coding", Name = "Coding", Verified = false },
                         new { Id = "4", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Football", Name = "American Football", Verified = false },
-                        new { Id = "5", CreationDate = new DateTime(2018, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Kite flying enthusiasts", Name = "Kites", Verified = false },
-                        new { Id = "6", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Magic: The Gathering Game", Name = "Magic: The Gathering", Verified = false },
-                        new { Id = "7", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Dungeons & Dragons 5e", Name = "Dungeons & Dragons 5e", Verified = false },
-                        new { Id = "8", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Pathfinder", Name = "Pathfinder", Verified = false },
-                        new { Id = "9", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "League of Legends", Name = "League of Legends", Verified = false }
+                        new { Id = "5", CreationDate = new DateTime(2018, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Kite flying enthusiasts", Name = "Kites", Verified = false }
                     );
                 });
 
@@ -266,12 +250,7 @@ namespace Integration_Project.Migrations
                         new { Id = 1, InterestId = "1", StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
                         new { Id = 2, InterestId = "2", StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
                         new { Id = 3, InterestId = "3", StandardUserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
-                        new { Id = 4, InterestId = "4", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
-                        new { Id = 5, InterestId = "5", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
-                        new { Id = 6, InterestId = "6", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
-                        new { Id = 7, InterestId = "7", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
-                        new { Id = 8, InterestId = "8", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
-                        new { Id = 9, InterestId = "9", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" }
+                        new { Id = 4, InterestId = "4", StandardUserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" }
                     );
                 });
 
@@ -319,10 +298,7 @@ namespace Integration_Project.Migrations
                     b.HasData(
                         new { Id = "1", Address = "1750 N Lincoln Memorial Dr", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "6 public hard court tennis courts", IsPrivate = false, Latitude = 43.05395f, Longitude = -87.88557f, Name = "McKinley Park Tennis Courts", OverallRating = 0m, State = "WI", WebsiteUrl = "https://county.milwaukee.gov/EN/Parks/Explore/Lakefront/McKinley-Marina", Zipcode = 53202 },
                         new { Id = "2", Address = "2344 N Oakland Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Local meditation center in Milwaukee in Shambhala tradition.", IsPrivate = false, Latitude = 43.06116f, Longitude = -87.88788f, Name = "Shambhala Meditation Center of Milwaukee", OverallRating = 0m, State = "WI", WebsiteUrl = "https://milwaukee.shambhala.org", Zipcode = 53211 },
-                        new { Id = "3", Address = "1660 N Prospect Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Morning meditation group.Meets on Mondays for 30 minutes.", IsPrivate = true, Latitude = 43.05191f, Longitude = -87.89092f, Name = "Morning Meditation Group", OverallRating = 0m, State = "WI", Zipcode = 53202 },
-                        new { Id = "4", Address = "1717 E Kensington Blvd", City = "Shorewood", CreatedBy = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Game night!", IsPrivate = true, Latitude = 43.09802f, Longitude = -87.88787f, Name = "My Mom's Basement", OverallRating = 0m, State = "WI", Zipcode = 53211 },
-                        new { Id = "5", Address = "1204 Minnesota Ave", City = "South Milwaukee", CreatedBy = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Gaming Venue", IsPrivate = false, Latitude = 42.91303f, Longitude = -87.86496f, Name = "Pink Bunny Games", OverallRating = 0m, State = "WI", WebsiteUrl = "pinkbunnygames.com", Zipcode = 53172 },
-                        new { Id = "6", Address = "12714 W Hampton Ave", City = "Butler", CreatedBy = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", CreationDate = new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Gaming Venue", IsPrivate = false, Latitude = 43.10522f, Longitude = -88.07062f, Name = "Evolution Gaming", OverallRating = 0m, State = "WI", WebsiteUrl = "evo-game.com", Zipcode = 53007 }
+                        new { Id = "3", Address = "1660 N Prospect Ave", City = "Milwaukee", CreatedBy = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", CreationDate = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Morning meditation group.Meets on Mondays for 30 minutes.", IsPrivate = true, Latitude = 43.05191f, Longitude = -87.89092f, Name = "Morning Meditation Group", OverallRating = 0m, State = "WI", Zipcode = 53202 }
                     );
                 });
 
@@ -556,7 +532,7 @@ namespace Integration_Project.Migrations
                         .WithMany()
                         .HasForeignKey("EventId");
 
-                    b.HasOne("Integration_Project.Models.ApplicationUser", "User")
+                    b.HasOne("Integration_Project.Models.StandardUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });

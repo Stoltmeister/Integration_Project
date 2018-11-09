@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Meetup.Net</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/Cerulean.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -19,6 +19,7 @@
 
 
     </environment>    
+
 </head>
 
 <body>
@@ -26,16 +27,16 @@
 
     </style>
 
-    <nav class="navbar ">
+    <nav class="navbar navbar-inverse ">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar" style="background-color:lightblue"></span>
-                    <span class="icon-bar" style="background-color:lightblue"></span>
-                    <span class="icon-bar" style="background-color:lightblue"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar" ></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="font-family:'Trebuchet MS';font-size:xx-large;">Meetup.Net</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Meetup.Net</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -44,13 +45,13 @@
         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                     @if (User.IsInRole("Standard"))
                     {
-                        <li><a asp-area="" asp-controller="Events" asp-action="Create" style="font-family:Verdana; font-size:large">Create an Event</a></li>
+                        <li><a asp-area="" asp-controller="Events" asp-action="Create">Create an Event</a></li>
                     }
-                    <li><a asp-area="" asp-controller="Search" asp-action="Index" style="font-family:Verdana; font-size:large">Search Events</a></li>
-                    <li><a asp-area="" asp-controller="Venues" asp-action="Index" style="font-family:Verdana; font-size:large">Venues</a></li>
+                    <li><a asp-area="" asp-controller="Search" asp-action="Index">Search Events</a></li>
+                    <li><a asp-area="" asp-controller="Venues" asp-action="Index">Venues</a></li>
                     @if (User.IsInRole("Standard"))
                     {
-                        <li><a asp-area="" asp-controller="StandardUsers" asp-action="Index" style="font-family:Verdana; font-size:large">My Profile</a></li>
+                        <li><a asp-area="" asp-controller="StandardUsers" asp-action="Index">My Profile</a></li>
                     }
                 </ul>
                 <partial name="_LoginPartial" />
@@ -72,6 +73,10 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <link href="~/lib/jquery-datetimepicker/jquery.datetimepicker.css" rel="stylesheet" />
+        <script src="~/lib/jquery-datetimepicker/jquery.datetimepicker.js" type="text/javascript"></script>
+        <script src="~/lib/moment.js/moment.js"></script>
+        <script src="~/js/DateTimePickerReady.js" type="text/javascript"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
