@@ -71,7 +71,7 @@ namespace Integration_Project.Data
                 }
             );
 
-            /*modelBuilder.Entity<ApplicationUser>().HasData(
+            modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
                 {
                     Id = "b69a12da-22da-41b4-9cda-a58600ae433c",
@@ -88,7 +88,7 @@ namespace Integration_Project.Data
                     LockoutEnabled = false,
                     LockoutEnd = null
                 }
-            );*/
+            );
 
             modelBuilder.Entity<StandardUser>().HasData(
                 new StandardUser
@@ -120,7 +120,7 @@ namespace Integration_Project.Data
                 }
             );
 
-            /*modelBuilder.Entity<StandardUser>().HasData(
+            modelBuilder.Entity<StandardUser>().HasData(
                 new StandardUser
                 {
                     Id = "789e4076-5d71-4e12-b146-2c8f38622f13",
@@ -133,7 +133,7 @@ namespace Integration_Project.Data
                     State = "WI",
                     ZipCode = 53172
                 }
-            );*/
+            );
 
             
 
