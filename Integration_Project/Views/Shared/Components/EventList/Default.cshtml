@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<Integration_Project.Models.EventViewModel>
 
-@{
-    ViewData["Title"] = "My Events";
-}
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
@@ -24,7 +20,9 @@
                             @Html.DisplayFor(modelItem => item.Event.Name)
                         </div>
                         <div class="col-md-4">
-                            <button type="button" class="btn btn-default btn-xs">Organizer</button>
+                            @if (item.IsOrganizer) {
+                                <button type="button" class="btn btn-default btn-xs">Organizer</button>
+                            }
                         </div>
                     </div>
 

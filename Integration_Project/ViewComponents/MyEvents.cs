@@ -20,6 +20,7 @@ namespace Integration_Project.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int maxEvents)
         {
+            ViewData["Title"] = "My Events";
             var items = await GetEventsAsync(maxEvents);
             return View("/Views/Shared/Components/EventList/Default.cshtml", items);
         }
