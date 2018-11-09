@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Invite";
+}
+
+<h2>Email Invitation</h2>
+@using (Html.BeginForm())
+{    
+<div class="form-group">
+    <div class="form-group">
+        <label class="control-label">Enter Invitee's Email</label>
+        <input type="text" name="email" id="email" class="form-control" />
+        <br />
+    </div>
+    <br />
+</div>
+<div class="form-group">
+    <input type="submit" value="Send Email" class="btn btn-default" />
+</div>
+}

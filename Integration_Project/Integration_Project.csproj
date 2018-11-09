@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\GoogleMaps.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Shared\_EventSummary.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
