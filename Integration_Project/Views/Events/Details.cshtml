@@ -34,7 +34,10 @@
                     Event organizer: @Model.Organizer.FirstName  @Model.Organizer.LastName
                 </h3>
             </div>
-
+            @if(Model.isOrganizer && Model.CurrentEvent.Premium == 0)
+            {
+                @Html.ActionLink("Go Premium", "GetCharge", "Events", new { id = Model.CurrentEvent.Id })
+            }
         </div>
     </div>
 
@@ -238,14 +241,17 @@
     <div class="row">
         <div class="col-md-6">
             <h3>Interests</h3>
-            <div class="table-bordered">
-                @foreach (var item in Model.AddedInterests)
-                {
-                    <p>
-                        @item.Name : <i>@item.Description</i>
-                    </p>
-                }
-            </div>
+            @if (Model.AddedInterests.Count > 0)
+            {
+                <div class="table-bordered">
+                    @foreach (var item in Model.AddedInterests)
+                    {
+                        <p>
+                            @item.Name : <i>@item.Description</i>
+                        </p>
+                    }
+                </div>
+            }
             @if (Model.isOrganizer)
             {
                 <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>

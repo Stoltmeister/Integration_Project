@@ -14,13 +14,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Interests[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Interests[0].Verified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Interests[0].CreationDate)
-            </th>
+            </th>            
             <th></th>
         </tr>
     </thead>
@@ -33,13 +27,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(model => model.Interests[i].Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Interests[i].Verified)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Interests[i].CreationDate)
-                </td>
+                </td>                
                 <td>
                     @Html.ActionLink("Add Interest", "AddInterest", new { interestId = Model.Interests[i].Id, eventId = Model.CurrentEvent.Id })
                 </td>
@@ -63,13 +51,7 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Interests[0].Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Interests[0].Verified)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Interests[0].CreationDate)
-                </th>
+                </th>                
                 <th></th>
             </tr>
         </thead>
@@ -83,13 +65,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(model => model.AddedInterests[i].Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.AddedInterests[i].Verified)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.AddedInterests[i].CreationDate)
-                    </td>
+                    </td>                    
                     <td>
                         @Html.ActionLink("Remove Interest", "RemoveInterest", new { interestId = Model.AddedInterests[i].Id, eventId = Model.CurrentEvent.Id })
                     </td>
