@@ -16,11 +16,14 @@
             }
 
         }
-        <img src=@imgSrc alt=<img src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg"/>
-            <div class="row">
-                <div class="caption">
-                    <div class="col-sm-6">
-                        <h4><a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.Id">
+        <a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.Id">
+            <img src=@imgSrc alt=<img src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg" />
+        </a>
+        <div class="row">
+            <div class="caption">
+                <div class="col-sm-6">
+                    <h4>
+                        <a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.Id">
                             @{
                                 if (Model.Name == null)
                                 {
@@ -31,12 +34,13 @@
                                     @:@Model.Name
                                 }
                             }
-                        </a></h4>
-                    </div>
-                    <div class="col-sm-6">
-                        <p>@Model.Description</p>
-                    </div>
+                        </a>
+                    </h4>
+                </div>
+                <div class="col-sm-6">
+                    <p>@Model.Description</p>
                 </div>
             </div>
-    </div>
+        </div>
+</div>
 </div>

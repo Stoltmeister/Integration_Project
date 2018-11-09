@@ -16,20 +16,6 @@
 </div>
 <div class="row">
     @await Component.InvokeAsync("MultiPinMap", new { id = Model.Id})
-    @*<script src="~/js/GoogleMaps.js"></script>
-        <script>
-                        function mapCallback() {
-                            var name = "@Model.CurrentVenue.Name"
-                            var address = "@Model.CurrentVenue.Address"
-                            var latitude = @Model.CurrentVenue.Latitude
-                            var longitude = @Model.CurrentVenue.Longitude
-                            var map = initMap(name, address, latitude, longitude);
-
-                            addMarker(latitude, longitude, name, address, map);
-                        }
-        </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
-                async defer></script>*@
 </div>
 
 

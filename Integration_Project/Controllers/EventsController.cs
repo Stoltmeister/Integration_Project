@@ -45,12 +45,14 @@ namespace Integration_Project.Controllers
                 return NotFound();
             }
             bool isOrganizer = false;
+            StandardUser organizer = new StandardUser();
+            var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single();
+            organizer = _context.StandardUsers.Where(x => x.ApplicationUserId == organizerId).FirstOrDefault();
             if (User.IsInRole("Standard"))
             {
                 var currentUserId = User.Identity.GetUserId();
                 var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
-                var organizerId = await _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).SingleAsync();
-                isOrganizer = standardUserId == organizerId;
+                isOrganizer = currentUserId == organizerId;
             }
 
             EventInterestsViewModel eveInterests = new EventInterestsViewModel();
@@ -78,6 +80,7 @@ namespace Integration_Project.Controllers
             }
             var participants = GetParticipants(@event.Id);
             var PCount = ParticipantsCount(@event.Id);
+            eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
             eveInterests.particpantCount = PCount;
             eveInterests.CurrentVenue = currentVenue;
@@ -168,13 +171,13 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
         {
             if (id != @event.Id)
             {
                 return NotFound();
             }
-
+            @event = await StorePicture(@event, picture);
             if (ModelState.IsValid)
             {
                 try
@@ -197,6 +200,8 @@ namespace Integration_Project.Controllers
             }
             return View(@event);
         }
+
+
 
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(string id)
