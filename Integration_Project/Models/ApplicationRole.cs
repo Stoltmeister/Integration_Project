@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Integration_Project.Models
 {
-    public class ApplicationRole : IdentityRole<string>
+    public class ApplicationRole : IdentityRole
     {
 
     }

@@ -183,7 +183,7 @@ namespace Integration_Project.Data
 
             // ApplicationUserRoles
 
-            /*modelBuilder.Entity<ApplicationUserRole>().HasData(
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
                 new ApplicationUserRole
                 {
                     UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
@@ -213,7 +213,7 @@ namespace Integration_Project.Data
                     UserId = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b",
                     RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
                 }
-            ); */
+            ); 
 
             modelBuilder.Entity<Interest>().HasData(
                 new Interest

@@ -19,26 +19,6 @@ namespace Integration_Project.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Integration_Project.Models.ApplicationRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("NormalizedName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationRole");
-
-                    b.HasData(
-                        new { Id = "49573032-75a1-4a20-a956-9bc2b8f95fa6", ConcurrencyStamp = "fab9889c-afd4-40ff-91a5-ad7dbae0aedc", Name = "Standard", NormalizedName = "STANDARD" }
-                    );
-                });
-
             modelBuilder.Entity("Integration_Project.Models.Event", b =>
                 {
                     b.Property<string>("Id")
@@ -381,6 +361,9 @@ namespace Integration_Project.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
@@ -395,6 +378,8 @@ namespace Integration_Project.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -517,11 +502,16 @@ namespace Integration_Project.Migrations
 
                     b.Property<string>("RoleId");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -539,6 +529,20 @@ namespace Integration_Project.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Integration_Project.Models.ApplicationRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+
+                    b.ToTable("ApplicationRole");
+
+                    b.HasDiscriminator().HasValue("ApplicationRole");
+
+                    b.HasData(
+                        new { Id = "49573032-75a1-4a20-a956-9bc2b8f95fa6", ConcurrencyStamp = "fab9889c-afd4-40ff-91a5-ad7dbae0aedc", Name = "Standard", NormalizedName = "STANDARD" }
+                    );
+                });
+
             modelBuilder.Entity("Integration_Project.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -553,6 +557,23 @@ namespace Integration_Project.Migrations
                         new { Id = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", AccessFailedCount = 0, ConcurrencyStamp = "009d8a32-2338-41c6-8715-ba819eb861c2", Email = "esoemad5@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "ESOEMAD5@GMAIL.COM", NormalizedUserName = "ESOEMAD5@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEPDcXogAFBdXHB/ILP//pOgad2XY2YtsOMzQhutbq3vwWLMberWfDDTc5S0bKNtgiw==", PhoneNumberConfirmed = false, SecurityStamp = "BEMZA2GJMIASDNCYCHHKQYFZCLX7TG3L", TwoFactorEnabled = false, UserName = "esoemad5@gmail.com" },
                         new { Id = "b69a12da-22da-41b4-9cda-a58600ae433c", AccessFailedCount = 0, ConcurrencyStamp = "e001d86c-27e1-43ed-9b5f-a4a54e9ea1eb", Email = "stoltenberg96@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "STOLTENBERG96@GMAIL.COM", NormalizedUserName = "STOLTENBERG96@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAELw3XmOscJd2XVFufXA0AEASpKA+PRKGF4dDv7QAwaAgNTPaBe5Sm3nI5LL0BmNV4A==", PhoneNumberConfirmed = false, SecurityStamp = "5D6YY3GMYCV6ZDFWTS4MIAIT6KS2WQUW", TwoFactorEnabled = false, UserName = "stoltenberg96@gmail.com" },
                         new { Id = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b", AccessFailedCount = 0, ConcurrencyStamp = "01fdf294-e754-4f63-b6f8-09f751f90dbe", Email = "coltonsells@coltonsells.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "COLTONSELLS@COLTONSELLS.COM", NormalizedUserName = "COLTONSELLS@COLTONSELLS.COM", PasswordHash = "AQAAAAEAACcQAAAAEKUbqok+BMkAOlt1LOKHV/3m+dGHuYx8dAyoyaE5E2230M1bGw+aGRAfiGFAx4sACQ==", PhoneNumberConfirmed = false, SecurityStamp = "WKFLXKLHAWKHJXOU4SD4S4B6GHYCIID5", TwoFactorEnabled = false, UserName = "coltonsells@coltonsells.com" }
+                    );
+                });
+
+            modelBuilder.Entity("Integration_Project.Models.ApplicationUserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
+
+
+                    b.ToTable("ApplicationUserRole");
+
+                    b.HasDiscriminator().HasValue("ApplicationUserRole");
+
+                    b.HasData(
+                        new { UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" },
+                        new { UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" },
+                        new { UserId = "b69a12da-22da-41b4-9cda-a58600ae433c", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" },
+                        new { UserId = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" }
                     );
                 });
 
