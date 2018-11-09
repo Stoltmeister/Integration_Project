@@ -166,57 +166,34 @@
                     @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
                 </dd>
             </dl>
-<<<<<<< HEAD
             @if (Model.isOrganizer)
             {
                 <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
             }
         </div>
-            <div class="col-md-6">
-                <style>
-                    #map {
-                        height: 400px;
-                        width: 100%;
-                    }
-                </style>
-                <div id="map"></div>
-                <script>
-                function initMap() {
-                    var location = {
-                        lat: @Model.CurrentVenue.Latitude,
-                        lng: @Model.CurrentVenue.Longitude
-                    }
+        <div class="col-md-6">
+            <style>
+                #map {
+                    height: 400px;
+                    width: 100%;
+                }
+            </style>
+            <div id="map"></div>
+            <script src="~/js/GoogleMaps.js"></script>
+            <script>
+                function mapCallback() {
+                    var name = "@Model.CurrentVenue.Name"
+                    var address = "@Model.CurrentVenue.Address"
+                    var latitude = @Model.CurrentVenue.Latitude
+                    var longitude = @Model.CurrentVenue.Longitude
+                    var map = initMap(latitude, longitude);
 
-                    var options = {
-                        zoom: 13,
-                        center: location
-=======
-            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
+                    addMarker(latitude, longitude, name, address, map);
+                }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
+                    async defer></script>
         </div>
-         <div class="col-md-6">
-             <style>
-                 #map {
-                     height: 400px;
-                     width: 100%;
-                 }
-             </style>
-             <div id="map"></div>
-             <script src="~/js/GoogleMaps.js"></script>
-             <script>
-                    function mapCallback() {
-                        var name = "@Model.CurrentVenue.Name"
-                        var address = "@Model.CurrentVenue.Address"
-                        var latitude = @Model.CurrentVenue.Latitude
-                        var longitude = @Model.CurrentVenue.Longitude
-                        var map = initMap(latitude, longitude);
-
-                        addMarker(latitude, longitude, name, address, map);
->>>>>>> 83925c967968a229231c7ab11a80ff7036d0920c
-                    }
-             </script>
-             <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
-                     async defer></script>
-         </div>
         }
         else
         {
