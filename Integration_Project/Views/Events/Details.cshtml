@@ -154,7 +154,7 @@
                     Back To Search
                 </button>
         </div>
-<<<<<<< HEAD
+
         <div class="col-md-8">
             <div class="text-center"><h2>Venue Information</h2></div>
             @if (Model.CurrentVenue != null)
@@ -229,38 +229,7 @@
                 <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
             }
         </div>
-=======
-        <div class="col-md-6">
-            <style>
-                #map {
-                    height: 400px;
-                    width: 100%;
-                }
-            </style>
-            <div id="map"></div>
-            <script src="~/js/GoogleMaps.js"></script>
-            <script>
-                function mapCallback() {
-                    var name = "@Model.CurrentVenue.Name"
-                    var address = "@Model.CurrentVenue.Address"
-                    var latitude = @Model.CurrentVenue.Latitude
-                    var longitude = @Model.CurrentVenue.Longitude
-                    var map = initMap(latitude, longitude);
 
-                    addMarker(latitude, longitude, name, address, map);
-                }
-            </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
-                    async defer></script>
-        </div>
-        }
-        else
-        {
-            <h4>No Venue Assigned yet</h4>
-            
-            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
-        }
->>>>>>> cc2fdd67a0a90e43d3d3851134967dec908f5c1e
     </div>
 
 

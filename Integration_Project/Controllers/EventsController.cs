@@ -47,7 +47,7 @@ namespace Integration_Project.Controllers
             bool isOrganizer = false;
             StandardUser organizer = new StandardUser();
             var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single();
-            organizer = _context.StandardUsers.Where(x => x.Id == organizerId).FirstOrDefault();
+            organizer = _context.StandardUsers.Where(x => x.ApplicationUserId == organizerId).FirstOrDefault();
             if (User.IsInRole("Standard"))
             {
                 var currentUserId = User.Identity.GetUserId();
