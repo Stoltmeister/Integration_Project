@@ -79,6 +79,7 @@ namespace Integration_Project.Controllers
                 
             }
             var participants = GetParticipants(@event.Id);
+            participants.Add(organizer);
             var PCount = ParticipantsCount(@event.Id);
             eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
