@@ -27,10 +27,11 @@
 <link href="~/css/site.css" rel="stylesheet" />
 
 <style>
-    .table-bordered{
+    .table-bordered {
         padding: 5px;
     }
-    .row{
+
+    .row {
         border: groove;
         padding: 5px;
     }
@@ -111,7 +112,12 @@
                 @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
             </dd>
         </dl>
-        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
+        @if (Model.isOrganizer)
+        {
+            @Html.ActionLink("Invite People ", "Invite", new { Id = Model.CurrentEvent.Id })
+
+        }  | 
+        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">    Edit </a> |
         <a asp-action="Index" asp-controller="Search">Back to Search</a>
     </div>
     <div class="col-md-8">
@@ -258,7 +264,6 @@
 
     </div>
 </div>
-
 
 
 
