@@ -174,7 +174,7 @@
                         var address = "@Model.CurrentVenue.Address"
                         var latitude = @Model.CurrentVenue.Latitude
                         var longitude = @Model.CurrentVenue.Longitude
-                        var map = initMap(name, address, latitude, longitude);
+                        var map = initMap(latitude, longitude);
 
                         addMarker(latitude, longitude, name, address, map);
                     }
