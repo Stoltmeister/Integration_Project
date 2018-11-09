@@ -479,7 +479,7 @@ namespace Integration_Project.Controllers
                 "localhost:1111/Details/" + eventId + "\n" +
                 "3. On the event page click join event if you are able to attend";
             await Sendgrid.SendMail(email, "Your Invited!", body);
-            return RedirectToAction("Details", eventId);
+            return RedirectToAction("Details", "Events", new { id = eventId });
         }
     }
 }
