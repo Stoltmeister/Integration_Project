@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Integration_Project.Models
 {
-    public class UserRole : IdentityUserRole<Guid>
+    public class ApplicationRole : IdentityRole
     {
-        public virtual ApplicationUser User { get; set; }
-        public virtual IdentityRole Role { get; set; }
+
     }
 }

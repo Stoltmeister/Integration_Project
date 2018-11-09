@@ -15,7 +15,7 @@ namespace Integration_Project.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
+
         }
 
         public DbSet<Event> Events { get; set; }
@@ -32,7 +32,7 @@ namespace Integration_Project.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
                 {
@@ -71,7 +71,7 @@ namespace Integration_Project.Data
                 }
             );
 
-            /*modelBuilder.Entity<ApplicationUser>().HasData(
+            modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
                 {
                     Id = "b69a12da-22da-41b4-9cda-a58600ae433c",
@@ -88,7 +88,26 @@ namespace Integration_Project.Data
                     LockoutEnabled = false,
                     LockoutEnd = null
                 }
-            );*/
+            );
+
+            modelBuilder.Entity<ApplicationUser>().HasData(
+             new ApplicationUser
+                {
+                 Id = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b",
+                 UserName = "coltonsells@coltonsells.com",
+                 NormalizedUserName = "COLTONSELLS@COLTONSELLS.COM",
+                 Email = "coltonsells@coltonsells.com",
+                 NormalizedEmail = "COLTONSELLS@COLTONSELLS.COM",
+                 PasswordHash = "AQAAAAEAACcQAAAAEKUbqok+BMkAOlt1LOKHV/3m+dGHuYx8dAyoyaE5E2230M1bGw+aGRAfiGFAx4sACQ==",
+                 SecurityStamp = "WKFLXKLHAWKHJXOU4SD4S4B6GHYCIID5",
+                 ConcurrencyStamp = "01fdf294-e754-4f63-b6f8-09f751f90dbe",
+                 PhoneNumber = null,
+                 PhoneNumberConfirmed = false,
+                 TwoFactorEnabled = false,
+                 LockoutEnabled = false,
+                 LockoutEnd = null
+             }
+         );
 
             modelBuilder.Entity<StandardUser>().HasData(
                 new StandardUser
@@ -120,7 +139,7 @@ namespace Integration_Project.Data
                 }
             );
 
-            /*modelBuilder.Entity<StandardUser>().HasData(
+            modelBuilder.Entity<StandardUser>().HasData(
                 new StandardUser
                 {
                     Id = "789e4076-5d71-4e12-b146-2c8f38622f13",
@@ -133,20 +152,68 @@ namespace Integration_Project.Data
                     State = "WI",
                     ZipCode = 53172
                 }
-            );*/
+            );
 
-            
+            modelBuilder.Entity<StandardUser>().HasData(
+                new StandardUser
+                {
+                    Id = "90754d36-88ff-4c8b-a595-d95d46200a52",
+                    ApplicationUserId = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b",
+                    Bio = "Code. Games. Tennis.",
+                    FirstName = "Colton",
+                    LastName = "Sells",
+                    Email = "coltonsells@coltonsells.com",
+                    City = "Brookfield",
+                    State = "WI",
+                    ZipCode = 53045
+                }
+            );
 
-            // User Roles
-            //modelBuilder.Entity<UserRole>().HasData(
-            //    new UserRole
-            //    {
-            //        //UserId = "b7813711-0140-4696-b984-8bd4569c7bba",
-            //        //RoleId = ""
-            //    }
-            //);
-            
-            
+            // ApplicationRoles
+
+            modelBuilder.Entity<ApplicationRole>().HasData(
+                new ApplicationRole
+                {
+                    Id = "49573032-75a1-4a20-a956-9bc2b8f95fa6",
+                    Name = "Standard",
+                    NormalizedName = "STANDARD",
+                    ConcurrencyStamp = "fab9889c-afd4-40ff-91a5-ad7dbae0aedc"
+                }
+            );
+
+            // ApplicationUserRoles
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            );
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            );
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "b69a12da-22da-41b4-9cda-a58600ae433c",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            );
+
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
+                {
+                    UserId = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b",
+                    RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6"
+                }
+            ); 
 
             modelBuilder.Entity<Interest>().HasData(
                 new Interest
@@ -465,7 +532,7 @@ namespace Integration_Project.Data
                 new EventOrganizer { Id = 6, EventId = "6", IsCreator = true, UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6" },
                 new EventOrganizer { Id = 7, EventId = "7", IsCreator = true, UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6" }
             );
-            
+
             modelBuilder.Entity<EventInterest>().HasData(
                 new EventInterest { Id = "1", EventId = "1", InterestId = "1" },
                 new EventInterest { Id = "2", EventId = "2", InterestId = "2" },
@@ -492,9 +559,9 @@ namespace Integration_Project.Data
                 );
 
             modelBuilder.Entity<VenueInterest>().HasData(
-                new VenueInterest { Id = 1, VenueID = "1", InterestId = "1"},
-                new VenueInterest { Id = 2, VenueID = "2", InterestId = "2"},
-                new VenueInterest { Id = 3, VenueID = "3", InterestId = "2"}
+                new VenueInterest { Id = 1, VenueID = "1", InterestId = "1" },
+                new VenueInterest { Id = 2, VenueID = "2", InterestId = "2" },
+                new VenueInterest { Id = 3, VenueID = "3", InterestId = "2" }
             );
 
             // Participants.
@@ -503,9 +570,8 @@ namespace Integration_Project.Data
                 new Participant { Id = "2", EventId = "1", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
                 new Participant { Id = "3", EventId = "2", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" }
             );
-    
-            
+
+
         }
     }
 }
- 
