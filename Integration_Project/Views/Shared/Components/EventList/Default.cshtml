@@ -10,17 +10,18 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table table-hover">
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="table-row-href" data-href="/Events/Details/@item.Event.Id">
                     <div class="row">
                         <div class="col-md-8">
                             @Html.DisplayFor(modelItem => item.Event.Name)
                         </div>
                         <div class="col-md-4">
-                            @if (item.IsOrganizer) {
+                            @if (item.IsOrganizer)
+                            {
                                 <button type="button" class="btn btn-default btn-xs">Organizer</button>
                             }
                         </div>
@@ -31,4 +32,6 @@
             </tr>
         }
     </table>
+    
+    
 </div>
