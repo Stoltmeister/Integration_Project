@@ -22,13 +22,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Event.StartDate" class="control-label"></label>
-                <input asp-for="Event.StartDate" class="form-control" />
+                @*<input asp-for="Event.StartDate" class="form-control" />*@
+                @Html.EditorFor(e => e.Event.StartDate)
                 <span asp-validation-for="Event.StartDate" class="text-danger"></span>
                 <br />
             </div>
             <div class="form-group">
                 <label asp-for="Event.EndDate" class="control-label"></label>
-                <input asp-for="Event.EndDate" class="form-control" />
+                @*<input asp-for="Event.EndDate" class="form-control" />*@
+                @Html.EditorFor(e => e.Event.EndDate)
                 <span asp-validation-for="Event.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
