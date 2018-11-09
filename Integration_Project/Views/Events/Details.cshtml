@@ -24,7 +24,7 @@
 </div>
 
 
-
+<link href="~/css/site.css" rel="stylesheet" />
 
 <style>
     .table-bordered{
@@ -34,8 +34,9 @@
         border: groove;
         padding: 5px;
     }
-</style>
 
+    
+</style>
 <div class="row">
     <div class="col-md-4">
         <div class="text-center"><h2>Event Information</h2></div>
@@ -61,6 +62,12 @@
             <dt>
                 @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
             </dt>
+            @if(Model.CurrentEvent.Premium == 0)
+            {
+                <dd>
+                @Html.Display("No")
+                </dd>
+            }
             <dd>
                 @Html.DisplayFor(model => model.CurrentEvent.Premium)
             </dd>
@@ -110,42 +117,42 @@
     <div class="col-md-8">
         <div class="text-center"><h2>Venue Information</h2></div>
         @if (Model.CurrentVenue != null)
-         {
-         <div class="col-md-6">
-            <dl class="table-bordered">
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentVenue.Name)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentVenue.Name)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentVenue.Description)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentVenue.Description)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentVenue.City)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentVenue.City)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentVenue.State)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentVenue.State)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
-                </dd>
-            </dl>
-            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
-        </div>
+        {
+            <div class="col-md-6">
+                <dl class="table-bordered">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CurrentVenue.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CurrentVenue.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CurrentVenue.Description)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CurrentVenue.Description)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CurrentVenue.City)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CurrentVenue.City)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CurrentVenue.State)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CurrentVenue.State)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
+                    </dd>
+                </dl>
+                <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
+            </div>
             <div class="col-md-6">
                 <style>
                     #map {
@@ -198,9 +205,12 @@
         else
         {
             <h4>No Venue Assigned yet</h4>
+            
+            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
         }
     </div>
 </div>
+
 
 
 
@@ -223,19 +233,29 @@
         <div class="table-bordered">
             @foreach (var person in Model.Participants)
             {
-                @Html.ActionLink(@person.FirstName+" "+@person.LastName, "Profile", new { id = person.Id, eId = Model.CurrentEvent.Id})<br>
+                @Html.ActionLink(@person.FirstName + " " + @person.LastName, "Profile", new { id = person.Id, eId = Model.CurrentEvent.Id })<br>
             }
         </div>
-        @if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+        @if (User.IsInRole("Standard"))
         {
-            @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id })
+            @if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+            {
+                @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id })
+            }
+            else
+            {
+                <p>
+                    This Event is currently full
+                </p>
+            }
         }
         else
         {
-            <p>
-                This Event is currently full
-            </p>
+                <p>
+                    Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to JOIN!
+                </p>
         }
+
     </div>
 </div>
 

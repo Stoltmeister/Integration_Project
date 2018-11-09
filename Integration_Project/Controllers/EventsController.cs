@@ -354,7 +354,7 @@ namespace Integration_Project.Controllers
             var currentVenue = _context.Venues.Where(x => x.Id == currentVenueId).FirstOrDefault();
             if (currentVenue == null)
             {
-                return NotFound();
+                currentVenue = new Venue();
             }
             Event currentEvent = _context.Events.Where(x => x.Id == id).FirstOrDefault();
             EventVenueViewModel eventVenue = new EventVenueViewModel();
