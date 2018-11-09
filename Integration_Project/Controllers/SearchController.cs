@@ -24,9 +24,19 @@ namespace Integration_Project.Controllers
         public async Task<IActionResult> Index()
         {
             var Model = new SearchViewModel();
-            var currentEvents = await _context.Events.ToListAsync();
+            List<Event> combinedList = new List<Event>();
+            var currentEvents = await _context.Events.Where(x => x.IsPrivate != true).Where(x =>x.Premium == 0).ToListAsync();
+            var premEvents = await _context.Events.Where(x => x.Premium == 1).Where(x => x.IsPrivate != true).ToListAsync();
+            foreach(var eve in premEvents)
+            {
+                combinedList.Add(eve);
+            }
+            foreach(var eve in currentEvents)
+            {
+                combinedList.Add(eve);
+            }
             var currentInterests = await _context.Interests.ToListAsync();
-            Model.Events = currentEvents;
+            Model.Events = combinedList;
             Model.Interests = currentInterests;
             return View(Model);
         }
@@ -35,14 +45,18 @@ namespace Integration_Project.Controllers
         public IActionResult Index(List<Interest> interests, string text, string Id)
         {
             var eventInterest = _context.EventInterests.ToList();
-            var currentEvents = _context.Events.ToList();
+            var currentEvents = _context.Events.Where(x => x.IsPrivate != true).Where(x => x.Premium == 0).ToList();
+            var premEvents = _context.Events.Where(x => x.Premium == 1).Where( x => x.IsPrivate != true).ToList();
             var currentInt = _context.Interests.ToList();
             List<string> interestIds = new List<string>();
             List<List<string>> eventIds = new List<List<string>>();
             List<Event> Events = new List<Event>();
             SearchViewModel VM = new SearchViewModel() { Interests = currentInt};
 
-
+            //if (!string.IsNullOrEmpty(Id) && string.IsNullOrEmpty(text))
+            //{
+            //    text = Id;
+            //}
             if (!string.IsNullOrEmpty(text))
             {
                 interests = _context.Interests.FullTextSearchQuery(text).ToList();
@@ -55,14 +69,29 @@ namespace Integration_Project.Controllers
                     var getEventIds = eventInterest.Where(x => x.InterestId == id).Select(x => x.EventId).ToList();
                     eventIds.Add(getEventIds);
                 }
-                foreach(var lItem in eventIds)
+                foreach (var eventIdList in eventIds)
                 {
-                    foreach(var eve in lItem)
+                    foreach (var id in eventIdList.Distinct())
                     {
-                        var addEvent = currentEvents.Where(x => x.Id == eve).FirstOrDefault();
-                        if(addEvent.IsPrivate == false)
+                        foreach (var prem in premEvents)
                         {
-                            Events.Add(addEvent);
+                            if (prem.Id == id)
+                            {
+                                Events.Add(prem);
+                            }
+                        }
+                    }
+                }
+                foreach (var eventIdList in eventIds)
+                {
+                    foreach(var id in eventIdList.Distinct())
+                    {
+                        foreach(var reg in currentEvents)
+                        {
+                            if(reg.Id == id)
+                            {
+                                Events.Add(reg);
+                            }
                         }
                     }
                 }
@@ -74,8 +103,19 @@ namespace Integration_Project.Controllers
                 var filteredEvents = eventInterest.Where(x => x.EventId == Id).Select(x => x.EventId).ToList();
                 foreach(var id in filteredEvents)
                 {
+                    var eve = premEvents.Where(x => x.Id == id).FirstOrDefault();
+                    if(eve != null)
+                    {
+                        Events.Add(eve);
+                    }
+                }
+                foreach(var id in filteredEvents.Distinct())
+                {
                     var eve = currentEvents.Where(x => x.Id == id).FirstOrDefault();
-                    Events.Add(eve);
+                    if(eve != null)
+                    {
+                        Events.Add(eve);
+                    }
                 }
                 VM.Events = Events;
                 return View(VM);

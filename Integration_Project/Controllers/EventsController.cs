@@ -459,6 +459,7 @@ namespace Integration_Project.Controllers
             return RedirectToAction("Details", new {id = id });
         }
 
+
         public IActionResult Invite(string id)
         {
             TempData["Id"] = id;
@@ -481,5 +482,16 @@ namespace Integration_Project.Controllers
             await Sendgrid.SendMail(email, "Your Invited!", body);
             return RedirectToAction("Details", "Events", new { id = eventId });
         }
+
+        public async Task<IActionResult> Profile(string id, string eId)
+        {
+            var profile = _context.StandardUsers.Where(x => x.Id == id).FirstOrDefault();
+            var eve = _context.Events.Where(x => x.Id == eId).FirstOrDefault();
+            EventUserViewModel EUVM = new EventUserViewModel();
+            EUVM.User = profile;
+            EUVM.Event = eve;
+            return View(EUVM);
+        }
+
     }
 }
