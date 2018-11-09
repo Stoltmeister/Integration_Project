@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Integration_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181109141522_AddedRoleAndUserRoles")]
-    partial class AddedRoleAndUserRoles
+    [Migration("20181109152151_AddedColton")]
+    partial class AddedColton
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -263,7 +263,8 @@ namespace Integration_Project.Migrations
                     b.HasData(
                         new { Id = "b7813711-0140-4696-b984-8bd4569c7bba", ApplicationUserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", Bio = "Tennis. Code. Meditation.", City = "Milwaukee", Email = "c.james.obrien@gmail.com", FirstName = "Casey", LastName = "O'Brien", State = "WI", ZipCode = 53202 },
                         new { Id = "51e53b9a-f338-4211-9d7a-8be20bc068a9", ApplicationUserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", Bio = "Code. Milwaukee. Games.", City = "Shorewood", Email = "esoemad5@gmail.com", FirstName = "Elliot", LastName = "Soemadi", State = "Wisconsin", ZipCode = 53211 },
-                        new { Id = "789e4076-5d71-4e12-b146-2c8f38622f13", ApplicationUserId = "b69a12da-22da-41b4-9cda-a58600ae433c", Bio = "Games. Code. Pathfinder.", City = "South Milwaukee", Email = "stoltenberg96@gmail.com", FirstName = "Josh", LastName = "Stoltenberg", State = "WI", ZipCode = 53172 }
+                        new { Id = "789e4076-5d71-4e12-b146-2c8f38622f13", ApplicationUserId = "b69a12da-22da-41b4-9cda-a58600ae433c", Bio = "Games. Code. Pathfinder.", City = "South Milwaukee", Email = "stoltenberg96@gmail.com", FirstName = "Josh", LastName = "Stoltenberg", State = "WI", ZipCode = 53172 },
+                        new { Id = "90754d36-88ff-4c8b-a595-d95d46200a52", ApplicationUserId = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b", Bio = "Code. Games. Tennis.", City = "Brookfield", Email = "coltonsells@coltonsells.com", FirstName = "Colton", LastName = "Sells", State = "WI", ZipCode = 53045 }
                     );
                 });
 
@@ -518,16 +519,11 @@ namespace Integration_Project.Migrations
 
                     b.Property<string>("RoleId");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -557,23 +553,8 @@ namespace Integration_Project.Migrations
                     b.HasData(
                         new { Id = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", AccessFailedCount = 0, ConcurrencyStamp = "baddab696890", Email = "c.james.obrien@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "C.JAMES.OBRIEN@GMAIL.COM", NormalizedUserName = "C.JAMES.OBRIEN@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEJG8SzwSAu8tIzIHfAIwjt+5rY6LxLg5k3mXSBRGKxGwIzDWkQT1TpQUozpuBjY1ng==", PhoneNumberConfirmed = false, SecurityStamp = "GSZ7JNO4GZ7JR6W2NU7MQZIZGU5BBEJS", TwoFactorEnabled = false, UserName = "c.james.obrien@gmail.com" },
                         new { Id = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", AccessFailedCount = 0, ConcurrencyStamp = "009d8a32-2338-41c6-8715-ba819eb861c2", Email = "esoemad5@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "ESOEMAD5@GMAIL.COM", NormalizedUserName = "ESOEMAD5@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEPDcXogAFBdXHB/ILP//pOgad2XY2YtsOMzQhutbq3vwWLMberWfDDTc5S0bKNtgiw==", PhoneNumberConfirmed = false, SecurityStamp = "BEMZA2GJMIASDNCYCHHKQYFZCLX7TG3L", TwoFactorEnabled = false, UserName = "esoemad5@gmail.com" },
-                        new { Id = "b69a12da-22da-41b4-9cda-a58600ae433c", AccessFailedCount = 0, ConcurrencyStamp = "e001d86c-27e1-43ed-9b5f-a4a54e9ea1eb", Email = "stoltenberg96@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "STOLTENBERG96@GMAIL.COM", NormalizedUserName = "STOLTENBERG96@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAELw3XmOscJd2XVFufXA0AEASpKA+PRKGF4dDv7QAwaAgNTPaBe5Sm3nI5LL0BmNV4A==", PhoneNumberConfirmed = false, SecurityStamp = "5D6YY3GMYCV6ZDFWTS4MIAIT6KS2WQUW", TwoFactorEnabled = false, UserName = "stoltenberg96@gmail.com" }
-                    );
-                });
-
-            modelBuilder.Entity("Integration_Project.Models.ApplicationUserRole", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
-
-
-                    b.ToTable("ApplicationUserRole");
-
-                    b.HasDiscriminator().HasValue("ApplicationUserRole");
-
-                    b.HasData(
-                        new { UserId = "00df3fb1-fe99-4400-bf75-6d19c31662a6f", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" },
-                        new { UserId = "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" },
-                        new { UserId = "b69a12da-22da-41b4-9cda-a58600ae433c", RoleId = "49573032-75a1-4a20-a956-9bc2b8f95fa6" }
+                        new { Id = "b69a12da-22da-41b4-9cda-a58600ae433c", AccessFailedCount = 0, ConcurrencyStamp = "e001d86c-27e1-43ed-9b5f-a4a54e9ea1eb", Email = "stoltenberg96@gmail.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "STOLTENBERG96@GMAIL.COM", NormalizedUserName = "STOLTENBERG96@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAELw3XmOscJd2XVFufXA0AEASpKA+PRKGF4dDv7QAwaAgNTPaBe5Sm3nI5LL0BmNV4A==", PhoneNumberConfirmed = false, SecurityStamp = "5D6YY3GMYCV6ZDFWTS4MIAIT6KS2WQUW", TwoFactorEnabled = false, UserName = "stoltenberg96@gmail.com" },
+                        new { Id = "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b", AccessFailedCount = 0, ConcurrencyStamp = "01fdf294-e754-4f63-b6f8-09f751f90dbe", Email = "coltonsells@coltonsells.com", EmailConfirmed = false, LockoutEnabled = false, NormalizedEmail = "COLTONSELLS@COLTONSELLS.COM", NormalizedUserName = "COLTONSELLS@COLTONSELLS.COM", PasswordHash = "AQAAAAEAACcQAAAAEKUbqok+BMkAOlt1LOKHV/3m+dGHuYx8dAyoyaE5E2230M1bGw+aGRAfiGFAx4sACQ==", PhoneNumberConfirmed = false, SecurityStamp = "WKFLXKLHAWKHJXOU4SD4S4B6GHYCIID5", TwoFactorEnabled = false, UserName = "coltonsells@coltonsells.com" }
                     );
                 });
 
