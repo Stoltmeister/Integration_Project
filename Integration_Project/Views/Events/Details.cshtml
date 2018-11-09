@@ -24,18 +24,20 @@
 </div>
 
 
-
+<link href="~/css/site.css" rel="stylesheet" />
 
 <style>
-    .table-bordered{
+    .table-bordered {
         padding: 5px;
     }
-    .row{
+
+    .row {
         border: groove;
         padding: 5px;
     }
-</style>
 
+    
+</style>
 <div class="row">
     <div class="col-md-4">
         <div class="text-center"><h2>Event Information</h2></div>
@@ -61,6 +63,12 @@
             <dt>
                 @Html.DisplayNameFor(model => model.CurrentEvent.Premium)
             </dt>
+            @if(Model.CurrentEvent.Premium == 0)
+            {
+                <dd>
+                @Html.Display("No")
+                </dd>
+            }
             <dd>
                 @Html.DisplayFor(model => model.CurrentEvent.Premium)
             </dd>
@@ -104,7 +112,12 @@
                 @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
             </dd>
         </dl>
-        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">Edit</a> |
+        @if (Model.isOrganizer)
+        {
+            @Html.ActionLink("Invite People ", "Invite", new { Id = Model.CurrentEvent.Id })
+
+        }  | 
+        <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">    Edit </a> |
         <a asp-action="Index" asp-controller="Search">Back to Search</a>
     </div>
     <div class="col-md-8">
@@ -146,61 +159,39 @@
             </dl>
             <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
         </div>
-            <div class="col-md-6">
-                <style>
-                    #map {
-                        height: 400px;
-                        width: 100%;
+         <div class="col-md-6">
+             <style>
+                 #map {
+                     height: 400px;
+                     width: 100%;
+                 }
+             </style>
+             <div id="map"></div>
+             <script src="~/js/GoogleMaps.js"></script>
+             <script>
+                    function mapCallback() {
+                        var name = "@Model.CurrentVenue.Name"
+                        var address = "@Model.CurrentVenue.Address"
+                        var latitude = @Model.CurrentVenue.Latitude
+                        var longitude = @Model.CurrentVenue.Longitude
+                        var map = initMap(name, address, latitude, longitude);
+
+                        addMarker(latitude, longitude, name, address, map);
                     }
-                </style>
-                <div id="map"></div>
-                <script>
-                function initMap() {
-                    var location = {
-                        lat: @Model.CurrentVenue.Latitude,
-                        lng: @Model.CurrentVenue.Longitude
-                    }
-
-                    var options = {
-                        zoom: 13,
-                        center: location
-                    }
-
-                    var map = new google.maps.Map(document.getElementById('map'), options);
-
-                    addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
-                }
-
-                function addMarker(latitude, longitude, title, description, map) {
-                    var latLng = new google.maps.LatLng(latitude, longitude);
-                    var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
-
-                    var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                    });
-
-                    var marker = new google.maps.Marker({
-                        position: latLng,
-                        title: title,
-                        map: map,
-                        draggable: false
-                    });
-
-                    google.maps.event.addListener(marker, 'click', function () {
-                            infowindow.open(map, marker);
-                    });
-                }
-                </script>
-                <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                        async defer></script>
-            </div>
+             </script>
+             <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
+                     async defer></script>
+         </div>
         }
         else
         {
             <h4>No Venue Assigned yet</h4>
+            
+            <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
         }
     </div>
 </div>
+
 
 
 
@@ -223,22 +214,31 @@
         <div class="table-bordered">
             @foreach (var person in Model.Participants)
             {
-                @person.FirstName @person.LastName<br>
+                @Html.ActionLink(@person.FirstName + " " + @person.LastName, "Profile", new { id = person.Id, eId = Model.CurrentEvent.Id })<br>
             }
         </div>
-        @if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+        @if (User.IsInRole("Standard"))
         {
-            @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id })
+            @if (Model.particpantCount < Model.CurrentEvent.MaxParticipants)
+            {
+                @Html.ActionLink("Join This Event", "JoinConfirm", new { Id = Model.CurrentEvent.Id })
+            }
+            else
+            {
+                <p>
+                    This Event is currently full
+                </p>
+            }
         }
         else
         {
-            <p>
-                This Event is currently full
-            </p>
+                <p>
+                    Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to JOIN!
+                </p>
         }
+
     </div>
 </div>
-
 
 
 

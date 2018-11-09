@@ -14,7 +14,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>    
+    </environment>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,11 +31,18 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
-                    <li><a asp-area="" asp-controller="Search" asp-action="Index">Events</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
+                    @if (User.IsInRole("Standard"))
+                    {
+                        <li><a asp-area="" asp-controller="Events" asp-action="Create">Create an Event</a></li>
+                    }
+                    <li><a asp-area="" asp-controller="Search" asp-action="Index">Search Events</a></li>
                     <li><a asp-area="" asp-controller="Venues" asp-action="Index">Venues</a></li>
-                    <li><a asp-area="" asp-controller="StandardUsers" asp-action="Index">My Profile</a></li>
+                    @if (User.IsInRole("Standard"))
+                    {
+                        <li><a asp-area="" asp-controller="StandardUsers" asp-action="Index">My Profile</a></li>
+                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

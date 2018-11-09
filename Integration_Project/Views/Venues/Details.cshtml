@@ -7,148 +7,122 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>@Model.CurrentVenue.Name</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-6">
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.Address)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.Address)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.City)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.City)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.State)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.State)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.Description)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.Description)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.CreationDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.CreationDate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.IsPrivate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentVenue.IsPrivate)
-            </dd>
-            <dt>
-                @Html.DisplayName("Rate this venue!")
-                @*@Html.DisplayNameFor(model => model.CurrentVenue.Rating)*@
-            </dt>
-            <dd>
-                @{ Html.RenderPartial("_RatingsControl", Model.CurrentVenue);}
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentVenue.WebsiteUrl)
-            </dt>
-            <dd>
-                <a href="http://www.@Model.CurrentVenue.WebsiteUrl">@Model.CurrentVenue.WebsiteUrl</a>
-            </dd>
-            <dt>Interests</dt>
-            @foreach (Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
-            {
-            <dd>&nbsp &nbsp @i.Name: <i>@i.Description</i></dd>
-            }
-            <br />
-            @if (Model.controller == "Event")
-            {
-                <a asp-controller="Events" asp-route-id="@Model.eventId" asp-action="SelectVenue">Back to List</a>
-            }
-            else
-            {
-                <a asp-action="InterestSelection" asp-route-id="@Model.CurrentVenue.Id">Add or Remove Interests</a>
-                <br /><br />
-                <div>
-                    <a asp-action="Edit" asp-route-id="@Model.CurrentVenue.Id">Edit</a> |
-                    <a asp-action="Index">Back to List</a>
-                </div>
-            }
-
-        </div>
-
-        <div class="col-md-6">
-            <style>
-                #map {
-                    height: 400px;
-                    width: 100%;
-                }
-            </style>
-            <div id="map"></div>
-            <script>
-        function initMap() {
-
-                        var location = {
-                lat: @Model.CurrentVenue.Latitude,
-                lng: @Model.CurrentVenue.Longitude
-            }
-
-                    var options = {
-                zoom: 13,
-                center: location
-            }
-
-            var map = new google.maps.Map(document.getElementById('map'), options);
-
-                    addMarker(location.lat, location.lng, '@Model.CurrentVenue.Name', '@Model.CurrentVenue.Address', map);
+<h4>@Model.CurrentVenue.Name</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.CreationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.CreationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.IsPrivate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentVenue.IsPrivate)
+        </dd>
+        <dt>
+            @Html.DisplayName("Rate this venue!")
+            @*@Html.DisplayNameFor(model => model.CurrentVenue.Rating)*@
+        </dt>
+        <dd>
+            @{ Html.RenderPartial("_RatingsControl", Model.CurrentVenue);}
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentVenue.WebsiteUrl)
+        </dt>
+        <dd>
+            <a href="http://www.@Model.CurrentVenue.WebsiteUrl">@Model.CurrentVenue.WebsiteUrl</a>
+        </dd>
+        <dt>Interests</dt>
+        @foreach (Interest i in Model.AddedInterests) //might want to limit the amount of intersts in the future
+        {
+        <dd>&nbsp &nbsp @i.Name: <i>@i.Description</i></dd>
+        }
+        <br />
+        @if (Model.controller == "Event")
+        {
+            <a asp-controller="Events" asp-route-id="@Model.eventId" asp-action="SelectVenue">Back to List</a>
+        }
+        else
+        {
+            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentVenue.Id">Add or Remove Interests</a>
+            <br /><br />
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.CurrentVenue.Id">Edit</a> |
+                <a asp-action="Index">Back to List</a>
+            </div>
         }
 
-        function addMarker(latitude, longitude, title, description, map) {
-                        var latLng = new google.maps.LatLng(latitude, longitude);
-                        var contentString = '<h3>' + title + '</h3>' + '<p>' + description + '</p>';
-
-                        var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: title,
-                map: map,
-                draggable: false
-            });
-
-            google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.open(map, marker);
-                    });
-                    }
-            </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=initMap"
-                    async defer><</script>
-        </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6"></div>
-        <div class="col-lg-6">
-            @{ 
-                string twitterLink = "https://twitter.com/" + Model.CurrentVenue.TwitterHandle + "?ref_src=twsrc%5Etfw";
+
+    <div class="col-md-6">
+        <style>
+            #map {
+                height: 400px;
+                width: 100%;
             }
-            <a class="twitter-timeline" data-height="600" href="@twitterLink"></a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            @*How to generate the href attribute from the users twitter url?*@
-        </div>
+        </style>
+        <div id="map"></div>
+        <script src="~/js/GoogleMaps.js"></script>
+        <script>
+            function mapCallback() {
+                var name = "@Model.CurrentVenue.Name"
+                var address = "@Model.CurrentVenue.Address"
+                var latitude = @Model.CurrentVenue.Latitude
+                var longitude = @Model.CurrentVenue.Longitude
+                var map = initMap(name, address, latitude, longitude);
+
+                addMarker(latitude, longitude, name, address, map);
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
+                async defer>
+            
+        </script>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6"></div>
+    <div class="col-lg-6">
+        @{ 
+            string twitterLink = "https://twitter.com/" + Model.CurrentVenue.TwitterHandle + "?ref_src=twsrc%5Etfw";
+        }
+        <a class="twitter-timeline" data-height="600" href="@twitterLink"></a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        @*How to generate the href attribute from the users twitter url?*@
     </div>
 </div>
 
