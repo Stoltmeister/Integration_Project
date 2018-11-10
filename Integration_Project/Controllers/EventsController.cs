@@ -79,7 +79,6 @@ namespace Integration_Project.Controllers
                 
             }
             var participants = GetParticipants(@event.Id);
-            participants.Add(organizer);
             var PCount = ParticipantsCount(@event.Id);
             eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
@@ -139,6 +138,7 @@ namespace Integration_Project.Controllers
         {
             string eventString = (string)TempData["EventRedirect"];
             Event eve = JsonConvert.DeserializeObject<Event>(eventString);
+            Participant organizer = new Participant();
             eve.CreatedDate = DateTime.Today;
             eve.ModifiedDate = DateTime.Today;
             var userId = User.Identity.GetUserId();
@@ -146,6 +146,11 @@ namespace Integration_Project.Controllers
             _context.Events.Add(eve);
             await _context.SaveChangesAsync();
             EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = userId, IsCreator = true };
+            organizer.ConfirmedDate = DateTime.Today;
+            organizer.EventId = eve.Id;
+            organizer.InvitedDate = DateTime.Today;
+            organizer.UserId = standardUserId;
+            _context.Participants.Add(organizer);
             _context.EventOrganizers.Add(creator);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = eve.Id });
@@ -505,5 +510,42 @@ namespace Integration_Project.Controllers
             return View(EUVM);
         }
 
+        public ActionResult CreateVenue()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVenue([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,TwitterHandle,ProfilePicture")] Venue venue, IFormFile picture)
+        {
+            // Picture does not get saved
+            venue = await StorePicture(venue, picture);
+            if (ModelState.IsValid)
+            {
+                var eID = (string)TempData["eveId"];
+                venue.CreatedBy = User.Identity.GetUserId();
+                venue.CreationDate = DateTime.Now;
+                venue.UpdateLatitudeAndLongitude();
+                _context.Add(venue);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("SelectVenue", new { id = eID});
+            }
+            return View(venue);
+        }
+
+        private async Task<Venue> StorePicture(Venue ven, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    ven.ProfilePicture = stream.ToArray();
+                }
+            }
+
+            return ven;
+        }
     }
 }

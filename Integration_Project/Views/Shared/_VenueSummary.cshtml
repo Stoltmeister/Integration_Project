@@ -1,29 +1,51 @@
-﻿@model  Integration_Project.Models.Venue
+﻿@model Integration_Project.Models.Venue
 
-<div>
+@{
+    var imgSrc = "Hello";
+    if (Model.ProfilePicture != null)
+    {
+        var base64 = Convert.ToBase64String(Model.ProfilePicture);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    }
+    else
+    {
+        imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg";
+    }
 
-    <div class="thumbnail">
-        @{ 
-            var imgSrc = "Hello";
-            if (Model.ProfilePicture != null)
-            {
-                var base64 = Convert.ToBase64String(Model.ProfilePicture);
-                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            }
-            else
-            {
-                imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg";
-            }
+}
+<style>
+    .Cont {
+        background-size: contain;
+        background-size: cover;
+        height: 200px;
+        width: 100%;
+        padding:0;
+        background-repeat: no-repeat;
+        
+    }
+    .h3{
+        font-weight:bolder;
+    }
+    .row{
+        margin-left:auto;
+        margin-right:auto;
+    }
+   
+    .bot{
+        position:absolute;
+        bottom: 0;
+    }
+</style>
 
-        }
-        <a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.Id">
-            <img src=@imgSrc alt=<img src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg" />
-        </a>
+<div class="Cont container"style="background-image:url(@imgSrc)" onclick="location.href='@Url.Action("Details","Venues", new { id = Model.Id})'">
+        @*<a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.Id">
+            <img src=@imgSrc alt="@imgSrc" style="width:100%" heig />
+        </a>*@
         <div class="row">
-            <div class="caption">
-                <div class="col-sm-6">
-                    <h4>
-                        <a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.Id">
+            <div class="col-sm-6">
+                
+                <h3 style="color:white">
+                    
                             @{
                                 if (Model.Name == null)
                                 {
@@ -35,12 +57,18 @@
                                 }
                             }
                         </a>
-                    </h4>
-                </div>
-                <div class="col-sm-6">
-                    <p>@Model.Description</p>
-                </div>
+                </h3>
+                    
             </div>
-        </div>
-</div>
+                <div class="row">
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p style="color:white">@Model.Description</p>
+                    </div>
+                </div>
+                
+        </div>   
+  
 </div>
