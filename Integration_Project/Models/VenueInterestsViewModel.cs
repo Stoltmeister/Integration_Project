@@ -10,7 +10,7 @@ namespace Integration_Project.Models
         public Venue CurrentVenue { get; set; }
         public List<Interest> Interests { get; set; }
         public List<Interest> AddedInterests { get; set; }
-
+        public string UserId { get; set; }
         public string controller = "";
         public string eventId = "";
     }

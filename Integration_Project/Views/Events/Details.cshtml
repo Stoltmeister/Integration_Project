@@ -34,9 +34,13 @@
                     Event organizer: @Model.Organizer.FirstName  @Model.Organizer.LastName
                 </h3>
             </div>
-            @if(Model.isOrganizer && Model.CurrentEvent.Premium == 0)
+            @if (Model.isOrganizer && Model.CurrentEvent.Premium == 0)
             {
-                @Html.ActionLink("Go Premium", "GetCharge", "Events", new { id = Model.CurrentEvent.Id })
+          
+                <button class="btn"
+                        style="background-color:red;border-radius:10px;color:white;margin-bottom:5px;margin-top:auto;margin-left:auto" onclick="location.href='@Url.Action("GetCharge","Events", new { id = Model.CurrentEvent.Id})'">
+                    GO PREMIUM
+                </button>
             }
         </div>
     </div>
@@ -92,12 +96,15 @@
                 @if (Model.CurrentEvent.Premium == 0)
                 {
                     <dd>
-                        @Html.Display("No")
+                        No
                     </dd>
                 }
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Premium)
-                </dd>
+                else
+                {
+                    <dd>
+                        Yes
+                    </dd>
+                }
                 <dt>
                     @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
                 </dt>
@@ -124,26 +131,24 @@
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
-                </dd>              
+                </dd>
             </dl>
             @if (Model.isOrganizer)
             {
-                <p>
-                    @Html.ActionLink("Invite People ", "Invite", new { Id = Model.CurrentEvent.Id })
-                    |
-                </p>
-            }
-            @if (Model.isOrganizer)
-            {
-                <p>
-                    <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">    Edit </a> |
-                </p>
-                
-            }
-                <button class="btn" 
-                        style="background-color:orangered;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Search")'">
+                <button class="btn"
+                        style="background-color:red;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Invite","Events", new { id = Model.CurrentEvent.Id})'">
                     Back To Search
                 </button>
+           
+                <button class="btn"
+                        style="padding-bottom:10px;background-color:red;border-radius:10px;color:white;margin-bottom:5px;margin-top:auto;margin-left:auto" onclick="location.href='@Url.Action("GetCharge","Events", new { id = Model.CurrentEvent.Id})'">
+                    Edit
+                </button>
+            }
+            <button class="btn"
+                    style="background-color:red;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Search")'">
+                Back To Search
+            </button>
         </div>
 
         <div class="col-md-8">
@@ -186,8 +191,10 @@
                     </dl>
                     @if (Model.isOrganizer)
                     {
-                        <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
-
+                        <button class="btn"
+                                style="background-color:red;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.CurrentEvent.Id})'">
+                            Change Venue
+                        </button>
                     }
                 </div>
                 <div class="col-md-6">
@@ -218,7 +225,10 @@
                 <h4>No Venue Assigned yet</h4>
                 @if (User.IsInRole("Standard") && Model.isOrganizer)
                 {
-                    <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
+                    <button class="btn"
+                            style="background-color:lightcoral;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.CurrentEvent.Id})'">
+                        Add Venue
+                    </button>
                 }
             }
         </div>
@@ -244,6 +254,7 @@
             }
             @if (Model.isOrganizer)
             {
+
                 <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
             }
 

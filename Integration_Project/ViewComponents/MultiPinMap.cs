@@ -32,6 +32,9 @@ namespace Integration_Project.ViewComponents
                 var EventVenueId = db.Events.Where(x => x.Id == participant.EventId).Select(x => x.VenueId).FirstOrDefault();
                 if (EventVenueId != null)
                 {
+                    var pId = participant.Event.VenueId;
+
+                    var vId = db.Venues.Where(v => v.Id == participant.Event.VenueId).FirstOrDefault();
                     //var venue = participant.Event.Venues;
                     var venue = db.Venues.Where(v => v.Id == participant.Event.VenueId).Single();
 

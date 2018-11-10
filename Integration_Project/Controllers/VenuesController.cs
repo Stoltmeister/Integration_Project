@@ -142,7 +142,7 @@ namespace Integration_Project.Controllers
             }
             venueInterests.AddedInterests = likedInterests;
             venueInterests.Interests = likedInterests;
-
+            venueInterests.UserId = User.Identity.GetUserId();
             venueInterests.CurrentVenue = venue;
             string cCheck = (string)TempData["controllerCheck"];
             string eId = (string)TempData["eventId"];
