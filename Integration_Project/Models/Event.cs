@@ -28,6 +28,7 @@ namespace Integration_Project.Models
         [Display(Name="Outdoors")]
         public bool IsWeatherDependent { get; set; }
         [DataType(DataType.DateTime)]
+        [Display(Name = "Date Added")]
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         [Display(Name = "Minimum Participants")]

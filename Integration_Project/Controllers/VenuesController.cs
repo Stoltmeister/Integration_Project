@@ -236,7 +236,7 @@ namespace Integration_Project.Controllers
             {
                 return NotFound();
             }
-            // If the user does not upload an image, the image will be the default image, even if the venue already had an image
+
             venue = await StorePicture(venue, picture);
 
 

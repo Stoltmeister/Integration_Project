@@ -46,13 +46,13 @@ namespace Integration_Project.Controllers
             }
             bool isOrganizer = false;
             StandardUser organizer = new StandardUser();
-            var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single();
+            var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single(); // try catch?
             organizer = _context.StandardUsers.Where(x => x.ApplicationUserId == organizerId).FirstOrDefault();
             if (User.IsInRole("Standard"))
             {
                 var currentUserId = User.Identity.GetUserId();
                 var standardUserId = await _context.StandardUsers.Where(u => u.ApplicationUserId == currentUserId).Select(u => u.Id).SingleAsync();
-                isOrganizer = standardUserId == organizerId;
+                isOrganizer = currentUserId == organizerId;
             }
 
             EventInterestsViewModel eveInterests = new EventInterestsViewModel();
@@ -79,6 +79,7 @@ namespace Integration_Project.Controllers
                 
             }
             var participants = GetParticipants(@event.Id);
+            participants.Add(organizer);
             var PCount = ParticipantsCount(@event.Id);
             eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
@@ -171,13 +172,13 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants")] Event @event)
+        public async Task<IActionResult> Edit([Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
         {
-            if (id != @event.Id)
-            {
-                return NotFound();
-            }
-
+            //if (id != @event.Id)
+            //{
+            //    return NotFound();
+            //}
+            @event = await StorePicture(@event, picture);
             if (ModelState.IsValid)
             {
                 try
@@ -200,6 +201,21 @@ namespace Integration_Project.Controllers
             }
             return View(@event);
         }
+
+        private async Task<Event> StorePicture(Event eve, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    eve.EventPicture = stream.ToArray();
+                }
+            }
+
+            return eve;
+        }
+
 
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -313,19 +329,7 @@ namespace Integration_Project.Controllers
             return View(newInterest);
         }
 
-        private async Task<Event> StorePicture(Event eve, IFormFile picture)
-        {
-            if (picture != null)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    await picture.CopyToAsync(stream);
-                    eve.EventPicture = stream.ToArray();
-                }
-            }
-
-            return eve;
-        }
+     
 
         public IActionResult GetCharge(string id)
         {
@@ -479,7 +483,7 @@ namespace Integration_Project.Controllers
         {
             string eventId = (string)TempData["Id"];
             var eo = _context.EventOrganizers.Where(e => e.EventId == eventId).Select(u => u.UserId).Single();
-            var standardUser = _context.StandardUsers.Where(u => u.Id == eo).Single();
+            var standardUser = _context.StandardUsers.Where(u => u.ApplicationUserId == eo).Single();
             var currentEvent = _context.Events.Where(e => e.Id == eventId).Single();
             string body = standardUser.FirstName + " has invited you to their event " + currentEvent.Name + "!" + "\n" +
                 "Please follow these instructions to join: \n" +
