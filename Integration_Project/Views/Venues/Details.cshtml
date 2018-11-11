@@ -120,7 +120,7 @@
         @if (Model.controller == "Event")
         {
             <button class="btn"
-                    style="background-color:lightcoral;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.eventId})'">
+                    style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.eventId})'">
                 Back to List
             </button>
         }
@@ -129,21 +129,21 @@
             @if (Model.CurrentVenue.CreatedBy == Model.UserId)
             {
                 <button class="btn"
-                        style="background-color:lightcoral;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("InterestSelection","Venues",new { id = Model.CurrentVenue.Id})'">
+                        style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("InterestSelection","Venues",new { id = Model.CurrentVenue.Id})'">
                     Add or Remove Interest
                 </button>
 
                 <br /><br />
                 
                     <button class="btn"
-                            style="background-color:lightcoral;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Edit","Venues",new { id = Model.CurrentVenue.Id})'">
+                            style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Edit","Venues",new { id = Model.CurrentVenue.Id})'">
                         Edit
                     </button>
 
            
             }
             <button class="btn"
-                    style="background-color:lightcoral;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Venues")'">
+                    style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Venues")'">
                 Back to List
             </button>
         }
