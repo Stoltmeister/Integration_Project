@@ -26,7 +26,7 @@
         </dd>
     </dl>
     @Html.HiddenFor(model => model.Id)
-    <button type="submit">Confirm</button>
+    <button type="submit" style="background-color:darkblue;border:none;border-radius:10px;color:white">Confirm</button>
     <a asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
 </div>
 }
