@@ -2,42 +2,51 @@
 @{
     ViewData["Title"] = "SelectVenue";
 }
+<div class="container main">
+    <h2>SelectVenue</h2>
 
-<h2>SelectVenue</h2>
-
-<h2>Venues</h2>
-@using (Html.BeginForm())
-{
+    <h2>Venues</h2>
+    @using (Html.BeginForm())
+    {
 
 
-@if (User.IsInRole("Standard"))
-{
-    <p>
-        <a asp-action="CreateVenue">Add New</a>
-    </p>
-}
-else
-{
-    <p>
-        Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
-    </p>
-}
-
-<div class="row">
-    @{
-        foreach (Venue venue in Model.Venues)
+        @if (User.IsInRole("Standard"))
         {
-
-        <div class="col-sm-4">
-            <div class="row">
-                <button value="@venue.Id" type="submit" name="venueChoice">Select Venue</button><br />
-            </div>
-            <div class="row">
-                @Html.Partial("_VenueSummary", venue)
-            </div>
-        </div>
+            <p>
+                <a asp-action="CreateVenue">Add New +</a>
+            </p>
         }
-    }
-</div>
+        else
+        {
+            <p>
+                Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
+            </p>
+        }
 
- }
+        <div class="row">
+            @{
+                foreach (Venue venue in Model.Venues)
+                {
+
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <button value="@venue.Id" type="submit" name="venueChoice" style="border:none;background-color:darkblue;border-radius:20px;color:white;margin-bottom:1%;margin-top:2%">Select Venue</button><br />
+                        </div>
+                        <div class="row">
+                            @Html.Partial("_VenueSummary", venue)
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <style>
+            .main {
+                -webkit-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+                -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+                box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+                padding-bottom: 4%
+            }
+        </style>
+    }
+
+</div>

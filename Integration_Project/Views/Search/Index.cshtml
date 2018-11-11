@@ -108,12 +108,12 @@
         </div>
         <hr />
 
-        <div class="container col-md-10 text-center">
+        <div class="container col-md-12 text-center">
             <div class="row Inner">
                 @{
                     foreach (var eve in Model.Events)
                     {
-                        <div class="col-sm-4" style="display:inline-block">
+                        <div class="col-sm-4" style="margin-bottom:3%">
                             @Html.Partial("_EventSummary", eve)
                         </div>
                     }
