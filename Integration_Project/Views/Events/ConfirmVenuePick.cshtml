@@ -53,10 +53,9 @@
         @Html.HiddenFor(model => model.currentVenue.Id)
     </dl>
 </div>
-    <div>
-        <button type="submit">Confirm</button>
-    </div>
-}
 <div>
-    <a asp-action="SelectVenue" asp-route-id="@Model.currentEvent.Id"></a>
+    <button type="submit" style="background-color:darkblue;color:white;border:none;border-radius:10px">Confirm</button>
+    <a asp-action="SelectVenue" asp-route-id="@Model.currentEvent.Id">Cancel</a>
+
 </div>
+}
