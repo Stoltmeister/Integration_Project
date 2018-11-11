@@ -40,9 +40,20 @@
         position: absolute;
         bottom: 0;
     }
+    .background-image {
+        -webkit-filter: brightness(100%);
+    }
+
+        .background-image:hover {
+            -webkit-filter: brightness(50%);
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            transition: all 1s ease;
+        }
 </style>
 
-<div class="Cont container" style="background-image:url(@imgSrc)" onclick="location.href='@Url.Action("Details","Events", new { id = Model.Id})'">
+<div class="Cont container background-image" style="background-image:url(@imgSrc)" onclick="location.href='@Url.Action("Details","Events", new { id = Model.Id})'">
     <div class="row" style="text-align:left">
         <div class="col-sm-12">
             <h3 style="color:white">
