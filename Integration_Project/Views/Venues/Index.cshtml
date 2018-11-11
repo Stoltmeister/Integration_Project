@@ -20,6 +20,7 @@
         -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
         box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
     }
+    
 </style>
 <div class="container main">
 <h2>Venues</h2>
@@ -45,7 +46,7 @@ else
             for (int j = 0; j <= 2; j++)
             {
                 @if (i + j == Model.Count()) { break; }
-                <div class="col-sm-4" style="margin-bottom:10px">
+                <div class="col-sm-4" style="margin-bottom:20px">
                     @Html.Partial("_VenueSummary", Model.ElementAt(i + j))
                 </div>
             }

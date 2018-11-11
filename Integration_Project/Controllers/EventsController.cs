@@ -544,8 +544,10 @@ namespace Integration_Project.Controllers
                     ven.ProfilePicture = stream.ToArray();
                 }
             }
-
+           
             return ven;
         }
+
+       
     }
 }
