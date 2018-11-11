@@ -175,7 +175,7 @@ namespace Integration_Project.Controllers
                 venue.UpdateLatitudeAndLongitude();
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", _context.Venues.Where(v => v.Id == venue.Id).Single());
+                return RedirectToAction("Details", new { id = venue.Id });
             }
             return View(venue);
         }

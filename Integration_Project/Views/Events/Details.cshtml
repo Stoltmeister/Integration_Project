@@ -136,17 +136,17 @@
             @if (Model.isOrganizer)
             {
                 <button class="btn"
-                        style="background-color:red;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Invite","Events", new { id = Model.CurrentEvent.Id})'">
+                        style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Invite","Events", new { id = Model.CurrentEvent.Id})'">
                     Back To Search
                 </button>
            
                 <button class="btn"
-                        style="padding-bottom:10px;background-color:red;border-radius:10px;color:white;margin-bottom:5px;margin-top:auto;margin-left:auto" onclick="location.href='@Url.Action("GetCharge","Events", new { id = Model.CurrentEvent.Id})'">
+                        style="padding-bottom:10px;background-color:darkblue;border-radius:10px;color:white;margin-bottom:5px;margin-top:auto;margin-left:auto" onclick="location.href='@Url.Action("GetCharge","Events", new { id = Model.CurrentEvent.Id})'">
                     Edit
                 </button>
             }
             <button class="btn"
-                    style="background-color:red;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Search")'">
+                    style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Search")'">
                 Back To Search
             </button>
         </div>
@@ -192,7 +192,7 @@
                     @if (Model.isOrganizer)
                     {
                         <button class="btn"
-                                style="background-color:red;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.CurrentEvent.Id})'">
+                                style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.CurrentEvent.Id})'">
                             Change Venue
                         </button>
                     }
