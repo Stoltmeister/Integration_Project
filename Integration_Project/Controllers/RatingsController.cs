@@ -24,10 +24,15 @@ namespace Integration_Project.Controllers
 
         public ActionResult SetRating(string Id, decimal rank)
         {
+            string userId = User.Identity.GetUserId();
+            if (_context.Ratings.Where( r=> r.UserId == userId).Count() >= 1)
+            {
+                return RedirectToAction("Details", "Venues", new { id = Id });
+            }
             Rating rating = new Rating();
             rating.Rank = rank;
             rating.VenueId = Id;
-            rating.UserId = User.Identity.GetUserId();
+            rating.UserId = userId;
 
             try
             {
@@ -44,7 +49,7 @@ namespace Integration_Project.Controllers
             //rating = _context.Ratings.
 
             //return rating;
-            return RedirectToAction("Details", "Venues", new { id = rating.VenueId });
+            return RedirectToAction("Details", "Venues", new { id = Id });
         }
 
         //public PartialViewResult RatingsControl(string venueId)
