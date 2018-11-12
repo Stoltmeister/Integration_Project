@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Integration_Project.Models.EventViewModel>
 
+
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
@@ -11,6 +13,20 @@
     </div>
 
     <table class="table table-hover">
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td class="table-row-href">
+                    <div class="row">
+                        <div class="col-md-12">
+                            You don't have any events. <a asp-area="" asp-controller="Search" asp-action="Index">Search</a> for one or <a asp-area="" asp-controller="Events" asp-action="Create">create</a> your own!
+</div>
+                        
+                    </div>
+                </td>
+            </tr>
+        }
+
         @foreach (var item in Model)
         {
             <tr>
