@@ -42,7 +42,7 @@ namespace Integration_Project.ViewComponents
             var myEvents = new List<Event>();
             foreach (var participant in participantsWithMyId)
             {
-                if (eventsAroundMe.Contains(participant.Event))
+                if (eventsAroundMe.Contains(participant.Event) || participant.Event.VenueId == null)
                 {
                     continue;
                 }
