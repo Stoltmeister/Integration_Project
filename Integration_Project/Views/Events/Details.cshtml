@@ -18,28 +18,26 @@
 }
 </br>
 <div class="container main">
-    <div class="row" style="padding-bottom: 10px;">
-
-        <div class="text-center col-sm-6">
-            <img src=@imgSrc alt="" height="300" width="500" style="border-radius:20px" />
-        </div>
-        <div class="col-sm-6">
-            <div class="row text-center">
+    <div class="jumbotron" style="padding-bottom: 10px; background-image: url(@imgSrc)">
+        
                 <h1>
                     @Model.CurrentEvent.Name
                 </h1>
-            </div>
-            <div class="row">
-                <h3>
+            
+                <h3 style="color:white">
                     Event organizer: @Model.Organizer.FirstName  @Model.Organizer.LastName
                 </h3>
-            </div>
-            @if(Model.isOrganizer && Model.CurrentEvent.Premium == 0)
+            
+            @if (Model.isOrganizer && Model.CurrentEvent.Premium == 0)
             {
-                @Html.ActionLink("Go Premium", "GetCharge", "Events", new { id = Model.CurrentEvent.Id })
+          
+                <button class="btn"
+                        style="background-color:darkblue;border-radius:10px;color:white;margin-bottom:5px;margin-top:auto;margin-right:auto" onclick="location.href='@Url.Action("GetCharge","Events", new { id = Model.CurrentEvent.Id})'">
+                    GO PREMIUM
+                </button>
             }
         </div>
-    </div>
+  
 
 
     <link href="~/css/site.css" rel="stylesheet" />
@@ -58,9 +56,21 @@
             -webkit-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
             -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
             box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
-
         }
-            
+        .jumbotron {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            margin-top: 2%;
+            margin-right: 0;
+            margin-left: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }  
 
 
     </style>
@@ -92,18 +102,15 @@
                 @if (Model.CurrentEvent.Premium == 0)
                 {
                     <dd>
-                        @Html.Display("No")
+                        No
                     </dd>
                 }
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.Premium)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.IsPrivate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.IsPrivate)
-                </dd>
+                else
+                {
+                    <dd>
+                        Yes
+                    </dd>
+                }
                 <dt>
                     @Html.DisplayNameFor(model => model.CurrentEvent.IsWeatherDependent)
                 </dt>
@@ -131,77 +138,75 @@
                 <dd>
                     @Html.DisplayFor(model => model.CurrentEvent.MaxParticipants)
                 </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CurrentEvent.CanInviteParticipants)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CurrentEvent.CanInviteParticipants)
-                </dd>
             </dl>
             @if (Model.isOrganizer)
             {
-                <p>
-                    @Html.ActionLink("Invite People ", "Invite", new { Id = Model.CurrentEvent.Id })
-                    |
-                </p>
-            }
-            @if (Model.isOrganizer)
-            {
-                <p>
-                    <a asp-action="Edit" asp-route-id="@Model.CurrentEvent.Id">    Edit </a> |
-                </p>
-                
-            }
-                <button class="btn" 
-                        style="background-color:orangered;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Search")'">
-                    Back To Search
+                <button class="btn"
+
+                        style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Invite","Events", new { id = Model.CurrentEvent.Id})'">
+                    Invite
                 </button>
+           
+                <button class="btn"
+
+                        style="padding-bottom:10px;background-color:darkblue;border-radius:10px;color:white;margin-bottom:5px;margin-top:auto;margin-left:auto" onclick="location.href='@Url.Action("Edit","Events", new { id = Model.CurrentEvent.Id})'">
+                    Edit
+                </button>
+            }
+            <button class="btn"
+
+                    style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Search")'">
+                Back To Search
+            </button>
         </div>
 
         <div class="col-md-8">
             <div class="text-center"><h2>Venue Information</h2></div>
             @if (Model.CurrentVenue != null)
             {
-            <div class="col-md-6">
+                <div class="col-md-6">
 
-                <dl class="table-bordered">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.Name)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.Name)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.Description)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.Description)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.City)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.City)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.State)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.State)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
-                    </dd>
-                </dl>
-                @if (Model.isOrganizer)
-                {
-                    <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Change Venue</a>
+                    <dl class="table-bordered">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentVenue.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentVenue.Name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentVenue.Description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentVenue.Description)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentVenue.City)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentVenue.City)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentVenue.State)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentVenue.State)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CurrentVenue.Zipcode)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CurrentVenue.Zipcode)
+                        </dd>
+                    </dl>
+                    @if (Model.isOrganizer)
+                    {
+                        <button class="btn"
 
-                }
-            </div>
+                                style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.CurrentEvent.Id})'">
+                            Change Venue
+                        </button>
+                    }
+                </div>
                 <div class="col-md-6">
                     <style>
                         #map {
@@ -228,8 +233,13 @@
             else
             {
                 <h4>No Venue Assigned yet</h4>
-
-                <a asp-action="SelectVenue" asp-route-id="@Model.CurrentEvent.Id">Add Venue</a>
+                @if (User.IsInRole("Standard") && Model.isOrganizer)
+                {
+                    <button class="btn"
+                            style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.CurrentEvent.Id})'">
+                        Add Venue
+                    </button>
+                }
             }
         </div>
 
@@ -254,6 +264,7 @@
             }
             @if (Model.isOrganizer)
             {
+
                 <a asp-action="InterestSelection" asp-route-id="@Model.CurrentEvent.Id">Add or Remove Interests</a>
             }
 

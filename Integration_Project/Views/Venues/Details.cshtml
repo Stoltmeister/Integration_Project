@@ -21,27 +21,47 @@
         imgSrc = "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg";
     }
 }
+<style>
+    .main {
+        -webkit-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+    }
+    .jumbotron {
+
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        margin-top: 2%;
+        margin-right: 0;
+        margin-left: 0;
+        padding-left: 0;
+        padding-right: 0;
+        
+    }
+</style>
+<div class="container main">
 </br>
 <style>
     #id{
         
     }
 </style>
-<div class="row">
-    <div class="col-md-3">
-        <div class="bottom">
-            <h2>Details</h2>
-            <h4>@Model.CurrentVenue.Name</h4>
-        </div>
-    </div>
-    <div class="col-md-7">
-        <img src=@imgSrc alt="" height="150" />
-    </div>
+<div class="jumbotron" style="background-image: url(@imgSrc)">
+    
+     
+            <h1>@Model.CurrentVenue.Name</h1>
+        
 </div>
     
-<hr />
-<div class="row">
-    <div class="col-md-6">
+
+<div class="row" style="background-color:#F6F6F6">
+    <div class="col-md-6" style="padding-top:3%">
+        <dl style="background-color:white">
         <dt>
             @Html.DisplayNameFor(model => model.CurrentVenue.Address)
         </dt>
@@ -73,19 +93,7 @@
             @Html.DisplayFor(model => model.CurrentVenue.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CurrentVenue.CreationDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentVenue.CreationDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentVenue.IsPrivate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentVenue.IsPrivate)
-        </dd>
-        <dt>
-            @Html.DisplayName("Rate this venue!")
+            @Html.DisplayName("Rating")
         </dt>
         <dd>
             @{ Html.RenderPartial("_RatingsControl", Model.CurrentVenue);}
@@ -101,24 +109,41 @@
         {
             <dd>&nbsp &nbsp @i.Name: <i>@i.Description</i></dd>
         }
-        <br />
+       
+        </dl>
         @if (Model.controller == "Event")
         {
-            <a asp-controller="Events" asp-route-id="@Model.eventId" asp-action="SelectVenue">Back to List</a>
+            <button class="btn"
+                    style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("SelectVenue","Events",new { id = Model.eventId})'">
+                Back to List
+            </button>
         }
         else
         {
-            <a asp-action="InterestSelection" asp-route-id="@Model.CurrentVenue.Id">Add or Remove Interests</a>
-            <br /><br />
-            <div>
-                <a asp-action="Edit" asp-route-id="@Model.CurrentVenue.Id">Edit</a> |
-                <a asp-action="Index">Back to List</a>
-            </div>
-        }
+            @if (Model.CurrentVenue.CreatedBy == Model.UserId)
+            {
+                <button class="btn"
+                        style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("InterestSelection","Venues",new { id = Model.CurrentVenue.Id})'">
+                    Add or Remove Interest
+                </button>
 
+                <br /><br />
+                
+                    <button class="btn"
+                            style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Edit","Venues",new { id = Model.CurrentVenue.Id})'">
+                        Edit
+                    </button>
+
+           
+            }
+            <button class="btn"
+                    style="background-color:darkblue;padding-bottom:10px;border-radius:10px;color:white;margin-bottom:5px" onclick="location.href='@Url.Action("Index","Venues")'">
+                Back to List
+            </button>
+        }
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" style="padding-top: 3%">
         <style>
             #map {
                 height: 400px;
@@ -155,6 +180,7 @@
         @*How to generate the href attribute from the users twitter url?*@
     </div>
 </div>
+    </div>
 
 
 

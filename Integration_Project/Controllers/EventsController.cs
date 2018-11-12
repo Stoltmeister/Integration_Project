@@ -46,7 +46,7 @@ namespace Integration_Project.Controllers
             }
             bool isOrganizer = false;
             StandardUser organizer = new StandardUser();
-            var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single();
+            var organizerId =  _context.EventOrganizers.Where(e => e.EventId == @event.Id).Select(e => e.UserId).Single(); // try catch?
             organizer = _context.StandardUsers.Where(x => x.ApplicationUserId == organizerId).FirstOrDefault();
             if (User.IsInRole("Standard"))
             {
@@ -79,7 +79,6 @@ namespace Integration_Project.Controllers
                 
             }
             var participants = GetParticipants(@event.Id);
-            participants.Add(organizer);
             var PCount = ParticipantsCount(@event.Id);
             eveInterests.Organizer = organizer;
             eveInterests.Participants = participants;
@@ -139,6 +138,7 @@ namespace Integration_Project.Controllers
         {
             string eventString = (string)TempData["EventRedirect"];
             Event eve = JsonConvert.DeserializeObject<Event>(eventString);
+            Participant organizer = new Participant();
             eve.CreatedDate = DateTime.Today;
             eve.ModifiedDate = DateTime.Today;
             var userId = User.Identity.GetUserId();
@@ -146,6 +146,11 @@ namespace Integration_Project.Controllers
             _context.Events.Add(eve);
             await _context.SaveChangesAsync();
             EventOrganizer creator = new EventOrganizer() { EventId = eve.Id, UserId = userId, IsCreator = true };
+            organizer.ConfirmedDate = DateTime.Today;
+            organizer.EventId = eve.Id;
+            organizer.InvitedDate = DateTime.Today;
+            organizer.UserId = standardUserId;
+            _context.Participants.Add(organizer);
             _context.EventOrganizers.Add(creator);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = eve.Id });
@@ -172,12 +177,12 @@ namespace Integration_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
+        public async Task<IActionResult> Edit([Bind("Id,VenueId,Name,StartDate,EndDate,Description,Premium,IsPrivate,IsWeatherDependent,CreatedDate,ModifiedDate,MinParticipants,MaxParticipants,CanInviteParticipants,EventPicture")] Event @event, IFormFile picture)
         {
-            if (id != @event.Id)
-            {
-                return NotFound();
-            }
+            //if (id != @event.Id)
+            //{
+            //    return NotFound();
+            //}
             @event = await StorePicture(@event, picture);
             if (ModelState.IsValid)
             {
@@ -202,6 +207,19 @@ namespace Integration_Project.Controllers
             return View(@event);
         }
 
+        private async Task<Event> StorePicture(Event eve, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    eve.EventPicture = stream.ToArray();
+                }
+            }
+
+            return eve;
+        }
 
 
         // GET: Events/Delete/5
@@ -316,19 +334,7 @@ namespace Integration_Project.Controllers
             return View(newInterest);
         }
 
-        private async Task<Event> StorePicture(Event eve, IFormFile picture)
-        {
-            if (picture != null)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    await picture.CopyToAsync(stream);
-                    eve.EventPicture = stream.ToArray();
-                }
-            }
-
-            return eve;
-        }
+     
 
         public IActionResult GetCharge(string id)
         {
@@ -504,5 +510,44 @@ namespace Integration_Project.Controllers
             return View(EUVM);
         }
 
+        public ActionResult CreateVenue()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVenue([Bind("Id,Name,Address,City,State,Zipcode,Description,IsPrivate,WebsiteUrl,TwitterHandle,ProfilePicture")] Venue venue, IFormFile picture)
+        {
+            // Picture does not get saved
+            venue = await StorePicture(venue, picture);
+            if (ModelState.IsValid)
+            {
+                var eID = (string)TempData["eveId"];
+                venue.CreatedBy = User.Identity.GetUserId();
+                venue.CreationDate = DateTime.Now;
+                venue.UpdateLatitudeAndLongitude();
+                _context.Add(venue);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("SelectVenue", new { id = eID});
+            }
+            return View(venue);
+        }
+
+        private async Task<Venue> StorePicture(Venue ven, IFormFile picture)
+        {
+            if (picture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await picture.CopyToAsync(stream);
+                    ven.ProfilePicture = stream.ToArray();
+                }
+            }
+           
+            return ven;
+        }
+
+       
     }
 }

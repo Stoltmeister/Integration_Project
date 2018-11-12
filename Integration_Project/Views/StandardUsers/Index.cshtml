@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    .main {
+        -webkit-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+        box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+    }
+</style>
+<div class="container main">
 
 <h2>Hello, @Model.FirstName!</h2>
 
@@ -17,5 +25,5 @@
 <div class="row">
     @await Component.InvokeAsync("MultiPinMap", new { id = Model.Id})
 </div>
-
+</div>
 

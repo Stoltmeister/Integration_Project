@@ -2,120 +2,51 @@
 @{
     ViewData["Title"] = "SelectVenue";
 }
+<div class="container main">
+    <h2>SelectVenue</h2>
 
-<h2>SelectVenue</h2>
-
-<h2>Venues</h2>
-@using (Html.BeginForm())
-{
+    <h2>Venues</h2>
+    @using (Html.BeginForm())
+    {
 
 
-@if (User.IsInRole("Standard"))
-{
-    <p>
-        <a asp-action="Create">Add New</a>
-    </p>
-}
-else
-{
-    <p>
-        Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
-    </p>
-}
-
-<div class="row">
-    @{
-        foreach (Venue venue in Model.Venues)
+        @if (User.IsInRole("Standard"))
         {
-
-        <div class="col-sm-4">
-            <div class="row">
-                <button value="@venue.Id" type="submit" name="venueChoice">Select Venue</button><br />
-            </div>
-            <div class="row">
-                @Html.Partial("_VenueSummary", venue)
-            </div>
-        </div>
+            <p>
+                <a asp-action="CreateVenue">Add New +</a>
+            </p>
         }
-    }
-</div>
+        else
+        {
+            <p>
+                Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a venue!
+            </p>
+        }
 
-<div class="row">
-    <br />
-    <br />
-    <h3>This table should be removed in the final product.</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.City)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.State)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.Zipcode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.CreationDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.IsPrivate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.currentVenue.WebsiteUrl)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Venues)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Zipcode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsPrivate)
-                    </td>
-                    <td>
-                        <a href="http://www.@item.WebsiteUrl">@item.WebsiteUrl</a>
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
+        <div class="row">
+            @{
+                foreach (Venue venue in Model.Venues)
+                {
+
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <button value="@venue.Id" type="submit" name="venueChoice" style="border:none;background-color:darkblue;border-radius:20px;color:white;margin-bottom:1%;margin-top:2%">Select Venue</button><br />
+                        </div>
+                        <div class="row">
+                            @Html.Partial("_VenueSummary", venue)
+                        </div>
+                    </div>
+                }
             }
-        </tbody>
-    </table>
+        </div>
+        <style>
+            .main {
+                -webkit-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+                -moz-box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+                box-shadow: 0px 11px 34px 2px rgba(184,180,184,1);
+                padding-bottom: 4%
+            }
+        </style>
+    }
+
 </div>
- }

@@ -24,6 +24,7 @@ namespace Integration_Project.Models
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public string Description { get; set; }
+        [Display(Name = "Date Added")]
         public DateTime CreationDate { get; set; }
         [Display(Name = "Private?")]
         public bool IsPrivate { get; set; }

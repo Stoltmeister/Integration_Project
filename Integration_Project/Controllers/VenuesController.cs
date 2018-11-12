@@ -142,7 +142,7 @@ namespace Integration_Project.Controllers
             }
             venueInterests.AddedInterests = likedInterests;
             venueInterests.Interests = likedInterests;
-
+            venueInterests.UserId = User.Identity.GetUserId();
             venueInterests.CurrentVenue = venue;
             string cCheck = (string)TempData["controllerCheck"];
             string eId = (string)TempData["eventId"];
@@ -175,7 +175,7 @@ namespace Integration_Project.Controllers
                 venue.UpdateLatitudeAndLongitude();
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", _context.Venues.Where(v => v.Id == venue.Id).Single());
+                return RedirectToAction("Details", new { id = venue.Id });
             }
             return View(venue);
         }

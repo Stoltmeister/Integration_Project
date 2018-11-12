@@ -29,11 +29,19 @@ namespace Integration_Project.ViewComponents
             
             foreach (var participant in participantsWithMyId)
             {
-                //var venue = participant.Event.Venues;
-                var venue = db.Venues.Where(v => v.Id == participant.Event.VenueId).Single();
+                var EventVenueId = db.Events.Where(x => x.Id == participant.EventId).Select(x => x.VenueId).FirstOrDefault();
+                if (EventVenueId != null)
+                {
+                    var pId = participant.Event.VenueId;
 
-                //Null reference for esoemad5, but not for Test
-                output.Add(new PinData("P", venue.Name, venue.Address, venue.Latitude, venue.Longitude));
+                    var vId = db.Venues.Where(v => v.Id == participant.Event.VenueId).FirstOrDefault();
+                    //var venue = participant.Event.Venues;
+                    var venue = db.Venues.Where(v => v.Id == participant.Event.VenueId).Single();
+
+                    //Null reference for esoemad5, but not for Test
+                    output.Add(new PinData("P", venue.Name, venue.Address, venue.Latitude, venue.Longitude));
+                }
+                
             }
             return output;
           
