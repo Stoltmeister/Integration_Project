@@ -9,7 +9,7 @@
 <script src="~/js/GoogleMaps.js"></script>
 <script>
     function mapCallback() {
-        @{ 
+        @{
             try
             {
                 @:var mapCenterLatitude = @Model.First().Latitude;
@@ -22,13 +22,14 @@
 
         }
         var map = initMap(mapCenterLatitude, mapCenterLongitude);
-        @{ 
+        @{
             foreach(var pin in Model)
             {
-                @:addMarker(@pin.Latitude, @pin.Longitude, "@pin.Name", "@pin.Address", map);
+                @: var description = "<p>@pin.Address</p><p>@pin.VenueName</p>"
+                @:addMarker(@pin.Latitude, @pin.Longitude, "@pin.EventName", description, map);
             }
         }
-        
+
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.googleMapsKey&callback=mapCallback"
