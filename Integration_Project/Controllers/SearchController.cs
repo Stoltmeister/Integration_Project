@@ -100,7 +100,7 @@ namespace Integration_Project.Controllers
             }
             else if (!string.IsNullOrEmpty(Id))
             {
-                var filteredEvents = eventInterest.Where(x => x.EventId == Id).Select(x => x.EventId).ToList();
+                var filteredEvents = eventInterest.Where(x => x.InterestId == Id).Select(x => x.EventId).ToList();
                 foreach(var id in filteredEvents)
                 {
                     var eve = premEvents.Where(x => x.Id == id).FirstOrDefault();
