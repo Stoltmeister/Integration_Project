@@ -44,8 +44,7 @@ namespace Integration_Project.Controllers
             //rating = _context.Ratings.
 
             //return rating;
-
-            return RedirectToAction("Details", "Venues", _context.Venues.Where(v => v.Id == Id).Single());
+            return RedirectToAction("Details", "Venues", new { id = rating.VenueId });
         }
 
         //public PartialViewResult RatingsControl(string venueId)
