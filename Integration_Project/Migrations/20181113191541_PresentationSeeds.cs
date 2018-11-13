@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Integration_Project.Migrations
 {
-    public partial class FinalSeed : Migration
+    public partial class PresentationSeeds : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -472,7 +472,7 @@ namespace Integration_Project.Migrations
                 values: new object[,]
                 {
                     { "b7813711-0140-4696-b984-8bd4569c7bba", "00df3fb1-fe99-4400-bf75-6d19c31662a6f", "Tennis. Code. Meditation.", "Milwaukee", "c.james.obrien@gmail.com", "Casey", "O'Brien", "WI", 53202 },
-                    { "51e53b9a-f338-4211-9d7a-8be20bc068a9", "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", "Code. Milwaukee. Games.", "Shorewood", "esoemad5@gmail.com", "Elliot", "Soemadi", "Wisconsin", 53211 },
+                    { "51e53b9a-f338-4211-9d7a-8be20bc068a9", "aaf5b1d2-e64c-4c8e-9a8b-41eaec051fb6", "Code. Milwaukee. Games.", "Shorewood", "esoemad5@gmail.com", "Elliott", "Soemadi", "Wisconsin", 53211 },
                     { "789e4076-5d71-4e12-b146-2c8f38622f13", "b69a12da-22da-41b4-9cda-a58600ae433c", "Games. Code. Pathfinder.", "South Milwaukee", "stoltenberg96@gmail.com", "Josh", "Stoltenberg", "WI", 53172 },
                     { "90754d36-88ff-4c8b-a595-d95d46200a52", "0c5b6110-5e5a-4af6-9b2e-f5736a26fa5b", "Code. Games. Tennis.", "Brookfield", "coltonsells@coltonsells.com", "Colton", "Sells", "WI", 53045 }
                 });
@@ -500,7 +500,7 @@ namespace Integration_Project.Migrations
                     { "6", false, new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "D&D homebrew group", new DateTime(2018, 11, 22, 18, 0, 0, 0, DateTimeKind.Unspecified), null, true, false, 6, 4, new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "D&D homebrew group", 0, new DateTime(2018, 11, 22, 15, 30, 0, 0, DateTimeKind.Unspecified), "4" },
                     { "1", true, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Doubles or Singles Tennis Match", new DateTime(2018, 11, 14, 18, 0, 0, 0, DateTimeKind.Unspecified), null, false, true, 4, 2, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Doubles or Singles Tennis Match", 0, new DateTime(2018, 11, 14, 16, 0, 0, 0, DateTimeKind.Unspecified), "1" },
                     { "2", true, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly Meditation Practice", new DateTime(2018, 11, 18, 11, 0, 0, 0, DateTimeKind.Unspecified), null, false, false, 15, 2, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly Meditation Practice", 1, new DateTime(2018, 11, 18, 9, 0, 0, 0, DateTimeKind.Unspecified), "2" },
-                    { "3", false, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly morning meditation sit", new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), null, true, false, 8, 2, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly Morning Meditation Sit", 0, new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), "3" },
+                    { "3", false, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly morning meditation sit", new DateTime(2018, 11, 12, 7, 0, 0, 0, DateTimeKind.Unspecified), null, false, false, 8, 2, new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly Morning Meditation Sit", 0, new DateTime(2018, 11, 12, 6, 30, 0, 0, DateTimeKind.Unspecified), "3" },
                     { "7", false, new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly One-Shot", new DateTime(2018, 11, 23, 18, 0, 0, 0, DateTimeKind.Unspecified), null, false, false, 6, 4, new DateTime(2018, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Weekly One-Shot", 0, new DateTime(2018, 11, 23, 15, 30, 0, 0, DateTimeKind.Unspecified), "5" }
                 });
 
@@ -539,9 +539,9 @@ namespace Integration_Project.Migrations
                     { "9", "7", "8" },
                     { "7", "7", "7" },
                     { "4", "4", "6" },
-                    { "8", "6", "8" },
                     { "5", "5", "6" },
                     { "6", "6", "7" },
+                    { "8", "6", "8" },
                     { "2", "2", "2" },
                     { "3", "3", "2" }
                 });
@@ -566,6 +566,7 @@ namespace Integration_Project.Migrations
                 values: new object[,]
                 {
                     { "3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2", "b7813711-0140-4696-b984-8bd4569c7bba", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
+                    { "1", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "4", "51e53b9a-f338-4211-9d7a-8be20bc068a9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "b7813711-0140-4696-b984-8bd4569c7bba" },
                     { "2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1", "b7813711-0140-4696-b984-8bd4569c7bba", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "51e53b9a-f338-4211-9d7a-8be20bc068a9" }
                 });
 

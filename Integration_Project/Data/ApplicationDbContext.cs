@@ -443,7 +443,7 @@ namespace Integration_Project.Data
                     Name = "Weekly Morning Meditation Sit",
                     Description = "Weekly morning meditation sit",
                     Premium = 0,
-                    IsPrivate = true,
+                    IsPrivate = false,
                     IsWeatherDependent = false,
                     CreatedDate = new DateTime(2018, 11, 6),
                     ModifiedDate = new DateTime(2018, 11, 6),
@@ -567,6 +567,7 @@ namespace Integration_Project.Data
             // Participants.
 
             modelBuilder.Entity<Participant>().HasData(
+                new Participant { Id = "1", EventId = "4", InvitedBy = "51e53b9a-f338-4211-9d7a-8be20bc068a9", UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
                 new Participant { Id = "2", EventId = "1", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" },
                 new Participant { Id = "3", EventId = "2", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "51e53b9a-f338-4211-9d7a-8be20bc068a9" }
             );
