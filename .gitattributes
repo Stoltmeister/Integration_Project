@@ -1,0 +1,5 @@
+# Set line endings to always be lf for SVG font files
+*.eot binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
