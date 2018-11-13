@@ -417,6 +417,7 @@ namespace Integration_Project.Controllers
                 var startForecast = forecast[day.Days];
                 vm.Forecast = forecast[0].text;
                 int code = forecast[0].code;            
+    
                 if(code < 20 || (code > 36 && code < 44) || (code > 44 && code < 48))
                 {
                     string warning = "Warning, the weather forecast for this venue is poor";
