@@ -573,7 +573,6 @@ namespace Integration_Project.Data
                 new Participant { Id = "4", EventId = "2", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
                 new Participant { Id = "5", EventId = "1", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "b7813711-0140-4696-b984-8bd4569c7bba" },
                 new Participant { Id = "6", EventId = "2", InvitedBy = "b7813711-0140-4696-b984-8bd4569c7bba", UserId = "b7813711-0140-4696-b984-8bd4569c7bba" }
-
             );
 
 
